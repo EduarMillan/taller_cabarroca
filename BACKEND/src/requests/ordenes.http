@@ -1,0 +1,63 @@
+@api = http://localhost:3000/trabajosrealizados
+
+GET {{api}}
+
+###
+GET {{api}}/1
+
+###
+GET {{api}}/count
+
+###
+POST {{api}}
+Content-Type: application/json
+
+{  
+"id_orden": "1",
+"nombre_material":"Acrilico",
+"espesor":"5",
+"color": "Transparente", 
+"descripcion_material":"Acrilico de 5mm color tranparente", 
+"medida_largo":"2", 
+"medida_ancho":"3", 
+"precio_largo":"32", 
+"precio_m2":"25", 
+"precio_total":"25",
+
+"nombre":"Morro Cabanna",
+"descripcion":"realizacion de salas de historia en el Cuartel Moncada",
+"pago_efectivo": "no",
+"precio":"30000",
+"fecha":"2023-02-18",
+"otros_gastos_descripcion":"Pago a masilleros",
+"costo_otros_gastos":"500",
+"impuesto_representacion":"1",
+"impuesto_onat":"1",
+"impuesto_equipos":"1",
+"costo_total":"1520",
+"utilidad":"1",
+"facturado":"si"
+}
+
+###
+DELETE {{api}}/2
+
+###
+PUT {{api}}/7
+Content-Type: application/json
+
+{
+"nombre":"Monumento Maceo",
+"descripcion":"trabajos varios ",
+"pago_efectivo":"no",
+"precio":"20500",
+"fecha":"2023-02-27",
+"otros_gastos_descripcion":"Pago a carpinteros2",
+"costo_otros_gastos":"702",
+"impuesto_representacion":"2",
+"impuesto_onat":"2",
+"impuesto_equipos":"2",
+"costo_total":"1",
+"utilidad":"1",
+"facturado":"si"
+}
