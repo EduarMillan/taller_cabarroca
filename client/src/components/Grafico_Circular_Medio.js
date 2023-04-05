@@ -120,3 +120,4 @@ export default function Grafico_Circular_Medio() {
     </PieChart>
   );
 }
+

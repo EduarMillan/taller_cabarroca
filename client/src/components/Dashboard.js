@@ -19,15 +19,15 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import { useMemo, useState } from 'react';
-import {withError} from '../error'
+import {withError} from '../pages/error'
 import { Route, Routes, useNavigate} from "react-router-dom";
 import {Brightness7, Brightness4, Home, PlaylistAddCheck, PlaylistAdd, DashboardCustomize, BlindsClosed} from '@mui/icons-material'
 import {Tooltip} from '@mui/material';
-import Lista_Materiales from '../../components/Lista_Materiales';
-import Lista_Trabajos_Realizados from '../../components/Lista_Trabajos_Realizados';
-import Formulario_Trabajos from '../../components/Formulario_Trabajos';
-import Formulario_Materiales from '../../components/Formulario_Materiales';
-import Inicio from '../../components/Inicio';
+import Lista_Materiales from './Lista_Materiales';
+import Lista_Trabajos_Realizados from './Lista_Trabajos_Realizados';
+import Formulario_Trabajos from './Formulario_Trabajos';
+import Formulario_Materiales from './Formulario_Materiales';
+import Inicio from './Inicio';
 
 const drawerWidth = 240;
 

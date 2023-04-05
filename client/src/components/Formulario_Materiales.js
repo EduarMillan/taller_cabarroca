@@ -100,21 +100,19 @@ const loadMaterial = async(id) => {
                 value={material.nombre}
                 onChange={handleChange}
                 inputProps={{ style: { color: "inherit" } }}
-                InputLabelProps={{ style: { color: "inherit" } }}
-               color='white'
-                
+                InputLabelProps={{ style: { color: "inherit" } }}  
               />
 
               <TextField
                 variant="filled"
                 label="Descripcion"
                 multiline
-                rows={4}
-                sx={{ display: "block", margin: ".5rem 0" }}
+                rows={3}
+                sx={{ display: "block", margin: ".5rem 0"}}
                 name="descripcion"
                 value={material.descripcion}
                 onChange={handleChange}
-                inputProps={{ style: { color: "inherit" } }}
+                inputProps={{ style: { color: "inherit"  } }}
                 InputLabelProps={{ style: { color: "inherit" } }}
               />
 

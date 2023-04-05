@@ -44,7 +44,7 @@ const renderCustomizedLabel = (props) => {
 
   return (
     <g>
-      <circle cx={x + width / 2} cy={y - radius} r={radius} fill="red" />
+      <circle cx={x + width / 2} cy={y - radius} r={radius} fill="#FFBB28" />
       <text
         x={x + width / 2}
         y={y - radius}
@@ -76,10 +76,10 @@ export default function Grafico_Barras() {
       <YAxis />
       <Tooltip />
       <Legend />
-      <Bar dataKey="pv" fill="red" minPointSize={5}>
+      <Bar dataKey="pv" fill="#FFBB28" minPointSize={5}>
         <LabelList dataKey="name" content={renderCustomizedLabel} />
       </Bar>
-      <Bar dataKey="uv" fill="blue" minPointSize={10} />
+      <Bar dataKey="uv" fill="#0088FE" minPointSize={10} />
     </BarChart>
   );
 }

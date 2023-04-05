@@ -1,5 +1,8 @@
 const API = "http://localhost:3000/materiales";
 const API2 = "http://localhost:3000/trabajosrealizados";
+const API3 = "http://localhost:3000/materialestrabajosrealizados";
+
+
 //-----------------materiales----------------
 export const getMateriales = async () => {
   const res = await fetch(API);
@@ -40,6 +43,12 @@ export const getTrabajosRealizados = async () => {
   const res = await fetch(API2);
   return await res.json();
 };
+
+export const getMaterialesTrabajosRealizados = async () => {
+  const res = await fetch(API3);
+  return await res.json();
+};
+
 
 export const getTrabajoRealizado = async (id) => {
   const res = await fetch(`${API2}/${id}`);

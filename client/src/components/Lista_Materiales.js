@@ -79,6 +79,7 @@ export default function Lista_Materiales() {
           return (
             <>
             <IconButton aria-label="Editar"  onClick={() => {
+                //navigate(`/materiales/${tableMeta.rowData[0]}`);
                 navigate(`/materiales/${tableMeta.rowData[0]}`);
               }}>
             <AssignmentIcon></AssignmentIcon>

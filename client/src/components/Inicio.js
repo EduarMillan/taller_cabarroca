@@ -17,7 +17,7 @@ export default function Inicio() {
       }}
     >
       <Paper elevation={3} sx={{ p: 3 }}>
-        <Typography variant="h4"> Total Planchas PVC</Typography>
+        <Typography variant="h4"> Total de Clientes</Typography>
         <Box
           sx={{
             display: "flex",
@@ -29,8 +29,8 @@ export default function Inicio() {
           <Typography variant="h4">10</Typography>
         </Box>
       </Paper>
-      <Paper elevation={3} sx={{ p: 3 }}>
-        <Typography variant="h4"> Total Planchas Acrilico</Typography>
+      <Paper elevation={3} sx={{ p: 3}}>
+        <Typography variant="h4"> Total de Obras Realizadas</Typography>
         <Box
           sx={{
             display: "flex",
@@ -60,6 +60,7 @@ export default function Inicio() {
             <h4>Trabajo 2</h4>
             <h4>Trabajo 3</h4>
             <h4>Trabajo 4</h4>
+            
           </List>
         </Box>
       </Paper>
@@ -87,6 +88,7 @@ export default function Inicio() {
           <Grafico_Circular_Medio />
         </Box>
       </Paper>
+      
     </Box>
   );
 }

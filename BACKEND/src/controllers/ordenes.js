@@ -1,4 +1,12 @@
-import { connect2, connect } from "../database";
+import { connect2 } from "../database";
+
+export const get_Materiales_de_Ordenes = async (req, res) => {
+  const [row] = await (
+    await connect2()
+  ).query("SELECT * FROM materialestrabajosrealizados");
+  res.json(row);
+};
+
 
 export const getOrdenes = async (req, res) => {
   const [row] = await (
@@ -36,7 +44,7 @@ export const saveOrdenes = async (req, res) => {
   var pagoEfectivo = req.body.pago_efectivo;
 
   const [promedio_m2] = await (
-    await connect()
+    await connect2()
   ).query(
     "SELECT AVG (costo_m2) FROM materiales WHERE nombre = ? AND espesor = ? AND color = ?",
     [nombre_material, espesor_material, color_material]
@@ -44,7 +52,7 @@ export const saveOrdenes = async (req, res) => {
   var prom_m2 = promedio_m2[0]["AVG (costo_m2)"];
 
   const [promedio_ml] = await (
-    await connect()
+    await connect2()
   ).query(
     "SELECT AVG(costo_ml) FROM materiales WHERE nombre = ? AND espesor = ? AND color = ?",
     [nombre_material, espesor_material, color_material]
@@ -56,15 +64,24 @@ export const saveOrdenes = async (req, res) => {
     "INSERT INTO materialestrabajosrealizados (id_orden, nombre, espesor, color, descripcion, medida_largo, medida_ancho, precio_largo, precio_m2, precio_total) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
     [
       rs[0].id + 1,
-      req.body.nombre_material,
-      req.body.espesor,
-      req.body.color,
-      req.body.descripcion_material,
-      req.body.medida_largo,
-      req.body.medida_ancho,
-      prom_ml,
-      prom_m2,
-      req.body.medida_largo * req.body.medida_ancho * prom_m2,
+      'pvc',
+      //req.body.nombre_material,
+      3,
+     // req.body.espesor,
+     'azul',
+      //req.body.color,
+      'pvc malo',
+      //req.body.descripcion_material,
+      2,
+     // req.body.medida_largo,
+     1,
+      //req.body.medida_ancho,
+      10,
+      //prom_ml,
+      25,
+      //prom_m2,
+      50,
+      //req.body.medida_largo * req.body.medida_ancho * prom_m2,
     ]
   );
   const [costo_total_materiales] = await (
