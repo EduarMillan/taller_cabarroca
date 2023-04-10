@@ -13,7 +13,7 @@ POST {{api}}
 Content-Type: application/json
 
 {  
-"id_orden": "1",
+"id_orden": "100",
 "nombre_material":"Acrilico",
 "espesor":"5",
 "color": "Transparente", 
@@ -24,7 +24,7 @@ Content-Type: application/json
 "precio_m2":"25", 
 "precio_total":"25",
 
-"nombre":"Mendive",
+"nombre":"Mendive jujuju",
 "descripcion":"realizacion de salas de historia en el Cuartel Moncada",
 "pago_efectivo": "no",
 "precio":"30000",

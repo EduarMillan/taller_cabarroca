@@ -1,7 +1,7 @@
 import moment from "moment";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AssignmentIcon from "@mui/icons-material/Assignment";
-import { EliminarMaterial, getMaterialesTrabajosRealizados } from "../api";
+import { EliminarMaterial, getMaterialesTrabajosRealizados, getMaterialTrabajosRealizados, saveMaterialTrabajosRealizados, UpdateMaterialTrabajosRealizados } from "../api";
 import {
   Button,
   Table,
@@ -271,9 +271,10 @@ export default function Formulario_Trabajos(route) {
   const [currency1, setCurrency1] = React.useState("NoEfectivo");
   const [EspesoresM1, setEspesoresM1] = React.useState("");
   const [Colores1, setColores1] = React.useState("");
-  const [MaterialesRegistrados1, setMaterialesRegistrados1] = React.useState("");
-
-  //------------------------------------------------------------
+ 
+  const params = useParams();
+  
+  //--------------------materiales trabajos realizados----------------------------------------
   const [idOrden, setIdOrden] = useState("");
   const [nombreM, setNombreM] = useState("");
   const [espesor, setEspesor] = useState("");
@@ -286,10 +287,65 @@ export default function Formulario_Trabajos(route) {
   const [precioTotal, setPrecioTotal] = useState("");
   const [filas, setFilas] = useState([]);
 
-  const handleSubmit = (event) => {
+  const [materialesOrdenes, setmaterialesOrdenes] = useState({
+    idOrden: '',
+    nombreM: '',
+    espesor: '',
+    color: '',
+    descripcionM: '',
+	  medidaLargo: '',
+	  medidaAncho: '',
+	  precioLargo: '',
+	  precioM2: '',
+	  precioTotal: '',
+  });
+
+  /*const loadmaterialesOrdenes = async (id) => {
+    const datos = await getMaterialTrabajosRealizados(id);
+    setmaterialesOrdenes(datos);
+  };*/
+
+  /*useEffect(() => {
+    loadmaterialesOrdenes();
+  }, []);*/
+
+  /*const EjecutaEliminar = async (id) => {
+    await EliminarMaterial(id); //arreglar esto
+    await loadmaterialesOrdenes();
+  };*/
+
+  const handleChangeMO = (event) => {
     event.preventDefault();
-    setFilas([
-      ...filas,
+    setColores1(event.target.value);
+    setEspesoresM1(event.target.value);
+    setNombreM(event.target.value);
+    setmaterialesOrdenes({ ...materialesOrdenes, [event.target.name]: event.target.value });
+  };
+
+  const handleSubmit = (event) => {
+    if(idOrden && nombreM && espesor && color && descripcionM && medidaLargo && medidaAncho && precioLargo
+      && precioM2 && precioTotal)
+      {
+        const newFilas = [...filas,{idOrden, nombreM, espesor, color, descripcionM, medidaLargo, medidaAncho, precioLargo, precioM2, precioTotal}];
+        setFilas(newFilas);
+        setLoading1(true);
+        try {
+          if (editing1) {
+            //navigate("/dashboard/trabajosrealizados");        
+            UpdateMaterialTrabajosRealizados(idOrden, newFilas);//revisar esta logica del id
+          } else {
+           // navigate("/dashboard/trabajosrealizados");
+            saveMaterialTrabajosRealizados(newFilas);
+            //console.log(newFilas);
+          }
+          setLoading1(false);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+    event.preventDefault();
+    setFilas([...filas,
       {
         idOrden,
         nombreM,
@@ -335,24 +391,8 @@ export default function Formulario_Trabajos(route) {
     setPrecioTotal(fila.precioTotal);
     handleDelete(index);
   };
-  //------------------------------------------------------------
-  const [materiales_Trabajos_Realizados, setMateriales_Trabajos_Realizados] =
-    useState([]);
 
-  const loadMateriales_Trabajos_Realizados = async () => {
-    const datos = await getMaterialesTrabajosRealizados();
-    setMateriales_Trabajos_Realizados(datos);
-  };
-
-  useEffect(() => {
-    loadMateriales_Trabajos_Realizados();
-  }, []);
-
-  const EjecutaEliminar = async (id) => {
-    await EliminarMaterial(id); //arreglar esto
-    await loadMateriales_Trabajos_Realizados();
-  };
-
+//-------------------------trabajos realizados-------------------------------------------------
   const [trabajo, setTrabajo] = useState({
     nombre: "",
     descripcion: "",
@@ -370,24 +410,22 @@ export default function Formulario_Trabajos(route) {
   });
 
   const [loading, setLoading] = useState(false);
-
-  const params = useParams();
+  const [loading1, setLoading1] = useState(false);
 
   const [editing, setEditing] = useState(false);
+  const [editing1, setEditing1] = useState(false);
 
   const handledSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
     try {
       if (editing) {
-        navigate("/dashboard/trabajosrealizados");
+        //navigate("/dashboard/trabajosrealizados");
         await UpdateTrabajoRealizado(params.id, trabajo);
       } else {
-        navigate("/dashboard/trabajosrealizados");
+       // navigate("/dashboard/trabajosrealizados");
         await saveTrabajosRealizados(trabajo);
       }
-
       setLoading(false);
     } catch (error) {
       console.error(error);
@@ -408,23 +446,6 @@ export default function Formulario_Trabajos(route) {
     setTrabajo({ ...trabajo, [event.target.name]: event.target.value });
   };
 
-  const handleChange3 = (event) => {
-    setEspesoresM1(event.target.value);
-    setEspesor(event.target.value);
-  };
-
-  const handleChange4 = (event) => {
-    event.preventDefault();
-    const nuevoValor = event.target.value;
-    setNombreM(nuevoValor);
-    setMaterialesRegistrados1(nuevoValor);
-  };
-
-  const handleChange5 = (event) => {
-    setColores1(event.target.value);
-    setColor(event.target.value);
-  };
-
   const loadTrabajos = async (id) => {
     const data = await getTrabajoRealizado(id);
     setTrabajo(...data);
@@ -437,9 +458,14 @@ export default function Formulario_Trabajos(route) {
     }
   }, [params.id]);
 
+  //------------------------------------------------------------
+
+
+  
+
   const fechaIncorrecta = trabajo.fecha; //aqui capturo la fecha con formato incorrecto
   const fechaCorrecta = moment(fechaIncorrecta).format("YYYY-MM-DDThh:mm"); //doy formato correcto a la fecha
-
+//----------------------------------------------------------------------------------------------------
   return (
     <Grid container direction="column" alignItems="top" justifyContent="center">
       <Grid container alignItems={"center"} paddingBottom={1}>
@@ -544,7 +570,7 @@ export default function Formulario_Trabajos(route) {
                 select
                 sx={{ display: "block", margin: ".5rem 0" }}
                 name="pago_efectivo"
-                value={currency1} //{trabajo.pago_efectivo}
+                value={trabajo.pago_efectivo}//{currency1} //{trabajo.pago_efectivo}
                 onChange={handleChange2}
                 InputLabelProps={{ style: { color: "inherit" } }}
                 InputProps={{
@@ -643,7 +669,7 @@ export default function Formulario_Trabajos(route) {
                 label="Facturado?"
                 sx={{ display: "block", margin: ".5rem 0" }}
                 name="facturado"
-                value={currency}
+                value={trabajo.facturado}
                 onChange={handleChange1}
                 InputLabelProps={{ style: { color: "inherit" } }}
                 InputProps={{
@@ -711,8 +737,8 @@ export default function Formulario_Trabajos(route) {
               label="Nombre del Material"
               select
               sx={{ display: "block", margin: ".5rem 0" }}
-              value={MaterialesRegistrados1}
-              onChange={handleChange4}
+              value={nombreM}
+              onChange={(event) => setNombreM(event.target.value)}
               InputLabelProps={{ style: { color: "inherit" } }}
               InputProps={{ style: { color: "inherit" } }}
             >
@@ -727,8 +753,8 @@ export default function Formulario_Trabajos(route) {
               label="Espesor"
               select
               sx={{ display: "block", margin: ".5rem 0" }}
-              value={EspesoresM1}
-              onChange={handleChange3}
+              value={espesor}
+              onChange={(event) => setEspesor(event.target.value)}
               InputLabelProps={{ style: { color: "inherit" } }}
               InputProps={{ style: { color: "inherit" } }}
             >
@@ -743,8 +769,8 @@ export default function Formulario_Trabajos(route) {
               label="Color"
               select
               sx={{ display: "block", margin: ".5rem 0" }}
-              value={Colores1}
-              onChange={handleChange5}
+              value={color}
+              onChange={(event) => setColor(event.target.value)}
               InputLabelProps={{ style: { color: "inherit" } }}
               InputProps={{ style: { color: "inherit" } }}
             >
@@ -754,7 +780,15 @@ export default function Formulario_Trabajos(route) {
                   </MenuItem>
                 ))}
             </TextField>
-           
+            <TextField
+              variant="outlined"
+              label="Descripción"
+              sx={{ display: "block", margin: ".5rem 0" }}
+              value={descripcionM}
+              onChange={(event) => setDescripcionM(event.target.value)}
+              InputLabelProps={{ style: { color: "inherit" } }}
+              InputProps={{ style: { color: "inherit" } }}
+            />
             <TextField
               variant="outlined"
               label="Medida Largo"
@@ -765,15 +799,7 @@ export default function Formulario_Trabajos(route) {
               InputLabelProps={{ style: { color: "inherit" } }}
               InputProps={{ style: { color: "inherit" } }}
             />
-             <TextField
-              variant="outlined"
-              label="Descripción"
-              sx={{ display: "block", margin: ".5rem 0" }}
-              value={descripcionM}
-              onChange={(event) => setDescripcionM(event.target.value)}
-              InputLabelProps={{ style: { color: "inherit" } }}
-              InputProps={{ style: { color: "inherit" } }}
-            />
+             
             <TextField
               variant="outlined"
               label="Medida Ancho"
@@ -809,7 +835,7 @@ export default function Formulario_Trabajos(route) {
               label="Precio Total"
               type="number"
               sx={{ display: "block", margin: ".5rem 0" }}
-              value={precioTotal}
+              value = {precioTotal}
               onChange={(event) => setPrecioTotal(event.target.value)}
               InputLabelProps={{ style: { color: "inherit" } }}
               InputProps={{ style: { color: "inherit" } }}

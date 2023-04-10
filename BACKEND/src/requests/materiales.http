@@ -3,7 +3,7 @@
 GET {{api}}
 
 ###
-GET {{api}}/35
+GET {{api}}/3
 
 ###
 GET {{api}}/count
@@ -13,7 +13,7 @@ POST {{api}}
 Content-Type: application/json
 
 {
-"nombre":"Bicapa",
+"nombre":"Bicapakkkk",
 "descripcion":"Bicapa de 1mm de espesor de color oro",
 "espesor":"1",
 "longitud_ancho":"0.61",

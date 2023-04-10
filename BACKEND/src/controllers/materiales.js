@@ -26,10 +26,9 @@ export const getContadorMateriales = async (req, res) => {
 
 export const saveMateriales = async (req, res) => {
   var cantidad_iteraciones = req.body.cantidad;
-  var costo_del_m2 = req.body.costo_total/(req.body.longitud_ancho * req.body.longitud_largo);
-  var costo_del_ml = req.body.costo_total/req.body.longitud_largo;
-  console.log(costo_del_m2);
-  console.log(costo_del_ml);
+  var costo_del_m2 =
+    req.body.costo_total / (req.body.longitud_ancho * req.body.longitud_largo);
+  var costo_del_ml = req.body.costo_total / req.body.longitud_largo;
   while (cantidad_iteraciones > 0) {
     await (
       await connect2()
@@ -65,5 +64,3 @@ export const updateMaterial = async (req, res) => {
   ).query("UPDATE materiales SET ? WHERE id=?", [req.body, req.params.id]);
   res.sendStatus(204);
 };
-
-

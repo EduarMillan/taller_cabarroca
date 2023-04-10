@@ -7,6 +7,10 @@ import {
   saveOrdenes,
   updateOrden,
   get_Materiales_de_Ordenes,
+  deleteMaterialOrdenes,
+  updateMaterialOrdenes,
+  getMaterialOrdenes,
+saveMaterialesTrabajos,
 } from "../controllers/ordenes";
 
 
