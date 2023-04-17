@@ -49,7 +49,6 @@ export const get_Materiales_de_Ordenes = async (req, res) => {
           req.body.precio_m2,
           req.body.precio_total,
         ]
-      );
-      
+      );      
   };
 

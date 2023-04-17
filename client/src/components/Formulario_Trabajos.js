@@ -275,16 +275,16 @@ export default function Formulario_Trabajos(route) {
   const params = useParams();
   
   //--------------------materiales trabajos realizados----------------------------------------
-  const [idOrden, setIdOrden] = useState("");
-  const [nombreM, setNombreM] = useState("");
+  const [id_orden, setIdOrden] = useState("");
+  const [nombre, setNombreM] = useState("");
   const [espesor, setEspesor] = useState("");
   const [color, setColor] = useState("");
-  const [descripcionM, setDescripcionM] = useState("");
-  const [medidaLargo, setMedidaLargo] = useState("");
-  const [medidaAncho, setMedidaAncho] = useState("");
-  const [precioLargo, setPrecioLargo] = useState("");
-  const [precioM2, setPrecioM2] = useState("");
-  const [precioTotal, setPrecioTotal] = useState("");
+  const [descripcion, setDescripcionM] = useState("");
+  const [medida_largo, setMedidaLargo] = useState("");
+  const [medida_ancho, setMedidaAncho] = useState("");
+  const [precio_largo, setPrecioLargo] = useState("");
+  const [precio_m2, setPrecioM2] = useState("");
+  const [precio_total, setPrecioTotal] = useState("");
   const [filas, setFilas] = useState([]);
 
   const [materialesOrdenes, setmaterialesOrdenes] = useState({
@@ -323,20 +323,20 @@ export default function Formulario_Trabajos(route) {
   };
 
   const handleSubmit = (event) => {
-    if(idOrden && nombreM && espesor && color && descripcionM && medidaLargo && medidaAncho && precioLargo
-      && precioM2 && precioTotal)
+    if(id_orden && nombre && espesor && color && descripcion && medida_largo && medida_ancho && precio_largo && precio_m2 && precio_total)
       {
-        const newFilas = [...filas,{idOrden, nombreM, espesor, color, descripcionM, medidaLargo, medidaAncho, precioLargo, precioM2, precioTotal}];
+        const newFilas = [...filas,{id_orden, nombre, espesor, color, descripcion, medida_largo, medida_ancho, precio_largo, precio_m2, precio_total}];
         setFilas(newFilas);
         setLoading1(true);
         try {
           if (editing1) {
             //navigate("/dashboard/trabajosrealizados");        
-            UpdateMaterialTrabajosRealizados(idOrden, newFilas);//revisar esta logica del id
+            UpdateMaterialTrabajosRealizados(id_orden, newFilas);//revisar esta logica del id
           } else {
            // navigate("/dashboard/trabajosrealizados");
+           console.log(newFilas);
             saveMaterialTrabajosRealizados(newFilas);
-            //console.log(newFilas);
+            console.log("salio");
           }
           setLoading1(false);
         } catch (error) {
@@ -347,16 +347,16 @@ export default function Formulario_Trabajos(route) {
     event.preventDefault();
     setFilas([...filas,
       {
-        idOrden,
-        nombreM,
+        id_orden,
+        nombre,
         espesor,
         color,
-        descripcionM,
-        medidaLargo,
-        medidaAncho,
-        precioLargo,
-        precioM2,
-        precioTotal,
+        descripcion,
+        medida_largo,
+        medida_ancho,
+        precio_largo,
+        precio_m2,
+        precio_total,
       },
     ]);
     setIdOrden("");
@@ -727,7 +727,7 @@ export default function Formulario_Trabajos(route) {
               label="ID Orden"
               type="number"
               sx={{ display: "block", margin: ".5rem 0" }}
-              value={idOrden}
+              value={id_orden}
               onChange={(event) => setIdOrden(event.target.value)}
               InputLabelProps={{ style: { color: "inherit" } }}
               InputProps={{ style: { color: "inherit" } }}
@@ -737,7 +737,7 @@ export default function Formulario_Trabajos(route) {
               label="Nombre del Material"
               select
               sx={{ display: "block", margin: ".5rem 0" }}
-              value={nombreM}
+              value={nombre}
               onChange={(event) => setNombreM(event.target.value)}
               InputLabelProps={{ style: { color: "inherit" } }}
               InputProps={{ style: { color: "inherit" } }}
@@ -784,7 +784,7 @@ export default function Formulario_Trabajos(route) {
               variant="outlined"
               label="Descripción"
               sx={{ display: "block", margin: ".5rem 0" }}
-              value={descripcionM}
+              value={descripcion}
               onChange={(event) => setDescripcionM(event.target.value)}
               InputLabelProps={{ style: { color: "inherit" } }}
               InputProps={{ style: { color: "inherit" } }}
@@ -794,7 +794,7 @@ export default function Formulario_Trabajos(route) {
               label="Medida Largo"
               type="number"
               sx={{ display: "block", margin: ".5rem 0" }}
-              value={medidaLargo}
+              value={medida_largo}
               onChange={(event) => setMedidaLargo(event.target.value)}
               InputLabelProps={{ style: { color: "inherit" } }}
               InputProps={{ style: { color: "inherit" } }}
@@ -805,7 +805,7 @@ export default function Formulario_Trabajos(route) {
               label="Medida Ancho"
               type="number"
               sx={{ display: "block", margin: ".5rem 0" }}
-              value={medidaAncho}
+              value={medida_ancho}
               onChange={(event) => setMedidaAncho(event.target.value)}
               InputLabelProps={{ style: { color: "inherit" } }}
               InputProps={{ style: { color: "inherit" } }}
@@ -815,7 +815,7 @@ export default function Formulario_Trabajos(route) {
               label="Precio Largo"
               type="number"
               sx={{ display: "block", margin: ".5rem 0" }}
-              value={precioLargo}
+              value={precio_largo}
               onChange={(event) => setPrecioLargo(event.target.value)}
               InputLabelProps={{ style: { color: "inherit" } }}
               InputProps={{ style: { color: "inherit" } }}
@@ -825,7 +825,7 @@ export default function Formulario_Trabajos(route) {
               label="Precio M2"
               type="number"
               sx={{ display: "block", margin: ".5rem 0" }}
-              value={precioM2}
+              value={precio_m2}
               onChange={(event) => setPrecioM2(event.target.value)}
               InputLabelProps={{ style: { color: "inherit" } }}
               InputProps={{ style: { color: "inherit" } }}
@@ -835,7 +835,7 @@ export default function Formulario_Trabajos(route) {
               label="Precio Total"
               type="number"
               sx={{ display: "block", margin: ".5rem 0" }}
-              value = {precioTotal}
+              value = {precio_total}
               onChange={(event) => setPrecioTotal(event.target.value)}
               InputLabelProps={{ style: { color: "inherit" } }}
               InputProps={{ style: { color: "inherit" } }}

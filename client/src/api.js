@@ -108,7 +108,6 @@ export const saveMaterialTrabajosRealizados = async (nuevomaterial) => {
     headers: { Accept: "application/json", "Content-Type": "application/json" },
     body: JSON.stringify(nuevomaterial),
   });
-  console.log(nuevomaterial);
   return await res.json();
 };
 

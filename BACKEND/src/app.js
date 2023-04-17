@@ -10,7 +10,7 @@ const specs = swaggerJSDoc(options);
 
 import MaterialesRoutes from './routes/materiales';
 import OrdenesRoutes from './routes/ordenes';
-import MaterialesOrdenesRoutes from './routes/materialesOrdenes'
+import MaterialesOrdenesRoutes from './routes/materialesOrdenes';
 
 
 const app = express();

@@ -3,21 +3,21 @@
 GET {{api}}
 
 ###
-GET {{api}}/1
-
-###
 POST {{api}}
 Content-Type: application/json
 
 {  
-"id_orden": "100",
-"nombre":"Acrilico",
-"espesor":"5",
-"color": "Transparente", 
-"descripcion":"Acrilico color tranparente", 
-"medida_largo":"2", 
-"medida_ancho":"3", 
-"precio_largo":"32", 
-"precio_m2":"25", 
-"precio_total":"25",
+"id_orden"    : "110",
+"nombre"      : "Acrilico",
+"espesor"     : "5",
+"color"       : "Transparente", 
+"descripcion" : "Acrilico color tranparente", 
+"medida_largo": "2", 
+"medida_ancho": "3", 
+"precio_largo": "32", 
+"precio_m2"   : "25", 
+"precio_total": "25"
 }
+
+###
+GET {{api}}/1

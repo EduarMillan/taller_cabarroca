@@ -6,11 +6,6 @@ import {
   getOrdenes,
   saveOrdenes,
   updateOrden,
-  get_Materiales_de_Ordenes,
-  deleteMaterialOrdenes,
-  updateMaterialOrdenes,
-  getMaterialOrdenes,
-saveMaterialesTrabajos,
 } from "../controllers/ordenes";
 
 
@@ -23,14 +18,6 @@ const router = Router();
  *    summary: Muestra todos los materiales existentes en la base de datos
  */
 router.get("/trabajosrealizados", getOrdenes);
-
-/**
- * @swagger
- * /materiales:
- *  get:
- *    summary: Muestra todos los materiales existentes en la base de datos
- */
-router.get("/materialestrabajosrealizados", get_Materiales_de_Ordenes);
 
 /**
  * @swagger
@@ -50,7 +37,7 @@ router.get("/trabajosrealizados/:id", getOrden);
 
 /**
  * @swagger
- * /materiales:
+ * /trabajosrealizados:
  *  post:
  *    summary: salva los materiales introducidos en la base de datos
  */

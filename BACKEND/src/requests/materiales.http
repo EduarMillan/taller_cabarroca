@@ -14,7 +14,7 @@ Content-Type: application/json
 
 {
 "nombre":"Bicapakkkk",
-"descripcion":"Bicapa de 1mm de espesor de color oro",
+"descripcion":"Bicapa de 1mm",
 "espesor":"1",
 "longitud_ancho":"0.61",
 "longitud_largo":"1.20",
