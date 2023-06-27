@@ -29,7 +29,7 @@ import Formulario_Trabajos from './Formulario_Trabajos';
 import Formulario_Materiales from './Formulario_Materiales';
 import Inicio from './Inicio';
 
-const drawerWidth = 240;
+const drawerWidth = 240; //cajon lateral del menu deplegable
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -151,7 +151,7 @@ function Dashboard() {
             </IconButton>
           </Tooltip>
           <Typography variant="h6" noWrap component="div" sx={{flexGrow:1}}>
-            Dashboard
+            Panel de Inicio
           </Typography>
           <IconButton onClick={()=>setDark(!dark)}>
             {dark ? <Brightness7/>: <Brightness4/>}
@@ -223,7 +223,7 @@ function Dashboard() {
           {list.map(item=>(
             <Route key={item.title} path={item.link} element= {item.component}/>
           ))}
-        </Routes>
+        </Routes> 
         
       </Box>
     </Box>

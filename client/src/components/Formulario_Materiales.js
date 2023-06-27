@@ -11,6 +11,7 @@ import React,{ useEffect, useState } from "react";
 import { saveMateriales, getMaterial, UpdateMaterial } from "../api";
 import { useNavigate, useParams } from "react-router-dom";
 
+
 export default function Formulario_Materiales(route) {
 
   const [material, setMaterial] = useState({
@@ -77,7 +78,7 @@ const loadMaterial = async(id) => {
   return (
     <Grid
       container
-      direction="column"
+      direction="column"//column
       alignItems="center"
       justifyContent="center"
     >

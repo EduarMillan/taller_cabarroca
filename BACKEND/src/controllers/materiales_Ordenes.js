@@ -33,12 +33,13 @@ export const get_Materiales_de_Ordenes = async (req, res) => {
   };
   
   export const saveMaterialesTrabajos = async (req, res) => {
+    const [rs] = await (await connect2()).query("SELECT MAX(id) AS id FROM trabajosrealizados");
       await (
         await connect2()        
       ).query(
         "INSERT INTO materialestrabajosrealizados (id_orden, nombre, espesor, color, descripcion, medida_largo, medida_ancho, precio_largo, precio_m2, precio_total) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?)",
         [
-          req.body.id_orden,
+          rs[0].id ,
           req.body.nombre,
           req.body.espesor,
           req.body.color,
