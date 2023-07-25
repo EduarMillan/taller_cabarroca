@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  deleteMaterialOrdenes,
   get_Materiales_de_Ordenes,
   saveMaterialesTrabajos,
   getMaterialOrdenes,
@@ -30,6 +31,14 @@ router.get("/materialestrabajosrealizados", get_Materiales_de_Ordenes);
  *    summary: Muestra un material especificado existente en la base de datos mediante un id, en caso de no existeir devuelve un mensaje
  */
 router.get("/materialestrabajosrealizados/:id", getMaterialOrdenes);
+
+/**
+ * @swagger
+ * /materiales_Ordenes/:
+ *  delete:
+ *    summary: Elimina un materiales existente en la base de datos mediante un id especificado
+ */
+router.delete("/materialestrabajosrealizados/:id", deleteMaterialOrdenes);
 
 
 

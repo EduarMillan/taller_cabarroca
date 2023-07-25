@@ -7,7 +7,7 @@ POST {{api}}
 Content-Type: application/json
 
 {  
-"id_orden"    : "110",
+"id_orden"    : "1",
 "nombre"      : "Acrilico",
 "espesor"     : "5",
 "color"       : "Transparente", 
@@ -20,4 +20,7 @@ Content-Type: application/json
 }
 
 ###
-GET {{api}}/1
+GET {{api}}/5
+
+###
+DELETE {{api}}/5

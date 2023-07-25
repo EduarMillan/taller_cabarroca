@@ -1,5 +1,3 @@
-//este componente muestra la tabla de materiales de las ordenes
-
 import MUIDataTable from "mui-datatables";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AssignmentIcon from "@mui/icons-material/Assignment";

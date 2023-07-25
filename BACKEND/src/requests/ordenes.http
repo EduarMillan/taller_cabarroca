@@ -3,7 +3,7 @@
 GET {{api}}
 
 ###
-GET {{api}}/1
+GET {{api}}/2
 
 ###
 GET {{api}}/count
@@ -40,7 +40,7 @@ Content-Type: application/json
 }
 
 ###
-DELETE {{api}}/2
+DELETE {{api}}/3
 
 ###
 PUT {{api}}/7
