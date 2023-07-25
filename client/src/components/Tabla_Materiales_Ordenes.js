@@ -1,39 +1,31 @@
-//este componente muestra la tabla de materiales de las ordenes
-
 import MUIDataTable from "mui-datatables";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AssignmentIcon from "@mui/icons-material/Assignment";
-import React, { useEffect, useState } from "react";
-import {
-  getMaterialesTrabajosRealizados,
-  EliminarMaterialTrabajosRealizados,
-} from "../api";
-import { useNavigate } from "react-router-dom";
 import { IconButton } from "@mui/material";
+import {
+    EliminarMaterial,
+    getMaterialesTrabajosRealizados,
+  } from "../api";
+import { useNavigate } from "react-router-dom";
 
-export default function Lista_Materiales_Ordenes() {
-  const [materialesOrdenes, setMaterialesOrdenes] = useState([]);
 
-  const navigate = useNavigate();
+export function Tabla_Materiales_Ordenes( {materialesOrdenes}) {
 
-  const loadMaterialesOrdenes = async () => {
-    const datos = await getMaterialesTrabajosRealizados();
-    //const datos = await getMate
-    setMaterialesOrdenes(datos);
-  };
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    loadMaterialesOrdenes();
-  }, []);
+    //const [materialesOrdenes, setMaterialesOrdenes] = useState([]);
 
-  const EjecutaEliminar = async (id) => {
-    await EliminarMaterialTrabajosRealizados(id);
-    await loadMaterialesOrdenes();
-  };
+    //const loadMaterialesOrdenes = async () => {
+    //    const datos = await getMaterialesTrabajosRealizados();
+    //    setMaterialesOrdenes(datos);
 
-  //------------------------------------------------------------
+    const EjecutaEliminar = async (id) => {
+        await EliminarMaterial(id);
+        //await loadMaterialesOrdenes();
+      };
+//-------------------------
 
-  const columns = [
+const columns = [
     {
       name: "id_orden",
       label: "ID",
@@ -150,8 +142,7 @@ export default function Lista_Materiales_Ordenes() {
       },
     },
   };
-
-  //------------------------------------------------------------
+//-------------------------
   return (
     <>
       <MUIDataTable
@@ -161,5 +152,5 @@ export default function Lista_Materiales_Ordenes() {
         options={options}
       />
     </>
-  );
+  )
 }

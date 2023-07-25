@@ -10,7 +10,9 @@ import { IconButton } from "@mui/material";
 export default function Lista_Materiales() {
  
   const [materiales, setMateriales] = useState([]);
+
   const navigate = useNavigate();
+  
   const loadMateriales = async () => {
     const datos = await getMateriales();
     setMateriales(datos);
