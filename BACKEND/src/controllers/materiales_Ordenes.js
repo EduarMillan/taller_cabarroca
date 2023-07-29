@@ -17,7 +17,7 @@ export const get_Materiales_de_Ordenes = async (req, res) => {
   export const updateMaterialOrdenes = async (req, res) => {
     await (
       await connect2()
-    ).query("UPDATE materialestrabajosrealizados SET ? WHERE id_orden=?", [req.body, req.params.id]);
+    ).query("UPDATE materialestrabajosrealizados SET ? WHERE id=?", [req.body, req.params.id]);
     res.sendStatus(204);
   };
   
@@ -33,7 +33,7 @@ export const get_Materiales_de_Ordenes = async (req, res) => {
   };
   
   export const saveMaterialesTrabajos = async (req, res) => {
-    const [rs] = await (await connect2()).query("SELECT MAX(id) AS id FROM trabajosrealizados");
+    const [rs] = await (await connect2()).query("SELECT MAX(id) AS id FROM trabajos_realizados");
       await (
         await connect2()        
       ).query(
@@ -49,6 +49,7 @@ export const get_Materiales_de_Ordenes = async (req, res) => {
           req.body.precio_largo,
           req.body.precio_m2,
           req.body.precio_total,
+
         ]
       );      
   };

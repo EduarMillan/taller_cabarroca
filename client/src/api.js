@@ -1,5 +1,5 @@
 const API = "http://localhost:3000/materiales";
-const API2 = "http://localhost:3000/trabajosrealizados";
+const API2 = "http://localhost:3000/trabajos_realizados";
 const API3 = "http://localhost:3000/materialestrabajosrealizados";
 
 

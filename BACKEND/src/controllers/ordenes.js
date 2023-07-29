@@ -3,14 +3,14 @@ import { connect2 } from "../database";
 export const getOrdenes = async (req, res) => {
   const [row] = await (
     await connect2()
-  ).query("SELECT * FROM trabajosrealizados");
+  ).query("SELECT * FROM trabajos_realizados");
   res.json(row);
 };
 
 export const getOrden = async (req, res) => {
   const [row] = await (
     await connect2()
-  ).query("SELECT * FROM trabajosrealizados WHERE id = ?", [req.params.id]);
+  ).query("SELECT * FROM trabajos_realizados WHERE id = ?", [req.params.id]);
   if (row.length == 0) {
     res.json("Orden no encontrada");
   } else {
@@ -21,14 +21,14 @@ export const getOrden = async (req, res) => {
 export const getContadorOrdenes = async (req, res) => {
   const [row] = await (
     await connect2()
-  ).query("SELECT COUNT(*) FROM trabajosrealizados");
+  ).query("SELECT COUNT(*) FROM trabajos_realizados");
   res.json(row[0]["COUNT(*)"]);
 };
 
 export const saveOrdenes = async (req, res) => {
   const [rs] = await (
     await connect2()
-  ).query("SELECT MAX(id) AS id FROM trabajosrealizados"); //uso esta consulta para darle un id mas tarde a los materiales usados en la orden a insertar
+  ).query("SELECT MAX(id) AS id FROM trabajos_realizados"); //uso esta consulta para darle un id mas tarde a los materiales usados en la orden a insertar
 
   var nombre_material = req.body.nombre_material; //capturo estos 3 parametros en estas variables para luego buscar en la base de datos de los materiales su promedio e introducir en la tabla de materiales de la orden los datos actualizados.
   var espesor_material = req.body.espesor;
@@ -111,7 +111,7 @@ export const saveOrdenes = async (req, res) => {
   await (
     await connect2()
   ).query(
-    "INSERT INTO trabajosrealizados (id,nombre, descripcion, pago_efectivo, precio, fecha, otros_gastos_descripcion, costo_otros_gastos, impuesto_representacion, impuesto_onat, impuesto_equipos, costo_total, utilidad, facturado) VALUES (?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?)",
+    "INSERT INTO trabajos_realizados (id,nombre, descripcion, pago_efectivo, precio, fecha, otros_gastos_descripcion, costo_otros_gastos, impuesto_representacion, impuesto_onat, impuesto_equipos, costo_total, utilidad, facturado) VALUES (?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?)",
     [
       rs[0].id + 1,
       req.body.nombre,
@@ -134,7 +134,7 @@ export const saveOrdenes = async (req, res) => {
 export const deleteOrden = async (req, res) => {
   await (
     await connect2()
-  ).query("DELETE FROM trabajosrealizados WHERE id =?", [req.params.id]);
+  ).query("DELETE FROM trabajos_realizados WHERE id =?", [req.params.id]);
 
   await (
     await connect2()
@@ -170,7 +170,7 @@ export const updateOrden = async (req, res) => {
   await (
     await connect2()
   ).query(
-    "UPDATE trabajosrealizados SET nombre = ?, descripcion = ?, pago_efectivo = ?, precio = ?, fecha = ?, otros_gastos_descripcion = ?, costo_otros_gastos = ?, impuesto_representacion = ?, impuesto_onat =?, impuesto_equipos = ?, costo_total = ?, utilidad=?, facturado = ?  WHERE id=?",
+    "UPDATE trabajos_realizados SET nombre = ?, descripcion = ?, pago_efectivo = ?, precio = ?, fecha = ?, otros_gastos_descripcion = ?, costo_otros_gastos = ?, impuesto_representacion = ?, impuesto_onat =?, impuesto_equipos = ?, costo_total = ?, utilidad=?, facturado = ?  WHERE id=?",
     [
       req.body.nombre,
       req.body.descripcion,
