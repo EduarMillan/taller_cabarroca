@@ -3,6 +3,10 @@
 GET {{api}}
 
 ###
+GET {{api}}/count
+
+
+###
 POST {{api}}
 Content-Type: application/json
 
@@ -20,4 +24,7 @@ Content-Type: application/json
 }
 
 ###
-GET {{api}}/1
+GET {{api}}/6
+
+###
+DELETE {{api}}/5

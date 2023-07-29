@@ -18,7 +18,6 @@ export default function Lista_Materiales_Ordenes() {
 
   const loadMaterialesOrdenes = async () => {
     const datos = await getMaterialesTrabajosRealizados();
-    //const datos = await getMate
     setMaterialesOrdenes(datos);
   };
 

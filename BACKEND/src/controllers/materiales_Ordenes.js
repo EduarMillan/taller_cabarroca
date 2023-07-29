@@ -53,3 +53,10 @@ export const get_Materiales_de_Ordenes = async (req, res) => {
       );      
   };
 
+  export const getContadorMaterialesOrdenes = async (req, res) => {
+    const [row] = await (
+      await connect2()
+    ).query("SELECT COUNT(*) FROM materialestrabajosrealizados");
+    res.json(row[0]["COUNT(*)"]);
+  };
+

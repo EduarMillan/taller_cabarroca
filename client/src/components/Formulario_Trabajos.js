@@ -1,25 +1,13 @@
 import moment from "moment";
-import DeleteIcon from "@mui/icons-material/Delete";
-import AssignmentIcon from "@mui/icons-material/Assignment";
 import {
-  EliminarMaterial,
-  getMaterialesTrabajosRealizados,
-  getMaterialTrabajosRealizados,
   saveMaterialTrabajosRealizados,
   UpdateMaterialTrabajosRealizados,
 } from "../api";
 import {
   Button,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
   TextField,
 } from "@material-ui/core";
 import {
-  IconButton,
   Card,
   CardContent,
   Grid,
@@ -32,7 +20,7 @@ import {
   getTrabajoRealizado,
   UpdateTrabajoRealizado,
 } from "../api";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import MenuItem from "@material-ui/core/MenuItem";
 import { makeStyles } from "@material-ui/core/styles";
 import {ColoresM, EspesoresM, currencies, currencies1, materialesRegistrados} from '../CaracteristicasMateriales/DatosMateriales'
@@ -50,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Formulario_Trabajos(route) {
   
-  const navigate = useNavigate();
   const classes = useStyles();
   const [currency, setCurrency] = React.useState("NoFacturado");
   const [currency1, setCurrency1] = React.useState("NoEfectivo");
@@ -119,7 +106,7 @@ export default function Formulario_Trabajos(route) {
         } else {
           // navigate("/dashboard/trabajosrealizados");
           saveMaterialTrabajosRealizados(newFilas[newFilas.length - 1]);
-         
+          
         }
         setLoading1(false);
       } catch (error) {
