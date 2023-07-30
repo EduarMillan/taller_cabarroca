@@ -25,7 +25,7 @@ import {Brightness7, Brightness4, Home, PlaylistAddCheck, PlaylistAdd, Dashboard
 import {Tooltip} from '@mui/material';
 import Lista_Materiales from './Lista_Materiales';
 import Lista_Trabajos_Realizados from './Lista_Trabajos_Realizados';
-import Formulario_Trabajos from './Formulario_Trabajos';
+import Componete_General_Trabajos from './Componete_General_Trabajos';
 import Formulario_Materiales from './Formulario_Materiales';
 import Inicio from './Inicio';
 
@@ -117,8 +117,8 @@ function Dashboard() {
     {title: 'Inicio', icon:<Home/>, link:'inicio', component:<Inicio/>},
     {title: 'Materiales', icon:<BlindsClosed/>, link:'materiales', component:<Lista_Materiales/>},
     {title: 'Adicionar Materiales', icon:<DashboardCustomize/>, link:'materiales/nuevo', component:<Formulario_Materiales/>},
-    {title: 'Trabajos Realizados', icon:<PlaylistAddCheck/>, link:'trabajosrealizados', component:<Lista_Trabajos_Realizados/>},
-    {title: 'Adicionar Trabajos ', icon:<PlaylistAdd/>, link:'trabajosrealizados/nuevo', component:<Formulario_Trabajos/>},
+    {title: 'Trabajos Realizados', icon:<PlaylistAddCheck/>, link:'trabajos_realizados', component:<Lista_Trabajos_Realizados/>},
+    {title: 'Adicionar Trabajos ', icon:<PlaylistAdd/>, link:'trabajos_realizados/nuevo', component:<Componete_General_Trabajos/>},
   ])
 
   const navigate = useNavigate()

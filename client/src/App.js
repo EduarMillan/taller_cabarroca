@@ -5,7 +5,7 @@ import Formulario_Materiales from "./components/Formulario_Materiales";
 import Lista_Materiales from "./components/Lista_Materiales";
 import Lista_Trabajos_Realizados from "./components/Lista_Trabajos_Realizados";
 import Navbar from "./components/Navbar";
-import Formulario_Trabajos from "./components/Formulario_Trabajos";
+import Componete_General_Trabajos from "./components/Componete_General_Trabajos";
 import Inicio from "./components/Inicio";
 import TablaDesplegable from "./components/TablaDesplegable";
 
@@ -21,8 +21,8 @@ const App = () => {
           <Route path="/tabladesplegable" element={<TablaDesplegable/>} />
           
           <Route path="/trabajos_realizados" element={<Lista_Trabajos_Realizados/>}/>
-          <Route path="/trabajos_realizados/nuevo" element={<Formulario_Trabajos />} />
-          <Route path="/trabajos_realizados/:id" element={<Formulario_Trabajos />}/>
+          <Route path="/trabajos_realizados/nuevo" element={<Componete_General_Trabajos />} />
+          <Route path="/trabajos_realizados/:id" element={<Componete_General_Trabajos />}/>
           <Route path="/materiales" element={<Lista_Materiales />} />
           <Route path="/materiales/nuevo" element={<Formulario_Materiales />} />
           <Route path="/materiales/:id" element={<Formulario_Materiales />} />

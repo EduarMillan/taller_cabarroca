@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {tareas as data} from './Lista_Tareas'
-
 function Calculator() {
 
 const [tareas, setTareas] = useState([]);

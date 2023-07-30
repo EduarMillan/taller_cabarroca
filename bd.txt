@@ -1,0 +1,28 @@
+CREATE TABLE materialestrabajosrealizados (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_orden INT,
+    nombre VARCHAR(100),
+    espesor DECIMAL(10, 2),
+    color VARCHAR(50),
+    descripcion TEXT,
+    medida_largo DECIMAL(10, 2),
+    medida_ancho DECIMAL(10, 2),
+    precio_largo DECIMAL(10, 2),
+    precio_m2 DECIMAL(10, 2),
+    precio_total DECIMAL(10, 2)
+);
+
+CREATE TABLE materiales (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100),
+	descripcion TEXT,
+    espesor DECIMAL(10, 2),
+	longitud_ancho DECIMAL(10, 2),
+	longitud_largo DECIMAL(10, 2),
+	calidad_material VARCHAR(100),
+	costo_total DECIMAL(10, 2),
+	costo_m2 DECIMAL(10, 2),
+	costo_ml DECIMAL(10, 2),
+	cantidad INT,
+	color VARCHAR(50)
+); 

@@ -92,6 +92,7 @@ export default function Lista_Trabajos_Realizados() {
           return (
             <>
             <IconButton aria-label="Editar"  onClick={() => {
+              
                 navigate(`/trabajos_realizados/${tableMeta.rowData[0]}`);
               }}>
             <AssignmentIcon></AssignmentIcon>

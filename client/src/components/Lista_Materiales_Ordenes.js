@@ -7,22 +7,25 @@ import React, { useEffect, useState } from "react";
 import {
   getMaterialesTrabajosRealizados,
   EliminarMaterialTrabajosRealizados,
+  getMaterialTrabajosRealizados,
 } from "../api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { IconButton } from "@mui/material";
+
 
 export default function Lista_Materiales_Ordenes() {
   const [materialesOrdenes, setMaterialesOrdenes] = useState([]);
 
   const navigate = useNavigate();
+  const params = useParams();
 
-  const loadMaterialesOrdenes = async () => {
-    const datos = await getMaterialesTrabajosRealizados();
+  const loadMaterialesOrdenes = async (id) => {
+    const datos = await getMaterialTrabajosRealizados(id);
     setMaterialesOrdenes(datos);
   };
 
   useEffect(() => {
-    loadMaterialesOrdenes();
+    loadMaterialesOrdenes(params.id);
   }, []);
 
   const EjecutaEliminar = async (id) => {
