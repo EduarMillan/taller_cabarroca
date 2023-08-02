@@ -34,7 +34,7 @@ export default function Formulario_Materiales_Ordenes() {
   const [EspesoresM1, setEspesoresM1] = React.useState("");
   const [Colores1, setColores1] = React.useState("");
 
-  const params = useParams();
+  const params = useParams(); //se usa este hook para acceer a los datos del id del material pasado por parametro y asi poder hacer la consulta a la BD
 
   //--------------------materiales trabajos realizados----------------------------------------
   const [id_orden, setIdOrden] = useState("");
@@ -49,7 +49,7 @@ export default function Formulario_Materiales_Ordenes() {
   const [precio_total, setPrecioTotal] = useState("");
   const [filas, setFilas] = useState([]);
 
-  const handleChangeMO = (event) => {
+ /* const handleChangeMO = (event) => {
     event.preventDefault();
     setColores1(event.target.value);
     setEspesoresM1(event.target.value);
@@ -58,7 +58,7 @@ export default function Formulario_Materiales_Ordenes() {
       ...materialesOrdenes,
       [event.target.name]: event.target.value,
     });*/
-  };
+  //};
 
   const handleSubmit = (event) => {
     if (
@@ -152,8 +152,6 @@ export default function Formulario_Materiales_Ordenes() {
 
   return (
     <Grid container direction="column" alignItems="top" justifyContent="center">
-      {/*contine todo el panel */}
-
       <div>&nbsp;</div>
       <Card
         style={{

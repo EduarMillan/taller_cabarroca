@@ -1,16 +1,14 @@
 //este componente muestra la tabla de materiales de las ordenes
-
+import { IconButton,Grid,Card } from "@mui/material";
 import MUIDataTable from "mui-datatables";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import React, { useEffect, useState } from "react";
 import {
-  getMaterialesTrabajosRealizados,
   EliminarMaterialTrabajosRealizados,
   getMaterialTrabajosRealizados,
 } from "../api";
 import { useNavigate, useParams } from "react-router-dom";
-import { IconButton } from "@mui/material";
 
 
 export default function Lista_Materiales_Ordenes() {
@@ -26,7 +24,7 @@ export default function Lista_Materiales_Ordenes() {
 
   useEffect(() => {
     loadMaterialesOrdenes(params.id);
-  }, []);
+  }, [params.id]);
 
   const EjecutaEliminar = async (id) => {
     await EliminarMaterialTrabajosRealizados(id);
@@ -155,13 +153,20 @@ export default function Lista_Materiales_Ordenes() {
 
   //------------------------------------------------------------
   return (
-    <>
+    <Grid>
+    <Card style={{
+      backgroundColor: "transparent",
+      padding: ".5rem",
+      color: "inherit",
+      marginRight: "0.5rem",
+    }}>
       <MUIDataTable
         title={"Lista de Materiales de la Orden"}
         data={materialesOrdenes}
         columns={columns}
         options={options}
       />
-    </>
+    </Card>
+    </Grid>
   );
 }

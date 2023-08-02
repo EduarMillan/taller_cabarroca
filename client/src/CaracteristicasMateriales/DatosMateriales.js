@@ -201,22 +201,22 @@ export const ColoresM = [
   
   export const currencies = [
     {
-      value: "Facturado",
+      value: "1",
       label: "Facturado",
     },
     {
-      value: "NoFacturado",
+      value: "0",
       label: "Sin Facturar",
     },
   ];
   
   export const currencies1 = [
     {
-      value: "Efectivo",
+      value: "1",
       label: "Pago en Efectivo",
     },
     {
-      value: "NoEfectivo",
+      value: "0",
       label: "Pago por Contrato",
     },
   ];

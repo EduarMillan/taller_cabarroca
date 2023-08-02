@@ -4,7 +4,8 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import React, { useEffect, useState,  } from "react";
 import { getTrabajosRealizados, EliminarTrabajoRealizado } from "../api";
 import { useNavigate } from "react-router-dom";
-import { IconButton } from "@mui/material";
+import { IconButton} from "@mui/material";
+//import { Card } from "@material-ui/core";
 
 export default function Lista_Trabajos_Realizados() {
   

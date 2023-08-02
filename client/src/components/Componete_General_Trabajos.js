@@ -41,7 +41,7 @@ export default function Componete_General_Trabajos() {
           alignItems="top"
           justifyContent="center"
         >
-          <Formulario_Trabajo_Realizado />
+          <Formulario_Trabajo_Realizado /> 
         </Grid>
       )}
     </>
