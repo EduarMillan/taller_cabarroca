@@ -28,14 +28,14 @@ export default function Lista_Materiales_Ordenes() {
 
   const EjecutaEliminar = async (id) => {
     await EliminarMaterialTrabajosRealizados(id);
-    await loadMaterialesOrdenes();
+    await loadMaterialesOrdenes(params.id);
   };
 
   //------------------------------------------------------------
 
   const columns = [
     {
-      name: "id_orden",
+      name: "id",
       label: "ID",
     },
     {

@@ -37,7 +37,7 @@ export default function Formulario_Materiales_Ordenes() {
   const params = useParams(); //se usa este hook para acceer a los datos del id del material pasado por parametro y asi poder hacer la consulta a la BD
 
   //--------------------materiales trabajos realizados----------------------------------------
-  const [id_orden, setIdOrden] = useState("");
+  const [id_orden, setIdOrden] = useState(params.id);
   const [nombre, setNombreM] = useState("");
   const [espesor, setEspesor] = useState("");
   const [color, setColor] = useState("");
@@ -62,6 +62,7 @@ export default function Formulario_Materiales_Ordenes() {
 
   const handleSubmit = (event) => {
     if (
+      id_orden &&
       nombre &&
       espesor &&
       color &&
@@ -75,6 +76,7 @@ export default function Formulario_Materiales_Ordenes() {
       const newFilas = [
         ...filas,
         {
+          id_orden,
           nombre,
           espesor,
           color,
@@ -93,7 +95,7 @@ export default function Formulario_Materiales_Ordenes() {
           //navigate("/dashboard/trabajosrealizados");
           UpdateMaterialTrabajosRealizados(id_orden, newFilas); //revisar esta logica del id
         } else {
-          // navigate("/dashboard/trabajosrealizados");
+          //navigate("/dashboard/trabajosrealizados");
           saveMaterialTrabajosRealizados(newFilas[newFilas.length - 1]);
         }
       } catch (error) {

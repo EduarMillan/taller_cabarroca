@@ -11,7 +11,7 @@ POST {{api}}
 Content-Type: application/json
 
 {  
-"id_orden"    : "110",
+"id_orden"    : "1",
 "nombre"      : "Acrilico",
 "espesor"     : "5",
 "color"       : "Transparente", 

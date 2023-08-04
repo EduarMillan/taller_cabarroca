@@ -10,7 +10,7 @@ export const get_Materiales_de_Ordenes = async (req, res) => {
   export const deleteMaterialOrdenes = async (req, res) => {
     await (
       await connect2()
-    ).query("DELETE FROM materialestrabajosrealizados WHERE id_orden =?", [req.params.id]);
+    ).query("DELETE FROM materialestrabajosrealizados WHERE id =?", [req.params.id]);
     res.sendStatus(204);
   };
   
@@ -33,13 +33,12 @@ export const get_Materiales_de_Ordenes = async (req, res) => {
   };
   
   export const saveMaterialesTrabajos = async (req, res) => {
-    const [rs] = await (await connect2()).query("SELECT MAX(id) AS id FROM trabajos_realizados");
       await (
         await connect2()        
       ).query(
         "INSERT INTO materialestrabajosrealizados (id_orden, nombre, espesor, color, descripcion, medida_largo, medida_ancho, precio_largo, precio_m2, precio_total) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?)",
         [
-          rs[0].id ,
+          req.body.id_orden,
           req.body.nombre,
           req.body.espesor,
           req.body.color,
@@ -49,7 +48,6 @@ export const get_Materiales_de_Ordenes = async (req, res) => {
           req.body.precio_largo,
           req.body.precio_m2,
           req.body.precio_total,
-
         ]
       );      
   };
