@@ -2,6 +2,7 @@
 import {
   saveMaterialTrabajosRealizados,
   UpdateMaterialTrabajosRealizados,
+  getMaterialTrabajosRealizados,
 } from "../api";
 import { Button, TextField } from "@material-ui/core";
 import {
@@ -28,129 +29,67 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Formulario_Materiales_Ordenes() {
-  const classes = useStyles();
-  const [editing, setEditing] = useState(false);
-  const [EspesoresM1, setEspesoresM1] = React.useState("");
-  const [Colores1, setColores1] = React.useState("");
+export default function Formulario_Materiales_Ordenes(route) {
 
-  const params = useParams(); //se usa este hook para acceer a los datos del id del material pasado por parametro y asi poder hacer la consulta a la BD
+  const classes = useStyles();
+  //const [EspesoresM1, setEspesoresM1] = React.useState("");
+  //const [Colores1, setColores1] = React.useState("");
+  const params = useParams(); 
+
+  //---------------------------trabajando new-------------------------------------------------
+  const [materialOrden, setMaterialOrden] = useState({
+    nombre: "",
+    espesor: "",
+    color: "",
+    descripcion: "",
+    medida_largo: "",
+    medida_ancho: "",
+    precio_largo: "",
+    precio_m2: "",
+    precio_total: ""
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [editing, setEditing] = useState(false);
 
   //--------------------materiales trabajos realizados----------------------------------------
   const [id_orden, setIdOrden] = useState(params.id);
-  const [nombre, setNombreM] = useState("");
-  const [espesor, setEspesor] = useState("");
-  const [color, setColor] = useState("");
-  const [descripcion, setDescripcionM] = useState("");
-  const [medida_largo, setMedidaLargo] = useState("");
-  const [medida_ancho, setMedidaAncho] = useState("");
-  const [precio_largo, setPrecioLargo] = useState("");
-  const [precio_m2, setPrecioM2] = useState("");
-  const [precio_total, setPrecioTotal] = useState("");
-  const [filas, setFilas] = useState([]);
+ //-------------------------------------------------------------------------------------------
 
- /* const handleChangeMO = (event) => {
-    event.preventDefault();
-    setColores1(event.target.value);
-    setEspesoresM1(event.target.value);
-    setNombreM(event.target.value);
-    /*setmaterialesOrdenes({
-      ...materialesOrdenes,
-      [event.target.name]: event.target.value,
-    });*/
-  //};
+  const handledSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
 
-  const handleSubmit = (event) => {
-    if (
-      id_orden &&
-      nombre &&
-      espesor &&
-      color &&
-      descripcion &&
-      medida_largo &&
-      medida_ancho &&
-      precio_largo &&
-      precio_m2 &&
-      precio_total
-    ) {
-      const newFilas = [
-        ...filas,
-        {
-          id_orden,
-          nombre,
-          espesor,
-          color,
-          descripcion,
-          medida_largo,
-          medida_ancho,
-          precio_largo,
-          precio_m2,
-          precio_total,
-        },
-      ];
-
-      setFilas(newFilas);
       try {
         if (editing) {
           //navigate("/dashboard/trabajosrealizados");
-          UpdateMaterialTrabajosRealizados(id_orden, newFilas); //revisar esta logica del id
+          UpdateMaterialTrabajosRealizados(id_orden, materialOrden); //revisar esta logica del id
         } else {
-          //navigate("/dashboard/trabajosrealizados");
-          saveMaterialTrabajosRealizados(newFilas[newFilas.length - 1]);
+          saveMaterialTrabajosRealizados(materialOrden);
         }
+        setLoading(false);
+
       } catch (error) {
         console.error(error);
       }
+    };
+
+    const handleChange = (e) => {
+      setMaterialOrden({ ...materialOrden, [e.target.name]: e.target.value });
+    };
+
+    
+const loadMaterial = async(id) => {
+  const data = await getMaterialTrabajosRealizados(id);
+   setMaterialOrden(...data);}
+  
+  useEffect(() =>{
+    if(params.id){
+      setEditing(true);
+      loadMaterial(params.id);
     }
+  },[params.id])
 
-    event.preventDefault();
-    setFilas([
-      ...filas,
-      {
-        id_orden,
-        nombre,
-        espesor,
-        color,
-        descripcion,
-        medida_largo,
-        medida_ancho,
-        precio_largo,
-        precio_m2,
-        precio_total,
-      },
-    ]);
-    setIdOrden("");
-    setNombreM("");
-    setEspesor("");
-    setColor("");
-    setDescripcionM("");
-    setMedidaLargo("");
-    setMedidaAncho("");
-    setPrecioLargo("");
-    setPrecioM2("");
-    setPrecioTotal("");
-  };
-
-  const handleDelete = (index) => {
-    const updatedFilas = [...filas];
-    updatedFilas.splice(index, 1);
-    setFilas(updatedFilas);
-  };
-
-  const handleEdit = (index) => {
-    const fila = filas[index];
-    setIdOrden(fila.idOrden);
-    setNombreM(fila.nombre);
-    setEspesor(fila.espesor);
-    setColor(fila.color);
-    setDescripcionM(fila.descripcion);
-    setMedidaLargo(fila.medidaLargo);
-    setMedidaAncho(fila.medidaAncho);
-    setPrecioLargo(fila.precioLargo);
-    setPrecioM2(fila.precioM2);
-    setPrecioTotal(fila.precioTotal);
-    handleDelete(index);
-  };
 
   return (
     <Grid container direction="column" alignItems="top" justifyContent="center">
@@ -173,14 +112,14 @@ export default function Formulario_Materiales_Ordenes() {
           Materiales Asociados
         </Typography>
 
-        <form className={classes.root} onSubmit={handleSubmit}>
+        <form className={classes.root} onSubmit={handledSubmit}>
           <TextField
             variant="outlined"
             label="Nombre del Material"
             select
             sx={{ display: "block", margin: ".5rem 0" }}
-            value={nombre}
-            onChange={(event) => setNombreM(event.target.value)}
+            value={materialOrden.nombre}
+            onChange={handleChange}
             InputLabelProps={{ style: { color: "inherit" } }}
             InputProps={{ style: { color: "inherit" } }}
           >
@@ -195,8 +134,8 @@ export default function Formulario_Materiales_Ordenes() {
             label="Espesor"
             select
             sx={{ display: "block", margin: ".5rem 0" }}
-            value={espesor}
-            onChange={(event) => setEspesor(event.target.value)}
+            value={materialOrden.espesor}
+            onChange={handleChange}
             InputLabelProps={{ style: { color: "inherit" } }}
             InputProps={{ style: { color: "inherit" } }}
           >
@@ -211,8 +150,8 @@ export default function Formulario_Materiales_Ordenes() {
             label="Color"
             select
             sx={{ display: "block", margin: ".5rem 0" }}
-            value={color}
-            onChange={(event) => setColor(event.target.value)}
+            value={materialOrden.color}
+            onChange={handleChange}
             InputLabelProps={{ style: { color: "inherit" } }}
             InputProps={{ style: { color: "inherit" } }}
           >
@@ -226,8 +165,8 @@ export default function Formulario_Materiales_Ordenes() {
             variant="outlined"
             label="Descripción"
             sx={{ display: "block", margin: ".5rem 0" }}
-            value={descripcion}
-            onChange={(event) => setDescripcionM(event.target.value)}
+            value={materialOrden.descripcion}
+            onChange={handleChange}
             InputLabelProps={{ style: { color: "inherit" } }}
             InputProps={{ style: { color: "inherit" } }}
           />
@@ -236,8 +175,8 @@ export default function Formulario_Materiales_Ordenes() {
             label="Medida Largo"
             type="number"
             sx={{ display: "block", margin: ".5rem 0" }}
-            value={medida_largo}
-            onChange={(event) => setMedidaLargo(event.target.value)}
+            value={materialOrden.medida_largo}
+            onChange={handleChange}
             InputLabelProps={{ style: { color: "inherit" } }}
             InputProps={{ style: { color: "inherit" } }}
           />
@@ -247,8 +186,8 @@ export default function Formulario_Materiales_Ordenes() {
             label="Medida Ancho"
             type="number"
             sx={{ display: "block", margin: ".5rem 0" }}
-            value={medida_ancho}
-            onChange={(event) => setMedidaAncho(event.target.value)}
+            value={materialOrden.medida_ancho}
+            onChange={handleChange}
             InputLabelProps={{ style: { color: "inherit" } }}
             InputProps={{ style: { color: "inherit" } }}
           />
@@ -257,8 +196,8 @@ export default function Formulario_Materiales_Ordenes() {
             label="Precio Largo"
             type="number"
             sx={{ display: "block", margin: ".5rem 0" }}
-            value={precio_largo}
-            onChange={(event) => setPrecioLargo(event.target.value)}
+            value={materialOrden.precio_largo}
+            onChange={handleChange}
             InputLabelProps={{ style: { color: "inherit" } }}
             InputProps={{ style: { color: "inherit" } }}
           />
@@ -267,8 +206,8 @@ export default function Formulario_Materiales_Ordenes() {
             label="Precio M2"
             type="number"
             sx={{ display: "block", margin: ".5rem 0" }}
-            value={precio_m2}
-            onChange={(event) => setPrecioM2(event.target.value)}
+            value={materialOrden.precio_m2}
+            onChange={handleChange}
             InputLabelProps={{ style: { color: "inherit" } }}
             InputProps={{ style: { color: "inherit" } }}
           />
@@ -277,8 +216,8 @@ export default function Formulario_Materiales_Ordenes() {
             label="Precio Total"
             type="number"
             sx={{ display: "block", margin: ".5rem 0" }}
-            value={precio_total}
-            onChange={(event) => setPrecioTotal(event.target.value)}
+            value={materialOrden.precio_total}
+            onChange={handleChange}
             InputLabelProps={{ style: { color: "inherit" } }}
             InputProps={{ style: { color: "inherit" } }}
           />

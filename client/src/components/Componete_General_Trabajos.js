@@ -3,6 +3,7 @@ import { Grid } from "@mui/material";
 import Datos_Impuestos_Equipos from "./Datos_Impuestos_Equipos";
 import Lista_Materiales_Ordenes from "./Lista_Materiales_Ordenes";
 import Formulario_Materiales_Ordenes from "./Formulario_Materiales_Ordenes";
+import  Banner  from "./Banner";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -41,7 +42,8 @@ export default function Componete_General_Trabajos() {
           alignItems="top"
           justifyContent="center"
         >
-          <Formulario_Trabajo_Realizado /> 
+          <Formulario_Trabajo_Realizado />
+          
         </Grid>
       )}
     </>

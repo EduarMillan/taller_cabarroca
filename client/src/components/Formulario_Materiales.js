@@ -39,7 +39,6 @@ export default function Formulario_Materiales(route) {
     setLoading(true);
 
     try {
-      console.log(editing);
       if (editing)  {
         navigate("/dashboard/materiales");
         await UpdateMaterial(params.id, material);

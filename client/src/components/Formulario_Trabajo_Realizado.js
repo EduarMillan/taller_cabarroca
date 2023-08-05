@@ -32,8 +32,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Formulario_Trabajo_Realizado(route) {
   const classes = useStyles();
-  const [currency, setCurrency] = React.useState("NoFacturado");
-  const [currency1, setCurrency1] = React.useState("NoEfectivo");
+  const [currency, setCurrency] = useState(null);
+  const [currency1, setCurrency1] = useState(null);
 
   const params = useParams();
 
@@ -80,12 +80,23 @@ export default function Formulario_Trabajo_Realizado(route) {
   };
 
   const handleChange1 = (event) => {
-    setCurrency(event.target.value);
+    if(event.target.value===0)
+    {
+      setCurrency("Sin Facturar");
+    }
+    else{
+      setCurrency("Facturado");
+    }
     setTrabajo({ ...trabajo, [event.target.name]: event.target.value });
   };
 
   const handleChange2 = (event) => {
-    setCurrency1(event.target.value);
+    if(event.target.value===0)
+    {
+      setCurrency1("Pago por Contrato");
+    }
+    else
+    setCurrency1("Pago Pago en Efectivo");
     setTrabajo({ ...trabajo, [event.target.name]: event.target.value });
   };
 
@@ -168,7 +179,7 @@ export default function Formulario_Trabajo_Realizado(route) {
                 select
                 sx={{ display: "block", margin: ".5rem 0" }}
                 name="pago_efectivo"
-                value={trabajo.pago_efectivo} //{currency1} //{trabajo.pago_efectivo}
+                value={trabajo.pago_efectivo + ""} //{currency1} //{trabajo.pago_efectivo}
                 onChange={handleChange2}
                 InputLabelProps={{ style: { color: "inherit" } }}
                 InputProps={{
@@ -278,12 +289,13 @@ export default function Formulario_Trabajo_Realizado(route) {
                 disabled={
                   !trabajo.nombre ||
                   !trabajo.descripcion ||
-                  !trabajo.pago_efectivo ||
+                  !(trabajo.pago_efectivo || trabajo.pago_efectivo === 0) ||
                   !trabajo.fecha ||
                   !trabajo.precio ||
                   !trabajo.otros_gastos_descripcion ||
                   !trabajo.costo_otros_gastos ||
-                  !trabajo.facturado
+                  !(trabajo.facturado || trabajo.facturado === 0)
+				  
                 }
               >
                 {loading2 ? (

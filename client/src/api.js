@@ -1,6 +1,6 @@
-const API = "http://localhost:3000/materiales";
-const API2 = "http://localhost:3000/trabajos_realizados";
-const API3 = "http://localhost:3000/materialestrabajosrealizados";
+const API = "http://127.0.0.1:3000/materiales";
+const API2 = "http://127.0.0.1:3000/trabajos_realizados";
+const API3 = "http://127.0.0.1:3000/materialestrabajosrealizados";
 
 
 //-----------------materiales----------------

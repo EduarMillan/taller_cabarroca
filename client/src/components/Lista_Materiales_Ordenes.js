@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import {
   EliminarMaterialTrabajosRealizados,
   getMaterialTrabajosRealizados,
+  UpdateMaterialTrabajosRealizados,
 } from "../api";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -30,6 +31,11 @@ export default function Lista_Materiales_Ordenes() {
     await EliminarMaterialTrabajosRealizados(id);
     await loadMaterialesOrdenes(params.id);
   };
+
+  const Update_MaterialOrden = async (id) => {
+    const materialOrden = await getMaterialTrabajosRealizados(id);
+    await UpdateMaterialTrabajosRealizados(id,materialOrden);
+  }
 
   //------------------------------------------------------------
 
@@ -87,8 +93,8 @@ export default function Lista_Materiales_Ordenes() {
               <IconButton
                 aria-label="Editar"
                 onClick={() => {
-                  //navigate(`/materiales/${tableMeta.rowData[0]}`);
-                  navigate(`/materiales/${tableMeta.rowData[0]}`);
+                  navigate(`/materialestrabajosrealizados/${tableMeta.rowData[0]}`);
+                 //Update_MaterialOrden(tableMeta.rowData[0]);
                 }}
               >
                 <AssignmentIcon></AssignmentIcon>
