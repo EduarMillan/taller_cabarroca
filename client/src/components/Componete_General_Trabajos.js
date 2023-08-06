@@ -3,9 +3,9 @@ import { Grid } from "@mui/material";
 import Datos_Impuestos_Equipos from "./Datos_Impuestos_Equipos";
 import Lista_Materiales_Ordenes from "./Lista_Materiales_Ordenes";
 import Formulario_Materiales_Ordenes from "./Formulario_Materiales_Ordenes";
-import  Banner  from "./Banner";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { MaterialProvider } from "./MaterialContext";
 
 export default function Componete_General_Trabajos() {
   const [editar, setEditar] = useState(false);
@@ -19,7 +19,7 @@ export default function Componete_General_Trabajos() {
   }, [params.id]);
 
   return (
-    <>
+    <MaterialProvider>
       {editar ? (
         <Grid
           container
@@ -30,8 +30,6 @@ export default function Componete_General_Trabajos() {
           <Datos_Impuestos_Equipos />
 
           <Formulario_Trabajo_Realizado />
-
-          <Formulario_Materiales_Ordenes />
 
           <Lista_Materiales_Ordenes />
         </Grid>
@@ -46,6 +44,6 @@ export default function Componete_General_Trabajos() {
           
         </Grid>
       )}
-    </>
+    </MaterialProvider>
   );
 }

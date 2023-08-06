@@ -31,6 +31,17 @@ export const get_Materiales_de_Ordenes = async (req, res) => {
       res.json(row);
     }
   };
+
+  export const getMaterialOrdenesEditing = async (req, res) => {
+    const [row] = await (
+      await connect2()
+    ).query("SELECT * FROM materialestrabajosrealizados WHERE id = ?", [req.params.id]);
+    if (row.length == 0) {
+      res.json("Material no encontrado");
+    } else {
+      res.json(row);
+    }
+  };
   
   export const saveMaterialesTrabajos = async (req, res) => {
       await (

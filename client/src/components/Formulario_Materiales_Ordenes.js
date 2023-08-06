@@ -1,15 +1,11 @@
-
+import { useMaterialContext } from "./MaterialContext";
 import {
   saveMaterialTrabajosRealizados,
   UpdateMaterialTrabajosRealizados,
   getMaterialTrabajosRealizados,
 } from "../api";
 import { Button, TextField } from "@material-ui/core";
-import {
-  Card,
-  Grid,
-  Typography
-} from "@mui/material";
+import { Card, Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -29,15 +25,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Formulario_Materiales_Ordenes(route) {
+export default function Formulario_Materiales_Ordenes({ editedMaterial }) {
+
+  const { setShouldReload } = useMaterialContext();
+
+  if (editedMaterial != null) {
+    var editedMaterial1 = editedMaterial;
+  }
 
   const classes = useStyles();
-  //const [EspesoresM1, setEspesoresM1] = React.useState("");
-  //const [Colores1, setColores1] = React.useState("");
-  const params = useParams(); 
+  const params = useParams();
 
-  //---------------------------trabajando new-------------------------------------------------
   const [materialOrden, setMaterialOrden] = useState({
+    //id:"",
+    id_orden: params.id,
     nombre: "",
     espesor: "",
     color: "",
@@ -46,50 +47,58 @@ export default function Formulario_Materiales_Ordenes(route) {
     medida_ancho: "",
     precio_largo: "",
     precio_m2: "",
-    precio_total: ""
+    precio_total: "",
   });
 
   const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState(false);
 
-  //--------------------materiales trabajos realizados----------------------------------------
-  const [id_orden, setIdOrden] = useState(params.id);
- //-------------------------------------------------------------------------------------------
-
   const handledSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-      try {
-        if (editing) {
-          //navigate("/dashboard/trabajosrealizados");
-          UpdateMaterialTrabajosRealizados(id_orden, materialOrden); //revisar esta logica del id
-        } else {
-          saveMaterialTrabajosRealizados(materialOrden);
-        }
-        setLoading(false);
-
-      } catch (error) {
-        console.error(error);
+    try {
+      if (editing) {
+        UpdateMaterialTrabajosRealizados(materialOrden.id, materialOrden); //revisar esta logica del id
+      } else {
+        saveMaterialTrabajosRealizados(materialOrden);
       }
-    };
-
-    const handleChange = (e) => {
-      setMaterialOrden({ ...materialOrden, [e.target.name]: e.target.value });
-    };
-
-    
-const loadMaterial = async(id) => {
-  const data = await getMaterialTrabajosRealizados(id);
-   setMaterialOrden(...data);}
-  
-  useEffect(() =>{
-    if(params.id){
-      setEditing(true);
-      loadMaterial(params.id);
+      setShouldReload(true);
+      setLoading(false);
+      setEditing(false);
+    } catch (error) {
+      console.error(error);
     }
-  },[params.id])
+    setMaterialOrden({
+      //limpio los campos una vez salvados los valores
+      ...materialOrden,
+      nombre: "",
+      espesor: "",
+      color: "",
+      descripcion: "",
+      medida_largo: "",
+      medida_ancho: "",
+      precio_largo: "",
+      precio_m2: "",
+      precio_total: "",
+    });
+  };
 
+  const handleChange = (e) => {
+    setMaterialOrden({ ...materialOrden, [e.target.name]: e.target.value });
+  };
+
+  /*const loadMaterialOrdenes = async(id) => {
+  const data = await getMaterialTrabajosRealizados(id);
+   setMaterialOrden(...data);}*/
+
+  useEffect(() => {
+    if (editedMaterial1) {
+      setEditing(true);
+      setMaterialOrden(editedMaterial1);
+      //loadMaterialOrdenes(params.id);
+    }
+  }, [params.id, editedMaterial]);
 
   return (
     <Grid container direction="column" alignItems="top" justifyContent="center">
@@ -116,6 +125,7 @@ const loadMaterial = async(id) => {
           <TextField
             variant="outlined"
             label="Nombre del Material"
+            name="nombre"
             select
             sx={{ display: "block", margin: ".5rem 0" }}
             value={materialOrden.nombre}
@@ -131,7 +141,8 @@ const loadMaterial = async(id) => {
           </TextField>
           <TextField
             variant="outlined"
-            label="Espesor"
+            label="Espesor (mm)"
+            name="espesor"
             select
             sx={{ display: "block", margin: ".5rem 0" }}
             value={materialOrden.espesor}
@@ -148,6 +159,7 @@ const loadMaterial = async(id) => {
           <TextField
             variant="outlined"
             label="Color"
+            name="color"
             select
             sx={{ display: "block", margin: ".5rem 0" }}
             value={materialOrden.color}
@@ -164,6 +176,7 @@ const loadMaterial = async(id) => {
           <TextField
             variant="outlined"
             label="Descripción"
+            name="descripcion"
             sx={{ display: "block", margin: ".5rem 0" }}
             value={materialOrden.descripcion}
             onChange={handleChange}
@@ -173,6 +186,7 @@ const loadMaterial = async(id) => {
           <TextField
             variant="outlined"
             label="Medida Largo"
+            name="medida_largo"
             type="number"
             sx={{ display: "block", margin: ".5rem 0" }}
             value={materialOrden.medida_largo}
@@ -184,6 +198,7 @@ const loadMaterial = async(id) => {
           <TextField
             variant="outlined"
             label="Medida Ancho"
+            name="medida_ancho"
             type="number"
             sx={{ display: "block", margin: ".5rem 0" }}
             value={materialOrden.medida_ancho}
@@ -194,6 +209,7 @@ const loadMaterial = async(id) => {
           <TextField
             variant="outlined"
             label="Precio Largo"
+            name="precio_largo"
             type="number"
             sx={{ display: "block", margin: ".5rem 0" }}
             value={materialOrden.precio_largo}
@@ -204,6 +220,7 @@ const loadMaterial = async(id) => {
           <TextField
             variant="outlined"
             label="Precio M2"
+            name="precio_m2"
             type="number"
             sx={{ display: "block", margin: ".5rem 0" }}
             value={materialOrden.precio_m2}
@@ -214,6 +231,7 @@ const loadMaterial = async(id) => {
           <TextField
             variant="outlined"
             label="Precio Total"
+            name="precio_total"
             type="number"
             sx={{ display: "block", margin: ".5rem 0" }}
             value={materialOrden.precio_total}
@@ -228,7 +246,7 @@ const loadMaterial = async(id) => {
             color="primary"
             style={{ padding: "12px", margin: "12px" }}
           >
-            Agregar
+            Salvar
           </Button>
         </form>
       </Card>

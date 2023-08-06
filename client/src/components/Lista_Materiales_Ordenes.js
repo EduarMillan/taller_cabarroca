@@ -1,5 +1,5 @@
 //este componente muestra la tabla de materiales de las ordenes
-import { IconButton,Grid,Card } from "@mui/material";
+import { IconButton, Grid, Card } from "@mui/material";
 import MUIDataTable from "mui-datatables";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AssignmentIcon from "@mui/icons-material/Assignment";
@@ -7,13 +7,17 @@ import React, { useEffect, useState } from "react";
 import {
   EliminarMaterialTrabajosRealizados,
   getMaterialTrabajosRealizados,
-  UpdateMaterialTrabajosRealizados,
+  getMaterialesTrabajosRealizados,
 } from "../api";
 import { useNavigate, useParams } from "react-router-dom";
-
+import Formulario_Materiales_Ordenes from "./Formulario_Materiales_Ordenes";
+import { useMaterialContext } from "./MaterialContext";
 
 export default function Lista_Materiales_Ordenes() {
+
+  const { shouldReload, setShouldReload } = useMaterialContext();
   const [materialesOrdenes, setMaterialesOrdenes] = useState([]);
+  const [editingMaterial, setEditingMaterial] = useState(null);
 
   const navigate = useNavigate();
   const params = useParams();
@@ -24,8 +28,12 @@ export default function Lista_Materiales_Ordenes() {
   };
 
   useEffect(() => {
-    loadMaterialesOrdenes(params.id);
-  }, [params.id]);
+    //if (shouldReload) {
+      loadMaterialesOrdenes(params.id);
+      setShouldReload(false); // Restablecer el valor después de cargar
+  //  }
+  }, [shouldReload, setShouldReload, params.id]);
+
 
   const EjecutaEliminar = async (id) => {
     await EliminarMaterialTrabajosRealizados(id);
@@ -33,11 +41,10 @@ export default function Lista_Materiales_Ordenes() {
   };
 
   const Update_MaterialOrden = async (id) => {
-    const materialOrden = await getMaterialTrabajosRealizados(id);
-    await UpdateMaterialTrabajosRealizados(id,materialOrden);
-  }
-
-  //------------------------------------------------------------
+    const materialOrden = await getMaterialesTrabajosRealizados();
+    const  materialEncontrado = materialOrden.find((material) => material.id === id);
+    setEditingMaterial(materialEncontrado);
+  };
 
   const columns = [
     {
@@ -93,8 +100,7 @@ export default function Lista_Materiales_Ordenes() {
               <IconButton
                 aria-label="Editar"
                 onClick={() => {
-                  navigate(`/materialestrabajosrealizados/${tableMeta.rowData[0]}`);
-                 //Update_MaterialOrden(tableMeta.rowData[0]);
+                  Update_MaterialOrden(tableMeta.rowData[0]);
                 }}
               >
                 <AssignmentIcon></AssignmentIcon>
@@ -160,19 +166,37 @@ export default function Lista_Materiales_Ordenes() {
   //------------------------------------------------------------
   return (
     <Grid>
-    <Card style={{
-      backgroundColor: "transparent",
-      padding: ".5rem",
-      color: "inherit",
-      marginRight: "0.5rem",
-    }}>
-      <MUIDataTable
-        title={"Lista de Materiales de la Orden"}
-        data={materialesOrdenes}
-        columns={columns}
-        options={options}
-      />
-    </Card>
+      <Formulario_Materiales_Ordenes editedMaterial={editingMaterial} />
+      
+      {materialesOrdenes === "Material no encontrado" ? (
+        <div
+          style={{
+            backgroundColor: "#202020",
+            display: "flex",
+            alignItems: "center", 
+            justifyContent: "center",
+            fontSize: "30px",
+          }}
+        >
+          No hay materiales aún
+        </div>
+      ) : (
+        <Card
+          style={{
+            backgroundColor: "transparent",
+            padding: ".5rem",
+            color: "inherit",
+            marginRight: "0.5rem",
+          }}
+        >
+          <MUIDataTable
+            title={"Lista de Materiales de la Orden"}
+            data={materialesOrdenes}
+            columns={columns}
+            options={options}
+          />
+        </Card>
+      )}
     </Grid>
   );
 }

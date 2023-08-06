@@ -5,7 +5,8 @@ import {
   getMaterialOrdenes,
   deleteMaterialOrdenes,
   updateMaterialOrdenes,
-  getContadorMaterialesOrdenes
+  getContadorMaterialesOrdenes,
+  getMaterialOrdenesEditing
 } from "../controllers/materiales_Ordenes";
 
 const router = Router();

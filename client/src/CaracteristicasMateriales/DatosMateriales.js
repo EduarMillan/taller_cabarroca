@@ -59,40 +59,40 @@ export const ColoresM = [
   
   export const EspesoresM = [
     {
-      value: "1mm",
-      label: "1mm",
+      value: "1",
+      label: "1",
     },
     {
-      value: "2mm",
-      label: "2mm",
+      value: "2",
+      label: "2",
     },
     {
-      value: "3mm",
-      label: "3mm",
+      value: "3",
+      label: "3",
     },
     {
-      value: "4mm",
-      label: "4mm",
+      value: "4",
+      label: "4",
     },
     {
-      value: "5mm",
-      label: "5mm",
+      value: "5",
+      label: "5",
     },
     {
-      value: "8mm",
-      label: "8mm",
+      value: "8",
+      label: "8",
     },
     {
-      value: "10mm",
-      label: "10mm",
+      value: "10",
+      label: "10",
     },
     {
-      value: "15mm",
-      label: "15mm",
+      value: "15",
+      label: "15",
     },
     {
-      value: "19mm",
-      label: "19mm",
+      value: "19",
+      label: "19",
     },
   ];
   
