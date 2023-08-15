@@ -16,7 +16,7 @@ export default function Inicio() {
         flexDirection: "column",
       }}
     >
-      <Paper elevation={3} sx={{ p: 3 }}>
+      <Paper elevation={3} sx={{ p: 3, }} >
         <Typography variant="h4"> Total de Clientes</Typography>
         <Box
           sx={{
@@ -76,7 +76,7 @@ export default function Inicio() {
           <Grafico_Barras />
         </Box>
       </Paper>
-      <Paper elevation={3} sx={{ p: 3 }}>
+      <Paper elevation={3} sx={{ p: 3, }}>
         <Typography variant="h4"> Trabajos por clientes</Typography>
         <Box
           sx={{

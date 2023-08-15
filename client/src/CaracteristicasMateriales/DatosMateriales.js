@@ -147,19 +147,11 @@ export const ColoresM = [
     },
     {
       value: "ViniloBlancoBrillo",
-      label: "Vinilo Blanco Brillo",
+      label: "Vinilo Brillo",
     },
     {
       value: "ViniloBlancoMate",
-      label: "Vinilo Blanco Mate",
-    },
-    {
-      value: "ViniloTransparenteBrillo",
-      label: "Vinilo Transparente Brillo",
-    },
-    {
-      value: "ViniloTransparenteMate",
-      label: "Vinilo Transparente Mate",
+      label: "Vinilo Mate",
     },
     {
       value: "VinilodeCorte",
@@ -183,11 +175,11 @@ export const ColoresM = [
     },
     {
       value: "Esmerilado",
-      label: "Esmerilado",
+      label: "Vinilo Esmerilado",
     },
     {
       value: "Microperforado",
-      label: "Microperforado",
+      label: "Vinilo Microperforado",
     },
     {
       value: "Lienzo",

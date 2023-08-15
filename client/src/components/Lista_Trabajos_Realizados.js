@@ -51,14 +51,14 @@ export default function Lista_Trabajos_Realizados() {
       name: "fecha",
       label: "Fecha",
     },
-    {
+    /*{
       name: "otros_gastos_descripcion",
       label: "Otros Gastos",
     },
     {
       name: "costo_otros_gastos",
       label: "Costo  Otros Gastos",
-    },
+    },*/
     {
       name: "impuesto_representacion",
       label: "Imp. Repres.",

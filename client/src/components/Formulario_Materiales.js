@@ -1,18 +1,34 @@
 import {
-  Card,
-  CardContent,
-  Grid,
-  TextField,
-  Typography,
   Button,
+  TextField,
+  Grid,
+  CardContent,
+  Card,
+  Typography,
   CircularProgress,
-} from "@mui/material";
-import React,{ useEffect, useState } from "react";
+} from "@material-ui/core";
+import MenuItem from "@material-ui/core/MenuItem";
+import React, { useEffect, useState } from "react";
 import { saveMateriales, getMaterial, UpdateMaterial } from "../api";
 import { useNavigate, useParams } from "react-router-dom";
+import {
+  ColoresM,
+  EspesoresM,
+  materialesRegistrados,
+} from "../CaracteristicasMateriales/DatosMateriales";
+import { makeStyles } from "@material-ui/core/styles";
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    "& .MuiTextField-root": {
+      margin: theme.spacing(1),
+      width: "30ch",
+    },
+  },
+}));
 
 export default function Formulario_Materiales(route) {
+  const classes = useStyles();
 
   const [material, setMaterial] = useState({
     nombre: "",
@@ -39,19 +55,15 @@ export default function Formulario_Materiales(route) {
     setLoading(true);
 
     try {
-      if (editing)  {
+      if (editing) {
         navigate("/dashboard/materiales");
         await UpdateMaterial(params.id, material);
-        
       } else {
         navigate("/dashboard/materiales");
         await saveMateriales(material);
-        
       }
-      
+
       setLoading(false);
-       
-      
     } catch (error) {
       console.error(error);
     }
@@ -61,67 +73,65 @@ export default function Formulario_Materiales(route) {
     setMaterial({ ...material, [e.target.name]: e.target.value });
   };
 
-const loadMaterial = async(id) => {
- const data = await getMaterial(id);
-  setMaterial(...data);
- 
-};
+  const loadMaterial = async (id) => {
+    const data = await getMaterial(id);
+    setMaterial(...data);
+  };
 
-  useEffect(() =>{
-    if(params.id){
+  useEffect(() => {
+    if (params.id) {
       setEditing(true);
       loadMaterial(params.id);
     }
-  },[params.id])
+  }, [params.id]);
 
   return (
     <Grid
       container
-      direction="column"//column
+      direction="column" //column
       alignItems="center"
       justifyContent="center"
     >
       <Grid item xs={3}>
         <Card
           sx={{ mt: 1 }}
-          style={{ backgroundColor: "transparent", padding: "1rem" , color :'inherit'}}
+          style={{
+            backgroundColor: "#202020",
+            padding: "1rem",
+            color: "inherit",
+          }}
         >
           <Typography variant="5" textAlign="center" color="inherit">
-            {editing ? "Actualizar Material": "Insertar Material"}
-            
+            {editing ? "Actualizar Material" : "Insertar Material"}
           </Typography>
           <CardContent>
-            <form onSubmit={handledSubmit}>
+            <form className={classes.root} onSubmit={handledSubmit}>
               <TextField
                 variant="filled"
                 label="Nombre"
-                sx={{ display: "block", margin: ".5rem 0"  }}
                 name="nombre"
+                select
+                sx={{ display: "block", margin: ".5rem 0" }}
                 value={material.nombre}
                 onChange={handleChange}
-                inputProps={{ style: { color: "inherit" } }}
-                InputLabelProps={{ style: { color: "inherit" } }}  
-              />
+                InputProps={{ style: { color: "inherit" } }}
+                InputLabelProps={{ style: { color: "inherit" } }}
+              >
+                {materialesRegistrados.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
 
               <TextField
                 variant="filled"
                 label="Descripcion"
                 multiline
                 rows={3}
-                sx={{ display: "block", margin: ".5rem 0"}}
+                sx={{ display: "block", margin: ".5rem 0" }}
                 name="descripcion"
                 value={material.descripcion}
-                onChange={handleChange}
-                inputProps={{ style: { color: "inherit"  } }}
-                InputLabelProps={{ style: { color: "inherit" } }}
-              />
-
-              <TextField
-                variant="filled"
-                label="Espesor (mm)"
-                sx={{ display: "block", margin: ".5rem 0" }}
-                name="espesor"
-                value={material.espesor + ''}
                 onChange={handleChange}
                 inputProps={{ style: { color: "inherit" } }}
                 InputLabelProps={{ style: { color: "inherit" } }}
@@ -129,10 +139,27 @@ const loadMaterial = async(id) => {
 
               <TextField
                 variant="filled"
+                label="Espesor (mm)"
+                name="espesor"
+                select
+                sx={{ display: "block", margin: ".5rem 0" }}
+                value={material.espesor}
+                onChange={handleChange}
+                InputLabelProps={{ style: { color: "inherit" } }}
+                InputProps={{ style: { color: "inherit" } }}
+              >
+                {EspesoresM.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+              <TextField
+                variant="filled"
                 label="Ancho (m)"
                 sx={{ display: "block", margin: ".5rem 0" }}
                 name="longitud_ancho"
-                value={material.longitud_ancho + ''}
+                value={material.longitud_ancho + ""}
                 onChange={handleChange}
                 inputProps={{ style: { color: "inherit" } }}
                 InputLabelProps={{ style: { color: "inherit" } }}
@@ -143,7 +170,7 @@ const loadMaterial = async(id) => {
                 label="Largo (m)"
                 sx={{ display: "block", margin: ".5rem 0" }}
                 name="longitud_largo"
-                value={material.longitud_largo + ''}
+                value={material.longitud_largo + ""}
                 onChange={handleChange}
                 inputProps={{ style: { color: "inherit" } }}
                 InputLabelProps={{ style: { color: "inherit" } }}
@@ -162,10 +189,10 @@ const loadMaterial = async(id) => {
 
               <TextField
                 variant="filled"
-                label="Costo Total"
+                label="Costo Total (USD)"
                 sx={{ display: "block", margin: ".5rem 0" }}
                 name="costo_total"
-                value={material.costo_total + ''}
+                value={material.costo_total + ""}
                 onChange={handleChange}
                 inputProps={{ style: { color: "inherit" } }}
                 InputLabelProps={{ style: { color: "inherit" } }}
@@ -176,7 +203,7 @@ const loadMaterial = async(id) => {
                 label="Cantidad"
                 sx={{ display: "block", margin: ".5rem 0" }}
                 name="cantidad"
-                value={material.cantidad + ''}
+                value={material.cantidad + ""}
                 onChange={handleChange}
                 inputProps={{ style: { color: "inherit" } }}
                 InputLabelProps={{ style: { color: "inherit" } }}
@@ -185,13 +212,20 @@ const loadMaterial = async(id) => {
               <TextField
                 variant="filled"
                 label="Color"
-                sx={{ display: "block", margin: ".5rem 0" }}
                 name="color"
+                select
+                sx={{ display: "block", margin: ".5rem 0" }}
                 value={material.color}
                 onChange={handleChange}
-                inputProps={{ style: { color: "inherit" } }}
                 InputLabelProps={{ style: { color: "inherit" } }}
-              />
+                InputProps={{ style: { color: "inherit" } }}
+              >
+                {ColoresM.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
               <Button
                 variant="contained"
                 color="primary"
@@ -210,9 +244,7 @@ const loadMaterial = async(id) => {
               >
                 {loading ? (
                   <CircularProgress color="inherit" size={24} />
-                 
                 ) : (
-                 
                   "Salvar"
                 )}
               </Button>

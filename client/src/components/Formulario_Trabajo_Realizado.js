@@ -91,6 +91,7 @@ export default function Formulario_Trabajo_Realizado(route) {
   };
 
   const handleChange2 = (event) => {
+    event.preventDefault();
     if(event.target.value===0)
     {
       setCurrency1("Pago por Contrato");
@@ -161,6 +162,8 @@ export default function Formulario_Trabajo_Realizado(route) {
               <TextField
                 variant="outlined"
                 label="Descripcion"
+                multiline
+                rows={1}
                 sx={{ display: "block", margin: ".5rem 0" }}
                 name="descripcion"
                 value={trabajo.descripcion}
@@ -179,7 +182,7 @@ export default function Formulario_Trabajo_Realizado(route) {
                 select
                 sx={{ display: "block", margin: ".5rem 0" }}
                 name="pago_efectivo"
-                value={trabajo.pago_efectivo + ""} //{currency1} //{trabajo.pago_efectivo}
+                value={trabajo.pago_efectivo + ""}
                 onChange={handleChange2}
                 InputLabelProps={{ style: { color: "inherit" } }}
                 InputProps={{
