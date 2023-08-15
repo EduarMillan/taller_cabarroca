@@ -88,7 +88,7 @@ export default function Formulario_Materiales(route) {
   return (
     <Grid
       container
-      direction="column" //column
+      direction="column" 
       alignItems="center"
       justifyContent="center"
     >
@@ -96,9 +96,11 @@ export default function Formulario_Materiales(route) {
         <Card
           sx={{ mt: 1 }}
           style={{
-            backgroundColor: "#202020",
             padding: "1rem",
-            color: "inherit",
+            color: "inherit", 
+            background: "rgba(255, 255, 255, 0.1)",
+            backdropFilter: "blur(20px)",
+    
           }}
         >
           <Typography variant="5" textAlign="center" color="inherit">
@@ -133,7 +135,7 @@ export default function Formulario_Materiales(route) {
                 name="descripcion"
                 value={material.descripcion}
                 onChange={handleChange}
-                inputProps={{ style: { color: "inherit" } }}
+                inputProps={{ style: { color: "white" } }}
                 InputLabelProps={{ style: { color: "inherit" } }}
               />
 
@@ -161,7 +163,7 @@ export default function Formulario_Materiales(route) {
                 name="longitud_ancho"
                 value={material.longitud_ancho + ""}
                 onChange={handleChange}
-                inputProps={{ style: { color: "inherit" } }}
+                inputProps={{ style: { color: "white" } }}
                 InputLabelProps={{ style: { color: "inherit" } }}
               />
 
@@ -172,7 +174,7 @@ export default function Formulario_Materiales(route) {
                 name="longitud_largo"
                 value={material.longitud_largo + ""}
                 onChange={handleChange}
-                inputProps={{ style: { color: "inherit" } }}
+                inputProps={{ style: { color: "white" } }}
                 InputLabelProps={{ style: { color: "inherit" } }}
               />
 
@@ -183,7 +185,7 @@ export default function Formulario_Materiales(route) {
                 name="calidad_material"
                 value={material.calidad_material}
                 onChange={handleChange}
-                inputProps={{ style: { color: "inherit" } }}
+                inputProps={{ style: { color: "white" } }}
                 InputLabelProps={{ style: { color: "inherit" } }}
               />
 
@@ -194,7 +196,7 @@ export default function Formulario_Materiales(route) {
                 name="costo_total"
                 value={material.costo_total + ""}
                 onChange={handleChange}
-                inputProps={{ style: { color: "inherit" } }}
+                inputProps={{ style: { color: "white" } }}
                 InputLabelProps={{ style: { color: "inherit" } }}
               />
 
@@ -205,7 +207,7 @@ export default function Formulario_Materiales(route) {
                 name="cantidad"
                 value={material.cantidad + ""}
                 onChange={handleChange}
-                inputProps={{ style: { color: "inherit" } }}
+                inputProps={{ style: { color: "white" } }}
                 InputLabelProps={{ style: { color: "inherit" } }}
               />
 
