@@ -23,10 +23,10 @@ import {withError} from '../pages/error'
 import { Route, Routes, useNavigate} from "react-router-dom";
 import {Brightness7, Brightness4, Home, PlaylistAddCheck, PlaylistAdd, DashboardCustomize, BlindsClosed} from '@mui/icons-material'
 import {Tooltip} from '@mui/material';
-import Lista_Materiales from './Lista_Materiales';
-import Lista_Trabajos_Realizados from './Lista_Trabajos_Realizados';
-import Componete_General_Trabajos from './Componete_General_Trabajos';
-import Formulario_Materiales from './Formulario_Materiales';
+import Lista_Materiales from './ListaMateriales';
+import Lista_Trabajos_Realizados from './ListaTrabajosRealizados';
+import Componete_General_Trabajos from './ComponeteGeneralTrabajos';
+import Formulario_Materiales from './FormularioMateriales';
 import Inicio from './Inicio';
 
 const drawerWidth = 240; //cajon lateral del menu deplegable

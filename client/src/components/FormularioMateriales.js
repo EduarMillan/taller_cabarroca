@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Formulario_Materiales(route) {
+export default function FormularioMateriales(route) {
   const classes = useStyles();
 
   const [material, setMaterial] = useState({

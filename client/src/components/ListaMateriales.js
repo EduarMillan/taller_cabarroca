@@ -1,28 +1,30 @@
 import MUIDataTable from "mui-datatables";
 import DeleteIcon from '@mui/icons-material/Delete';
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import React, { useEffect, useState,  } from "react";
-import { getTrabajosRealizados, EliminarTrabajoRealizado } from "../api";
+import { getMateriales, EliminarMaterial } from "../api";
 import { useNavigate } from "react-router-dom";
-import { IconButton} from "@mui/material";
-//import { Card } from "@material-ui/core";
+import { IconButton } from "@mui/material";
 
-export default function Lista_Trabajos_Realizados() {
-  
-  const [trabajos, setTrabajos] = useState([]);
+export default function ListaMateriales() {
+ 
+  const [materiales, setMateriales] = useState([]);
+
   const navigate = useNavigate();
-  const loadTrabajos = async () => {
-    const datos = await getTrabajosRealizados();
-    setTrabajos(datos);
+  
+  const loadMateriales = async () => {
+    const datos = await getMateriales();
+    setMateriales(datos);
   };
 
   useEffect(() => {
-    loadTrabajos();
+    loadMateriales();
   }, []);
 
   const EjecutaEliminar = async (id) => {
-    await EliminarTrabajoRealizado(id);
-    await loadTrabajos();
+    await EliminarMaterial(id);
+    await loadMateriales();
   };
   //------------------------------------------------------------
 
@@ -34,56 +36,42 @@ export default function Lista_Trabajos_Realizados() {
     {
       name: "nombre",
       label: "Nombre",
+      type: "singleSelect",
+      valueOptions: ["PVC", "Acrilico", "Vinilo", "Bicapa", "Glaspa"],
+      editable: true,
     },
     {
       name: "descripcion",
       label: "Descripción",
     },
     {
-      name: "pago_efectivo",
-      label: "P. Efectivo",
+      name: "espesor",
+      label: "Espesor (mm)",
     },
     {
-      name: "precio",
-      label: "Precio (MN)",
+      name: "longitud_ancho",
+      label: "Ancho (m)",
     },
     {
-      name: "fecha",
-      label: "Fecha",
-    },
-    /*{
-      name: "otros_gastos_descripcion",
-      label: "Otros Gastos",
+      name: "longitud_largo",
+      label: "Largo (m)",
     },
     {
-      name: "costo_otros_gastos",
-      label: "Costo  Otros Gastos",
-    },*/
-    {
-      name: "impuesto_representacion",
-      label: "Imp. Repres.",
+      name: "calidad_material",
+      label: "Calidad",
     },
     {
-      name: "impuesto_onat",
-      label: "Imp. ONAT",
+      name: "costo_total",
+      label: "Costo Total",
     },
     {
-      name: "impuesto_equipos",
-      label: "Imp. Equipos",
+      name: "cantidad",
+      label: "Cant.",
     },
     {
-        name: "costo_total",
-        label: "Costo Total",
+      name: "color",
+      label: "Color",
     },
-    {
-        name: "utilidad",
-        label: "Utilidad",
-    },
-    {
-      name: "facturado",
-      label: "Facturado",
-    },
-    
     {
       name: "acciones",
       label: "Acciones",
@@ -93,8 +81,8 @@ export default function Lista_Trabajos_Realizados() {
           return (
             <>
             <IconButton aria-label="Editar"  onClick={() => {
-              
-                navigate(`/trabajos_realizados/${tableMeta.rowData[0]}`);
+                //navigate(`/materiales/${tableMeta.rowData[0]}`);
+                navigate(`/materiales/${tableMeta.rowData[0]}`);
               }}>
             <AssignmentIcon></AssignmentIcon>
           </IconButton>
@@ -114,8 +102,8 @@ export default function Lista_Trabajos_Realizados() {
     selectableRowsHeader: false,
     selectableRows: false,
     filterType: "checkbox",
-    rowsPerPage: 6,
-    rowsPerPageOptions: [6, 12, 18],
+    rowsPerPage: 5,
+    rowsPerPageOptions: [5, 10, 15],
 
     textLabels: {
       body: {
@@ -155,12 +143,14 @@ export default function Lista_Trabajos_Realizados() {
   //------------------------------------------------------------
   return (
     <>
+      
         <MUIDataTable
-          title={"Trabajos Realizados"}
-          data={trabajos}
+          title={"Lista de Materiales"}
+          data={materiales}
           columns={columns}
           options={options}
         />
+    
     </>
   );
 }

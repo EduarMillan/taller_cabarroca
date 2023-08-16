@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { MaterialProvider } from "./MaterialContext";
 
-export default function Componete_General_Trabajos() {
+export default function ComponeteGeneralTrabajos() {
   const [editar, setEditar] = useState(false);
 
   const params = useParams();

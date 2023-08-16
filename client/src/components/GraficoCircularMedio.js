@@ -1,17 +1,18 @@
 import React, { useCallback, useState } from "react";
 import { PieChart, Pie, Sector, Legend } from "recharts";
+import { Box, Paper, Typography } from "@mui/material";
 
 const data = [
-    { name: "Ofic. Hist.", value: 200,fill: "#0088FE"  }, 
-    { name: "Emp. Estatales", value: 300, fill: "#FF8042" },
-    { name: "Efectivo", value: 500, fill: "#FFBB28" }
-  ];
+  { name: "Ofic. Hist.", value: 200, fill: "#0088FE" },
+  { name: "Emp. Estatales", value: 300, fill: "#FF8042" },
+  { name: "Efectivo", value: 500, fill: "#FFBB28" },
+];
 
-  const style = {
-    top: 270,
-    left: 50,
-    lineHeight: "24px"
-  };
+const style = {
+  top: 270,
+  left: 50,
+  lineHeight: "24px",
+};
 
 const renderActiveShape = (props) => {
   const RADIAN = Math.PI / 180;
@@ -26,7 +27,7 @@ const renderActiveShape = (props) => {
     fill,
     payload,
     percent,
-    value
+    value,
   } = props;
   const sin = Math.sin(-RADIAN * midAngle);
   const cos = Math.cos(-RADIAN * midAngle);
@@ -86,7 +87,7 @@ const renderActiveShape = (props) => {
   );
 };
 
-export default function Grafico_Circular_Medio() {
+export default function GraficoCircularMedio() {
   const [activeIndex, setActiveIndex] = useState(0);
   const onPieEnter = useCallback(
     (_, index) => {
@@ -96,28 +97,38 @@ export default function Grafico_Circular_Medio() {
   );
 
   return (
-    <PieChart width={430} height={250}>
-      <Pie
-        activeIndex={activeIndex}
-        activeShape={renderActiveShape}
-        data={data}
-        cx={200}
-        cy={110}
-        innerRadius={60}
-        outerRadius={80}
-        fill="#8884d8"
-        dataKey="value"
-        onMouseEnter={onPieEnter}
-      />
-      <Legend
-        iconSize={10}
-        width={330}
-        height={10}
-        layout="horizontal"
-        verticalAlign="middle"
-        wrapperStyle={style}
-      />
-    </PieChart>
+    <Paper elevation={3} sx={{ p: 3 }}>
+      <Typography variant="h4"> Trabajos por clientes</Typography>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <PieChart width={430} height={250}>
+          <Pie
+            activeIndex={activeIndex}
+            activeShape={renderActiveShape}
+            data={data}
+            cx={200}
+            cy={110}
+            innerRadius={60}
+            outerRadius={80}
+            fill="#8884d8"
+            dataKey="value"
+            onMouseEnter={onPieEnter}
+          />
+          <Legend
+            iconSize={10}
+            width={330}
+            height={10}
+            layout="horizontal"
+            verticalAlign="middle"
+            wrapperStyle={style}
+          />
+        </PieChart>
+      </Box>
+    </Paper>
   );
 }
-
