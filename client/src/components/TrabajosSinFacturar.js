@@ -31,6 +31,7 @@ useEffect(() => {
           <h4>{trabajos[1]}</h4>
           <h4>{trabajos[2]}</h4>
           <h4>{trabajos[3]}</h4>
+          
         </List>
       </Box>
       <Divider sx={{ mt: 3, mb: 3, opacity: 0.7 }} />
