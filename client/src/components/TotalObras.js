@@ -4,6 +4,7 @@ import { Box, Paper, Typography, Tab, Tabs } from "@mui/material";
 import { MapsHomeWork } from "@mui/icons-material";
 import { getTrabajosRealizados } from "../api";
 import moment from "moment";
+import GraficoObras from "./GraficoObras";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -50,21 +51,24 @@ export default function VerticalTabs() {
   };
 
   const trabajosPorFecha = async () => {
-    const datos = await getTrabajosRealizados();
-    let fecha = moment().year() + "";
-    let fecha3 = moment().year() - 1 + "";
-    let fecha2;
-    let annoActual = 0;
-    let annoPasado = 0;
-    if (datos.length > 0) {
-      for (let i = 0; i < datos.length; i++) {
-        fecha2 = moment(datos[i].fecha).format("YYYY");
-        if (fecha2 === fecha) annoActual += 1;
-        if (fecha2 === fecha3) annoPasado += 1;
-      }
+    try {
+      const datos = await getTrabajosRealizados();
+
+      const annoActual = moment().year();
+      const annoPasado = annoActual - 1;
+
+      const trabajosAnnoActual = datos.filter(
+        (dato) => moment(dato.fecha).year() === annoActual
+      ).length;
+      const trabajosAnnoPasado = datos.filter(
+        (dato) => moment(dato.fecha).year() === annoPasado
+      ).length;
+
+      setTrabajosAnnoActual(trabajosAnnoActual);
+      setTrabajosAnnoPasado(trabajosAnnoPasado);
+    } catch (error) {
+      console.error("Error:", error);
     }
-    setTrabajosAnnoActual(annoActual);
-    setTrabajosAnnoPasado(annoPasado);
   };
 
   useEffect(() => {
@@ -97,6 +101,7 @@ export default function VerticalTabs() {
             <Tab label="Historico" {...a11yProps(0)} />
             <Tab label="Año Pasado" {...a11yProps(1)} />
             <Tab label="Año Actual" {...a11yProps(2)} />
+            <Tab label="Gráficos" {...a11yProps(3)} />
           </Tabs>
           <TabPanel value={value} index={0}>
             <Typography variant="h5" marginLeft={5}>
@@ -153,6 +158,30 @@ export default function VerticalTabs() {
               <Typography variant="h4" marginLeft={5}>
                 {trabajosAnnoActual}
               </Typography>
+            </Box>
+          </TabPanel>
+          <TabPanel value={value} index={3}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                //  border: "1px solid"
+              }}
+            >
+              <GraficoObras />
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                //  border: "1px solid"
+              }}
+            >
+            <Typography fontSize='10px' color='#ff0000'>Prom. Trabajos Por Año</Typography>
+            <Typography fontSize='10px' color='#00ff00' paddingLeft="5px">Trabajos año {moment().year()-1}</Typography>
+            <Typography fontSize='10px' color='#0000ff' paddingLeft="5px">Trabajos año  {moment().year()-2}</Typography>
             </Box>
           </TabPanel>
         </Box>

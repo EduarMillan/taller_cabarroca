@@ -1,19 +1,28 @@
 import MUIDataTable from "mui-datatables";
-import DeleteIcon from '@mui/icons-material/Delete';
-import AssignmentIcon from '@mui/icons-material/Assignment';
-import React, { useEffect, useState,  } from "react";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import React, { useEffect, useState } from "react";
 import { getTrabajosRealizados, EliminarTrabajoRealizado } from "../api";
 import { useNavigate } from "react-router-dom";
-import { IconButton} from "@mui/material";
+import { IconButton } from "@mui/material";
+import moment from "moment";
 //import { Card } from "@material-ui/core";
 
 export default function ListaTrabajosRealizados() {
-  
   const [trabajos, setTrabajos] = useState([]);
   const navigate = useNavigate();
+
   const loadTrabajos = async () => {
-    const datos = await getTrabajosRealizados();
-    setTrabajos(datos);
+    try {
+      const datos = await getTrabajosRealizados();
+
+      // Ordenar los datos por fecha en orden descendente (de más reciente a más antiguo)
+      datos.sort((a, b) => moment(b.fecha).toDate() - moment(a.fecha).toDate());
+
+      setTrabajos(datos);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   useEffect(() => {
@@ -72,18 +81,18 @@ export default function ListaTrabajosRealizados() {
       label: "Imp. Equipos",
     },
     {
-        name: "costo_total",
-        label: "Costo Total",
+      name: "costo_total",
+      label: "Costo Total",
     },
     {
-        name: "utilidad",
-        label: "Utilidad",
+      name: "utilidad",
+      label: "Utilidad",
     },
     {
       name: "facturado",
       label: "Facturado",
     },
-    
+
     {
       name: "acciones",
       label: "Acciones",
@@ -92,18 +101,23 @@ export default function ListaTrabajosRealizados() {
         customBodyRender: (value, tableMeta, updateValue) => {
           return (
             <>
-            <IconButton aria-label="Editar"  onClick={() => {
-              
-                navigate(`/trabajos_realizados/${tableMeta.rowData[0]}`);
-              }}>
-            <AssignmentIcon></AssignmentIcon>
-          </IconButton>
-          <IconButton aria-label="Eliminar" onClick={() => {
-              EjecutaEliminar(tableMeta.rowData[0])
-            }}>
-            <DeleteIcon> </DeleteIcon>
-          </IconButton>
-          </>
+              <IconButton
+                aria-label="Editar"
+                onClick={() => {
+                  navigate(`/trabajos_realizados/${tableMeta.rowData[0]}`);
+                }}
+              >
+                <AssignmentIcon></AssignmentIcon>
+              </IconButton>
+              <IconButton
+                aria-label="Eliminar"
+                onClick={() => {
+                  EjecutaEliminar(tableMeta.rowData[0]);
+                }}
+              >
+                <DeleteIcon> </DeleteIcon>
+              </IconButton>
+            </>
           );
         },
       },
@@ -155,12 +169,12 @@ export default function ListaTrabajosRealizados() {
   //------------------------------------------------------------
   return (
     <>
-        <MUIDataTable
-          title={"Trabajos Realizados"}
-          data={trabajos}
-          columns={columns}
-          options={options}
-        />
+      <MUIDataTable
+        title={"Trabajos Realizados"}
+        data={trabajos}
+        columns={columns}
+        options={options}
+      />
     </>
   );
 }

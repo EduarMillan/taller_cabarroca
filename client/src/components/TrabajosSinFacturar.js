@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Box, Paper, Typography, List, Divider } from "@mui/material";
 import { getTrabajosRealizados } from "../api";
+import moment from "moment";
 
 export default function TrabajosSinFacturar() {
   const [trabajos, setTrabajos] = useState([]);
@@ -12,10 +13,12 @@ const loadTrabajos = async () => {
   if (trabajosSinFacturar.length === 0) {
     setTrabajos(["No hay Trabajo sin facturar"]);
   } else {
+    trabajosSinFacturar.sort((a, b) => moment(a.fecha).toDate() - moment(b.fecha).toDate());
     const nombresTrabajos = trabajosSinFacturar.map((trabajo) => trabajo.nombre);
     setTrabajos(nombresTrabajos);
   }
 };
+
 
 useEffect(() => {
   loadTrabajos();
@@ -26,13 +29,11 @@ useEffect(() => {
     <Paper elevation={3} sx={{ p: 2, gridColumn: 3, gridRow: "1/3" }}>
       <Box>
         <Typography variant="h4"> Trabajos sin facturar</Typography>
-        <List>
-          <h4>{trabajos[0]}</h4>
-          <h4>{trabajos[1]}</h4>
-          <h4>{trabajos[2]}</h4>
-          <h4>{trabajos[3]}</h4>
-          
-        </List>
+        <List sx={{ maxHeight: "180px", overflowY: "auto" }}>
+        {trabajos.map((trabajo, index) => (
+          <h5 key={index}>{trabajo}</h5>
+        ))}
+      </List>
       </Box>
       <Divider sx={{ mt: 3, mb: 3, opacity: 0.7 }} />
       <Box>
