@@ -3,9 +3,9 @@ import { PieChart, Pie, Sector, Legend } from "recharts";
 import { Box, Paper, Typography } from "@mui/material";
 
 const data = [
-  { name: "Ofic. Hist.", value: 200, fill: "#0088FE" },
-  { name: "Emp. Estatales", value: 300, fill: "#FF8042" },
-  { name: "Efectivo", value: 500, fill: "#FFBB28" },
+  { name: "Ofic. Hist.", value: 200, fill: "#0099FF" },
+  { name: "Emp. Estatales", value: 300, fill: "#FF7200" },
+  { name: "Efectivo", value: 500, fill: "#FFCC02" },
 ];
 
 const style = {
@@ -72,14 +72,14 @@ const renderActiveShape = (props) => {
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
         textAnchor={textAnchor}
-        fill="#333"
+        fill="#99FF33"
       >{`CUP ${value}`}</text>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
         dy={18}
         textAnchor={textAnchor}
-        fill="#999"
+        fill="#66FFFF"
       >
         {`( ${(percent * 100).toFixed(2)}% )`}
       </text>

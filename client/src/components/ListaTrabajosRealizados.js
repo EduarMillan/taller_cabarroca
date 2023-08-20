@@ -90,7 +90,7 @@ export default function ListaTrabajosRealizados() {
     },
     {
       name: "facturado",
-      label: "Facturado",
+      label: "Fact.",
     },
 
     {
@@ -104,7 +104,7 @@ export default function ListaTrabajosRealizados() {
               <IconButton
                 aria-label="Editar"
                 onClick={() => {
-                  navigate(`/trabajos_realizados/${tableMeta.rowData[0]}`);
+                  navigate(`/dashboard/trabajos_realizados/${tableMeta.rowData[0]}`);
                 }}
               >
                 <AssignmentIcon></AssignmentIcon>

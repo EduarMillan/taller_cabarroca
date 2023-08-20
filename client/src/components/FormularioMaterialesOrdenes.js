@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Formulario_Materiales_Ordenes({ editedMaterial }) {
+export default function FormularioMaterialesOrdenes({ editedMaterial }) {
 
   const { setShouldReload } = useMaterialContext();
 
@@ -244,6 +244,18 @@ export default function Formulario_Materiales_Ordenes({ editedMaterial }) {
             variant="contained"
             color="primary"
             style={{ padding: "12px", margin: "12px" }}
+            disabled={
+              !materialOrden.nombre ||
+              !materialOrden.espesor||
+              !materialOrden.color||
+              !materialOrden.descripcion||
+              !materialOrden.medida_largo||
+              !materialOrden.medida_ancho||
+              !materialOrden.precio_largo||
+              !materialOrden.precio_m2||
+              !materialOrden.precio_total
+              
+            }
           >
             Salvar
           </Button>

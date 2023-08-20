@@ -19,6 +19,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import {
   currencies,
   currencies1,
+  entidad,
 } from "../CaracteristicasMateriales/DatosMateriales";
 
 const useStyles = makeStyles((theme) => ({
@@ -30,14 +31,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Formulario_Trabajo_Realizado(route) {
+export default function FormularioTrabajoRealizado(route) {
   const classes = useStyles();
-  const [currency, setCurrency] = useState(null);
-  const [currency1, setCurrency1] = useState(null);
 
   const params = useParams();
 
-  //-------------------------trabajos realizados-------------------------------------------------
   const [trabajo, setTrabajo] = useState({
     nombre: "",
     descripcion: "",
@@ -52,6 +50,7 @@ export default function Formulario_Trabajo_Realizado(route) {
     costo_total: "",
     utilidad: "",
     facturado: "",
+    entidad: ""
   });
 
   const [loading2, setLoading2] = useState(false);
@@ -79,27 +78,6 @@ export default function Formulario_Trabajo_Realizado(route) {
     setTrabajo({ ...trabajo, [e.target.name]: e.target.value });
   };
 
-  const handleChange1 = (event) => {
-    if(event.target.value===0)
-    {
-      setCurrency("Sin Facturar");
-    }
-    else{
-      setCurrency("Facturado");
-    }
-    setTrabajo({ ...trabajo, [event.target.name]: event.target.value });
-  };
-
-  const handleChange2 = (event) => {
-    event.preventDefault();
-    if(event.target.value===0)
-    {
-      setCurrency1("Pago por Contrato");
-    }
-    else
-    setCurrency1("Pago Pago en Efectivo");
-    setTrabajo({ ...trabajo, [event.target.name]: event.target.value });
-  };
 
   const loadTrabajos = async (id) => {
     const data = await getTrabajoRealizado(id);
@@ -113,11 +91,9 @@ export default function Formulario_Trabajo_Realizado(route) {
     }
   }, [params.id]);
 
-  //------------------------------------------------------------
-
   const fechaIncorrecta = trabajo.fecha; //aqui capturo la fecha con formato incorrecto
   const fechaCorrecta = moment(fechaIncorrecta).format("YYYY-MM-DDThh:mm"); //doy formato correcto a la fecha
-  //----------------------------------------------------------------------------------------------------
+
   return (
     <Grid container direction="column" alignItems="top" justifyContent="center">
       <Grid>
@@ -183,7 +159,7 @@ export default function Formulario_Trabajo_Realizado(route) {
                 sx={{ display: "block", margin: ".5rem 0" }}
                 name="pago_efectivo"
                 value={trabajo.pago_efectivo + ""}
-                onChange={handleChange2}
+                onChange={handleChange}
                 InputLabelProps={{ style: { color: "inherit" } }}
                 InputProps={{
                   style: {
@@ -263,11 +239,11 @@ export default function Formulario_Trabajo_Realizado(route) {
               <TextField
                 variant="outlined"
                 select
-                label="Facturado?"
+                label="Facturado"
                 sx={{ display: "block", margin: ".5rem 0" }}
                 name="facturado"
                 value={trabajo.facturado}
-                onChange={handleChange1}
+                onChange={handleChange}
                 InputLabelProps={{ style: { color: "inherit" } }}
                 InputProps={{
                   style: {
@@ -276,6 +252,28 @@ export default function Formulario_Trabajo_Realizado(route) {
                 }}
               >
                 {currencies.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+
+              <TextField
+                variant="outlined"
+                select
+                label="Entidad"
+                sx={{ display: "block", margin: ".5rem 0" }}
+                name="entidad"
+                value={trabajo.entidad}
+                onChange={handleChange}
+                InputLabelProps={{ style: { color: "inherit" } }}
+                InputProps={{
+                  style: {
+                    color: "inherit",
+                  },
+                }}
+              >
+                {entidad.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
                   </MenuItem>
@@ -297,7 +295,8 @@ export default function Formulario_Trabajo_Realizado(route) {
                   !trabajo.precio ||
                   !trabajo.otros_gastos_descripcion ||
                   !trabajo.costo_otros_gastos ||
-                  !(trabajo.facturado || trabajo.facturado === 0)
+                  !(trabajo.facturado || trabajo.facturado === 0)||
+                  !trabajo.entidad 
 				  
                 }
               >

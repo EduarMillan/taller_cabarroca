@@ -9,17 +9,17 @@ import {
   getMaterialTrabajosRealizados,
   getMaterialesTrabajosRealizados,
 } from "../api";
-import { useNavigate, useParams } from "react-router-dom";
-import Formulario_Materiales_Ordenes from "./Formulario_Materiales_Ordenes";
+import {  useParams } from "react-router-dom";
+import FormularioMaterialesOrdenes from "./FormularioMaterialesOrdenes";
 import { useMaterialContext } from "./MaterialContext";
 
-export default function Lista_Materiales_Ordenes() {
+export default function ListaMaterialesOrdenes() {
 
   const { shouldReload, setShouldReload } = useMaterialContext();
   const [materialesOrdenes, setMaterialesOrdenes] = useState([]);
   const [editingMaterial, setEditingMaterial] = useState(null);
 
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const params = useParams();
 
   const loadMaterialesOrdenes = async (id) => {
@@ -166,7 +166,7 @@ export default function Lista_Materiales_Ordenes() {
   //------------------------------------------------------------
   return (
     <Grid>
-      <Formulario_Materiales_Ordenes editedMaterial={editingMaterial} />
+      <FormularioMaterialesOrdenes editedMaterial={editingMaterial} />
       
       {materialesOrdenes === "Material no encontrado" ? (
         <div
@@ -184,8 +184,8 @@ export default function Lista_Materiales_Ordenes() {
         <Card
           style={{
             backgroundColor: "transparent",
-            padding: ".5rem",
-            color: "inherit",
+            padding: ".1rem",
+            color: "white",
             marginRight: "0.5rem",
           }}
         >

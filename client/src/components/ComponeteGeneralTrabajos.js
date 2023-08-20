@@ -1,10 +1,9 @@
-import Formulario_Trabajo_Realizado from "./Formulario_Trabajo_Realizado";
+import FormularioTrabajoRealizado from "./FormularioTrabajoRealizado";
 import { Grid } from "@mui/material";
-import Datos_Impuestos_Equipos from "./Datos_Impuestos_Equipos";
-import Lista_Materiales_Ordenes from "./Lista_Materiales_Ordenes";
-import Formulario_Materiales_Ordenes from "./Formulario_Materiales_Ordenes";
+import DatosImpuestosEquipos from "./DatosImpuestosEquipos";
+import ListaMaterialesOrdenes from "./ListaMaterialesOrdenes";
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { MaterialProvider } from "./MaterialContext";
 
 export default function ComponeteGeneralTrabajos() {
@@ -27,11 +26,11 @@ export default function ComponeteGeneralTrabajos() {
           alignItems="top"
           justifyContent="center"
         >
-          <Datos_Impuestos_Equipos />
+          <DatosImpuestosEquipos />
 
-          <Formulario_Trabajo_Realizado />
+          <FormularioTrabajoRealizado />
 
-          <Lista_Materiales_Ordenes />
+          <ListaMaterialesOrdenes />
         </Grid>
       ) : (
         <Grid
@@ -40,7 +39,7 @@ export default function ComponeteGeneralTrabajos() {
           alignItems="top"
           justifyContent="center"
         >
-          <Formulario_Trabajo_Realizado />
+          <FormularioTrabajoRealizado />
           
         </Grid>
       )}

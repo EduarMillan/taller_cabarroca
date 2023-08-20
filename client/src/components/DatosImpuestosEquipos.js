@@ -1,7 +1,6 @@
 import { Grid } from "@mui/material";
-import React, { useEffect, useState } from "react";
 
-export default function Datos_Impuestos_Equipos() {
+export default function DatosImpuestosEquipos() {
   return (
     <Grid container alignItems={"center"} paddingBottom={1}>
       {" "}

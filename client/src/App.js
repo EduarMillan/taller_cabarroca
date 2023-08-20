@@ -19,8 +19,7 @@ const App = () => {
           <Route path="/trabajos_realizados/:id" element={<ComponeteGeneralTrabajos />}/>
           <Route path="/materiales" element={<ListaMateriales />} />
           <Route path="/materiales/nuevo" element={<FormularioMateriales />} />
-          <Route path="/materiales/:id" element={<FormularioMateriales />} />
-          {/*<Route path="/materialestrabajosrealizados/:id" element={<Componete_General_Trabajos />} />*/}  
+          <Route path="/materiales/:id" element={<FormularioMateriales />} /> 
           </Routes>
       </BrowserRouter>
     </>
