@@ -1,12 +1,7 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { PieChart, Pie, Sector, Legend } from "recharts";
 import { Box, Paper, Typography } from "@mui/material";
-
-const data = [
-  { name: "Ofic. Hist.", value: 200, fill: "#0099FF" },
-  { name: "Emp. Estatales", value: 300, fill: "#FF7200" },
-  { name: "Efectivo", value: 500, fill: "#FFCC02" },
-];
+import { getTrabajosRealizados } from "../api";
 
 const style = {
   top: 270,
@@ -69,11 +64,11 @@ const renderActiveShape = (props) => {
       />
       <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
       <text
-        x={ex + (cos >= 0 ? 1 : -1) * 12}
+        x={ex + (cos >= 0 ? 1 : -1) * 1}
         y={ey}
         textAnchor={textAnchor}
         fill="#99FF33"
-      >{`CUP ${value}`}</text>
+      >{` ${value} CUP`}</text>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
@@ -88,6 +83,48 @@ const renderActiveShape = (props) => {
 };
 
 export default function GraficoCircularMedio() {
+  const [sumaOficina, setSumaOficina] = useState(0);
+  const [sumaEstatales, setSumaEstatales] = useState(0);
+  const [sumaOtros, setSumaOtros] = useState(0);
+
+  const data = [
+    { name: "Ofic. Hist.", value: sumaOficina, fill: "#0099FF" },
+    { name: "Emp. Estatales", value: sumaEstatales, fill: "#FF7200" },
+    { name: "Efectivo", value: sumaOtros, fill: "#FFCC02" },
+  ];
+
+  const loadingDatos = async () => {
+    const contenedor = await getTrabajosRealizados();
+    const oficiHistoriador = contenedor.filter(
+      (x) => x.entidad === "oficinadelhistoriador"
+    );
+    const estatales = contenedor.filter(
+      (x) => x.entidad === "entidadesestatales"
+    );
+    const otros = contenedor.filter((x) => x.entidad === "otros");
+
+    const sumOficina = oficiHistoriador.reduce(
+      (accumulator, item) => accumulator + parseFloat(item.precio),
+      0
+    );
+    const sumEstatales = estatales.reduce(
+      (accumulator, item) => accumulator + parseFloat(item.precio),
+      0
+    );
+    const sumOtros = otros.reduce(
+      (accumulator, item) => accumulator + parseFloat(item.precio),
+      0
+    );
+
+    setSumaOficina(sumOficina);
+    setSumaEstatales(sumEstatales);
+    setSumaOtros(sumOtros);
+  };
+
+  useEffect(() => {
+    loadingDatos();
+  }, []);
+
   const [activeIndex, setActiveIndex] = useState(0);
   const onPieEnter = useCallback(
     (_, index) => {
@@ -98,7 +135,7 @@ export default function GraficoCircularMedio() {
 
   return (
     <Paper elevation={3} sx={{ p: 3 }}>
-      <Typography variant="h4"> Trabajos por clientes</Typography>
+      <Typography variant="h5"> TRABAJOS POR ENTIDADES</Typography>
       <Box
         sx={{
           display: "flex",
@@ -111,8 +148,8 @@ export default function GraficoCircularMedio() {
             activeIndex={activeIndex}
             activeShape={renderActiveShape}
             data={data}
-            cx={200}
-            cy={110}
+            cx={210}
+            cy={130}
             innerRadius={60}
             outerRadius={80}
             fill="#8884d8"

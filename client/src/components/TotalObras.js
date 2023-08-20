@@ -104,8 +104,8 @@ export default function VerticalTabs() {
             <Tab label="Gráficos" {...a11yProps(3)} />
           </Tabs>
           <TabPanel value={value} index={0}>
-            <Typography variant="h5" marginLeft={5}>
-              Trabajos Realizados
+            <Typography variant="h6" marginLeft={5}>
+              TRABAJOS REALIZADOS
             </Typography>
             <Box
               sx={{
@@ -123,8 +123,8 @@ export default function VerticalTabs() {
             </Box>
           </TabPanel>
           <TabPanel value={value} index={1}>
-            <Typography variant="h5" marginLeft={5}>
-              Trabajos Realizados
+            <Typography variant="h6" marginLeft={5}>
+            TRABAJOS REALIZADOS
             </Typography>
             <Box
               sx={{
@@ -142,8 +142,8 @@ export default function VerticalTabs() {
             </Box>
           </TabPanel>
           <TabPanel value={value} index={2}>
-            <Typography variant="h5" marginLeft={5}>
-              Trabajos Realizados
+            <Typography variant="h6" marginLeft={5}>
+            TRABAJOS REALIZADOS
             </Typography>
             <Box
               sx={{

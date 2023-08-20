@@ -28,7 +28,7 @@ useEffect(() => {
   return (
     <Paper elevation={3} sx={{ p: 2, gridColumn: 3, gridRow: "1/3" }}>
       <Box>
-        <Typography variant="h4"> Trabajos sin facturar</Typography>
+        <Typography variant="h5"> TRABAJOS SIN FACTURAR</Typography>
         <List sx={{ maxHeight: "180px", overflowY: "auto" }}>
         {trabajos.map((trabajo, index) => (
           <h5 key={index}>{trabajo}</h5>
@@ -37,7 +37,7 @@ useEffect(() => {
       </Box>
       <Divider sx={{ mt: 3, mb: 3, opacity: 0.7 }} />
       <Box>
-        <Typography variant="h4"> Otros Trabajos</Typography>
+        <Typography variant="h5"> OTROS TRABAJOS</Typography>
         <List>
           <h4>Trabajo 1</h4>
           <h4>Trabajo 2</h4>

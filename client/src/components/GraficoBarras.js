@@ -44,7 +44,7 @@ const renderCustomizedLabel = (props) => {
 
   return (
     <g>
-      <circle cx={x + width / 2} cy={y - radius} r={radius} fill="#00FF00" />
+      <circle cx={x + width / 2} cy={y - radius} r={radius} fill="#FF6600 " />
       <text
         x={x + width / 2}
         y={y - radius}
@@ -61,7 +61,7 @@ const renderCustomizedLabel = (props) => {
 export default function GraficoBarras() {
   return (
     <Paper elevation={3} sx={{ p: 3 }}>
-      <Typography variant="h4"> Comparacion por Trimestres</Typography>
+      <Typography variant="h5"> COMPARACION POR TRIMESTRES</Typography>
       <Box
         sx={{
           display: "flex",
@@ -74,7 +74,7 @@ export default function GraficoBarras() {
           height={300}
           data={data}
           margin={{
-            top: 5,
+            top: 15,
             right: 30,
             left: 20,
             bottom: 5,
@@ -85,10 +85,10 @@ export default function GraficoBarras() {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="pv" fill="#33FF00" minPointSize={5}>
+          <Bar dataKey="pv" fill="#FF3300" minPointSize={5}>
             <LabelList dataKey="name" content={renderCustomizedLabel} />
           </Bar>
-          <Bar dataKey="uv" fill="#FFCC00" minPointSize={10} />
+          <Bar dataKey="uv" fill="#0033FF" minPointSize={10} />
         </BarChart>
       </Box>
     </Paper>

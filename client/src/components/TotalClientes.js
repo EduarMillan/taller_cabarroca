@@ -5,7 +5,7 @@ import { Group } from "@mui/icons-material";
 export default function TotalClientes() {
   return (
     <Paper elevation={3} sx={{ p: 3 }}>
-      <Typography variant="h4"> Total de Clientes</Typography>
+      <Typography variant="h5"> TOTAL DE CLIENTES</Typography>
       <Box
         sx={{
           display: "flex",
