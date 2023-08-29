@@ -95,6 +95,7 @@ export default function GraficoCircularMedio() {
 
   const loadingDatos = async () => {
     const contenedor = await getTrabajosRealizados();
+    
     const oficiHistoriador = contenedor.filter(
       (x) => x.entidad === "oficinadelhistoriador"
     );

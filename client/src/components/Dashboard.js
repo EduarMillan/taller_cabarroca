@@ -154,12 +154,19 @@ function Dashboard() {
       link: "trabajos_realizados/nuevo",
       component: <ComponeteGeneralTrabajos />,
     },
-    {
+   {
       title: "NoMostrar",
       icon: <PlaylistAdd />,
       link: "trabajos_realizados/:id",
       component: <ComponeteGeneralTrabajos />,
     },
+    {
+      title: "NoMostrar",
+      icon: <DashboardCustomize />,
+      link: "materiales/:id",
+      component: <FormularioMateriales/>,
+    }
+    
   ]);
 
   const navigate = useNavigate();

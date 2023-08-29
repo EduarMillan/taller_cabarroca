@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   BarChart,
   Bar,
@@ -10,6 +10,7 @@ import {
   LabelList,
 } from "recharts";
 import { Box, Paper, Typography } from "@mui/material";
+import { getTrabajosRealizados } from "../api";
 
 const data = [
   {
@@ -59,6 +60,15 @@ const renderCustomizedLabel = (props) => {
 };
 
 export default function GraficoBarras() {
+
+  const [datosTrabajos, setDatosTrabajos] = useState();
+  
+  const loadDatos = async ()=> {
+    const  datos =  await getTrabajosRealizados();
+    setDatosTrabajos(datos);
+    //const primerTrimestre = datos.
+  }
+
   return (
     <Paper elevation={3} sx={{ p: 3 }}>
       <Typography variant="h5"> COMPARACION POR TRIMESTRES</Typography>

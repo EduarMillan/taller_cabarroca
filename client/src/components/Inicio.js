@@ -5,7 +5,6 @@ import React from "react";
 import TotalClientes from "./TotalClientes";
 import TotalObras from "./TotalObras";
 import TrabajosSinFacturar from "./TrabajosSinFacturar";
-import GraficoObras from "./GraficoObras";
 
 export default function Inicio() {
   return (

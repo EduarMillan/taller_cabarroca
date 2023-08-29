@@ -16,10 +16,10 @@ import {
 } from "../CaracteristicasMateriales/DatosMateriales";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  root: {//estilos para los cuadro de dialogos
     "& .MuiTextField-root": {
       margin: theme.spacing(1),
-      width: "25ch",
+      width: "25ch"
     },
   },
 }));
@@ -102,15 +102,7 @@ export default function FormularioMaterialesOrdenes({ editedMaterial }) {
   return (
     <Grid container direction="column" alignItems="top" justifyContent="center">
       <div>&nbsp;</div>
-      <Card
-        style={{
-          backgroundColor: "transparent",
-          padding: "0.5rem",
-          color: "inherit",
-          marginRight: "0.5rem",
-        }}
-      >
-        <Typography
+      <Typography
           variant="5"
           textAlign="center"
           color="inherit"
@@ -119,7 +111,17 @@ export default function FormularioMaterialesOrdenes({ editedMaterial }) {
         >
           Materiales Asociados
         </Typography>
-
+      <Card
+        style={{
+          backgroundColor: "transparent",
+          padding: "0.5rem",
+          color: "inherit",
+          marginRight: "0.5rem",
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        
         <form className={classes.root} onSubmit={handledSubmit}>
           <TextField
             variant="outlined"
@@ -260,6 +262,7 @@ export default function FormularioMaterialesOrdenes({ editedMaterial }) {
             Salvar
           </Button>
         </form>
+        <div style={{background:'rgb(20, 26, 26)', width:"270px"}}>Datos del Material</div>
       </Card>
       <div>&nbsp;</div>
     </Grid>

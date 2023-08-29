@@ -81,8 +81,7 @@ export default function ListaMateriales() {
           return (
             <>
             <IconButton aria-label="Editar"  onClick={() => {
-                //navigate(`/materiales/${tableMeta.rowData[0]}`);
-                navigate(`/materiales/${tableMeta.rowData[0]}`);
+                navigate(`/dashboard/materiales/${tableMeta.rowData[0]}`);
               }}>
             <AssignmentIcon></AssignmentIcon>
           </IconButton>
