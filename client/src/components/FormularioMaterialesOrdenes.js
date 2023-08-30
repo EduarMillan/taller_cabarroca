@@ -16,16 +16,16 @@ import {
 } from "../CaracteristicasMateriales/DatosMateriales";
 
 const useStyles = makeStyles((theme) => ({
-  root: {//estilos para los cuadro de dialogos
+  root: {
+    //estilos para los cuadro de dialogos
     "& .MuiTextField-root": {
       margin: theme.spacing(1),
-      width: "25ch"
+      width: "25ch",
     },
   },
 }));
 
 export default function FormularioMaterialesOrdenes({ editedMaterial }) {
-
   const { setShouldReload } = useMaterialContext();
 
   if (editedMaterial != null) {
@@ -103,14 +103,14 @@ export default function FormularioMaterialesOrdenes({ editedMaterial }) {
     <Grid container direction="column" alignItems="top" justifyContent="center">
       <div>&nbsp;</div>
       <Typography
-          variant="5"
-          textAlign="center"
-          color="inherit"
-          backgroundColor="green"
-          padding={0.5}
-        >
-          Materiales Asociados
-        </Typography>
+        variant="5"
+        textAlign="center"
+        color="inherit"
+        backgroundColor="green"
+        padding={0.5}
+      >
+        Materiales Asociados
+      </Typography>
       <Card
         style={{
           backgroundColor: "transparent",
@@ -121,7 +121,6 @@ export default function FormularioMaterialesOrdenes({ editedMaterial }) {
           justifyContent: "space-between",
         }}
       >
-        
         <form className={classes.root} onSubmit={handledSubmit}>
           <TextField
             variant="outlined"
@@ -248,21 +247,37 @@ export default function FormularioMaterialesOrdenes({ editedMaterial }) {
             style={{ padding: "12px", margin: "12px" }}
             disabled={
               !materialOrden.nombre ||
-              !materialOrden.espesor||
-              !materialOrden.color||
-              !materialOrden.descripcion||
-              !materialOrden.medida_largo||
-              !materialOrden.medida_ancho||
-              !materialOrden.precio_largo||
-              !materialOrden.precio_m2||
+              !materialOrden.espesor ||
+              !materialOrden.color ||
+              !materialOrden.descripcion ||
+              !materialOrden.medida_largo ||
+              !materialOrden.medida_ancho ||
+              !materialOrden.precio_largo ||
+              !materialOrden.precio_m2 ||
               !materialOrden.precio_total
-              
             }
           >
             Salvar
           </Button>
         </form>
-        <div style={{background:'rgb(20, 26, 26)', width:"270px"}}>Datos del Material</div>
+        <div
+          style={{
+            background: "inherit",
+            width: "270px",
+            justifyItems: "center",
+            color: "inherit",
+            textAlign: "center",
+            fontSize: "12px",
+            
+          }}
+        >
+          
+            DATOS DEL MATERIAL
+          
+          <p style={{color:'greenyellow', fontSize:'13px'}}>{materialOrden.nombre+" "+materialOrden.espesor+"mm"+" "+materialOrden.color}</p>
+          <p>Precio M2(usd):</p>
+          <p>Precio ML(usd):</p>
+        </div>
       </Card>
       <div>&nbsp;</div>
     </Grid>

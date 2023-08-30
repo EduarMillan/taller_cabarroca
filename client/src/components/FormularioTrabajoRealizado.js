@@ -50,7 +50,7 @@ export default function FormularioTrabajoRealizado(route) {
     costo_total: "",
     utilidad: "",
     facturado: "",
-    entidad: ""
+    entidad: "",
   });
 
   const [loading2, setLoading2] = useState(false);
@@ -78,7 +78,6 @@ export default function FormularioTrabajoRealizado(route) {
     setTrabajo({ ...trabajo, [e.target.name]: e.target.value });
   };
 
-
   const loadTrabajos = async (id) => {
     const data = await getTrabajoRealizado(id);
     setTrabajo(...data);
@@ -96,7 +95,15 @@ export default function FormularioTrabajoRealizado(route) {
 
   return (
     <Grid container direction="column" alignItems="top" justifyContent="center">
-      <Grid>
+      <Typography
+          variant="5"
+          textAlign="center"
+          color="inherit"
+          backgroundColor="green"
+          padding={0.5}
+        >
+           {editing ? "Actualizar Trabajo" : "Insertar Trabajo"}
+        </Typography>
         <Card
           style={{
             backgroundColor: "transparent",
@@ -105,15 +112,6 @@ export default function FormularioTrabajoRealizado(route) {
             marginRight: "0.5rem",
           }}
         >
-          <Typography
-            variant="5"
-            textAlign="center"
-            color="inherit"
-            backgroundColor="green"
-            padding={0.5}
-          >
-            {editing ? "Actualizar Trabajo" : "Insertar Trabajo"}
-          </Typography>
           <CardContent>
             <form className={classes.root} onSubmit={handledSubmit}>
               <TextField
@@ -295,9 +293,8 @@ export default function FormularioTrabajoRealizado(route) {
                   !trabajo.precio ||
                   !trabajo.otros_gastos_descripcion ||
                   !trabajo.costo_otros_gastos ||
-                  !(trabajo.facturado || trabajo.facturado === 0)||
-                  !trabajo.entidad 
-				  
+                  !(trabajo.facturado || trabajo.facturado === 0) ||
+                  !trabajo.entidad
                 }
               >
                 {loading2 ? (
@@ -309,7 +306,6 @@ export default function FormularioTrabajoRealizado(route) {
             </form>
           </CardContent>
         </Card>
-      </Grid>
     </Grid>
   );
 }
