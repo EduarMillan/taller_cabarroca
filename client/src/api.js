@@ -1,6 +1,43 @@
 const API = "http://127.0.0.1:3000/materiales";
 const API2 = "http://127.0.0.1:3000/trabajos_realizados";
 const API3 = "http://127.0.0.1:3000/materialestrabajosrealizados";
+const API4 = "http://127.0.0.1:3000/precio_materiales";
+
+//----------------precio_materiales----------------
+export const getPrecioMateriales = async () => {
+  const res = await fetch(API4);
+  return await res.json();
+};
+
+export const getPrecioMaterial = async (id) => {
+  const res = await fetch(`${API4}/${id}`);
+  return await res.json();
+};
+
+export const savePrecioMaterial = async (nombre, espesor, color, precio_ml, precio_m2) => {
+  const res = await fetch(API4, {
+    method: "POST",
+    headers: { Accept: "application/json", "Content-Type": "application/json" },
+    body: JSON.stringify(nombre, espesor, color, precio_ml, precio_m2),
+  });
+  return await res.json();
+};
+
+export const DeletePrecioMaterial = async (id) => {
+  await fetch(`${API4}/${id}`, {
+    method: "DELETE",
+  });
+};
+
+export const UpdatePrecioMaterial = async (id, newPrecioMaterial) => {
+ const res =  await fetch(`${API4}/${id}`, {
+    method: "PUT",
+    headers: { Accept: "application/json", "Content-Type": "application/json" },
+    body: JSON.stringify(newPrecioMaterial),
+  });
+  return res;
+};
+
 
 
 //-----------------materiales----------------

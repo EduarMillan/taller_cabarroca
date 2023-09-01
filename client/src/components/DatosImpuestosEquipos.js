@@ -24,7 +24,7 @@ export default function DatosImpuestosEquipos() {
   },[]);
 
   return (
-      <Grid container alignItems={"center"} paddingBottom={1}>
+      <Grid container alignItems={"center"} paddingBottom={1} >
       {" "}
       {/*Contiende los datos de los impuestos, utilidad y demas datos */}
       <Grid

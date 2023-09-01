@@ -1,0 +1,36 @@
+@api = http://localhost:3000/precio_materiales
+
+GET {{api}}
+
+###
+GET {{api}}/3
+
+###
+GET {{api}}/count
+
+###
+POST {{api}}
+Content-Type: application/json
+
+{
+"nombre":"PVC",
+"espesor":"10",
+"color":"Negro",
+"precio_ml":"80",
+"precio_m2":"120"
+}
+
+###
+DELETE {{api}}/3
+
+###
+PUT {{api}}/5
+Content-Type: application/json
+
+{
+"nombre":"PVC",
+"espesor":"5",
+"color":"Negro",
+"precio_ml":"50",
+"precio_m2":"70"
+}

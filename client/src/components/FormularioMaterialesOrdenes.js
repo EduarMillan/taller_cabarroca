@@ -2,6 +2,7 @@ import { useMaterialContext } from "./MaterialContext";
 import {
   saveMaterialTrabajosRealizados,
   UpdateMaterialTrabajosRealizados,
+  getPrecioMateriales
 } from "../api";
 import { Button, TextField } from "@material-ui/core";
 import { Card, Grid, Typography } from "@mui/material";
@@ -36,7 +37,6 @@ export default function FormularioMaterialesOrdenes({ editedMaterial }) {
   const params = useParams();
 
   const [materialOrden, setMaterialOrden] = useState({
-    //id:"",
     id_orden: params.id,
     nombre: "",
     espesor: "",
@@ -51,6 +51,9 @@ export default function FormularioMaterialesOrdenes({ editedMaterial }) {
 
   const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState(false);
+  const [precios, setPrecios] = useState();
+  const [precio_ml, setPrecio_ml] = useState(0);
+  const [precio_m2, setPrecio_m2] = useState(0);
 
   const handledSubmit = async (e) => {
     e.preventDefault();
@@ -58,9 +61,9 @@ export default function FormularioMaterialesOrdenes({ editedMaterial }) {
 
     try {
       if (editing) {
-        UpdateMaterialTrabajosRealizados(materialOrden.id, materialOrden); //revisar esta logica del id
+         UpdateMaterialTrabajosRealizados(materialOrden.id, materialOrden); //revisar esta logica del id
       } else {
-        saveMaterialTrabajosRealizados(materialOrden);
+         saveMaterialTrabajosRealizados(materialOrden);
       }
       setShouldReload(true);
       setLoading(false);
@@ -81,42 +84,62 @@ export default function FormularioMaterialesOrdenes({ editedMaterial }) {
       precio_m2: "",
       precio_total: "",
     });
+
   };
 
-  const handleChange = (e) => {
-    setMaterialOrden({ ...materialOrden, [e.target.name]: e.target.value });
+  const handleChange = async (e) => {
+    setMaterialOrden({ ...materialOrden, [e.target.name]: e.target.value }); 
   };
 
-  /*const loadMaterialOrdenes = async(id) => {
-  const data = await getMaterialTrabajosRealizados(id);
-   setMaterialOrden(...data);}*/
+  const calcularPrecios= async () => {
+    setPrecio_ml(0);
+    setPrecio_m2(0);
+    if(materialOrden.espesor && materialOrden.color && materialOrden.nombre)
+    {
+      const preciosM = await getPrecioMateriales();
+      const precio = preciosM.find(x=>(x.nombre === materialOrden.nombre && x.color === materialOrden.color && x.espesor === materialOrden.espesor)); 
+      setPrecios(precio) ; 
+      if(materialOrden.medida_largo )
+        setPrecio_ml(( materialOrden.medida_largo * precios.precio_ml));
+       
+      if(materialOrden.medida_largo  && materialOrden.medida_ancho)
+        setPrecio_m2((materialOrden.medida_largo*materialOrden.medida_ancho * precios.precio_m2));  
+       
+    }
+  }
 
   useEffect(() => {
     if (editedMaterial1) {
       setEditing(true);
       setMaterialOrden(editedMaterial1);
-      //loadMaterialOrdenes(params.id);
     }
-  }, [params.id, editedMaterial]);
+    //calcularPrecios();
+  }, [params.id, editedMaterial]);//params.id, editedMaterial, materialOrden
+
+  useEffect(() => {
+    calcularPrecios();
+  }, [materialOrden]);
 
   return (
-    <Grid container direction="column" alignItems="top" justifyContent="center">
+    <Grid container direction="column" alignItems="top" justifyContent="center" fontFamily={'Roboto'}>
       <div>&nbsp;</div>
       <Typography
         variant="5"
         textAlign="center"
         color="inherit"
-        backgroundColor="green"
+        backgroundColor="#0000FF"
         padding={0.5}
+        borderRadius='5px'
+        fontWeight='600'
       >
-        Materiales Asociados
+        MATERIALES ASOCIADOS
       </Typography>
       <Card
         style={{
           backgroundColor: "transparent",
           padding: "0.5rem",
           color: "inherit",
-          marginRight: "0.5rem",
+          borderRadius:'5px',
           display: "flex",
           justifyContent: "space-between",
         }}
@@ -173,16 +196,7 @@ export default function FormularioMaterialesOrdenes({ editedMaterial }) {
               </MenuItem>
             ))}
           </TextField>
-          <TextField
-            variant="outlined"
-            label="Descripción"
-            name="descripcion"
-            sx={{ display: "block", margin: ".5rem 0" }}
-            value={materialOrden.descripcion}
-            onChange={handleChange}
-            InputLabelProps={{ style: { color: "inherit" } }}
-            InputProps={{ style: { color: "inherit" } }}
-          />
+          
           <TextField
             variant="outlined"
             label="Medida Largo"
@@ -202,6 +216,16 @@ export default function FormularioMaterialesOrdenes({ editedMaterial }) {
             type="number"
             sx={{ display: "block", margin: ".5rem 0" }}
             value={materialOrden.medida_ancho}
+            onChange={handleChange}
+            InputLabelProps={{ style: { color: "inherit" } }}
+            InputProps={{ style: { color: "inherit" } }}
+          />
+          <TextField
+            variant="outlined"
+            label="Descripción"
+            name="descripcion"
+            sx={{ display: "block", margin: ".5rem 0" }}
+            value={materialOrden.descripcion}
             onChange={handleChange}
             InputLabelProps={{ style: { color: "inherit" } }}
             InputProps={{ style: { color: "inherit" } }}
@@ -263,20 +287,23 @@ export default function FormularioMaterialesOrdenes({ editedMaterial }) {
         <div
           style={{
             background: "inherit",
-            width: "270px",
-            justifyItems: "center",
+            width: "280px",
+            paddingTop: "5px",
             color: "inherit",
             textAlign: "center",
             fontSize: "12px",
-            
+            border: "1px solid",
+            borderRadius: "5px",
+            borderColor:"black"
           }}
         >
           
             DATOS DEL MATERIAL
           
           <p style={{color:'greenyellow', fontSize:'13px'}}>{materialOrden.nombre+" "+materialOrden.espesor+"mm"+" "+materialOrden.color}</p>
-          <p>Precio M2(usd):</p>
-          <p>Precio ML(usd):</p>
+          <p>Precio ML(usd): {precio_ml}</p>
+          <p>Precio M2(usd): {precio_m2}</p>
+          <p>Precio Total(usd):</p>
         </div>
       </Card>
       <div>&nbsp;</div>

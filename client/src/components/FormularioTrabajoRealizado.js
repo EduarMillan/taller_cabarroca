@@ -94,22 +94,24 @@ export default function FormularioTrabajoRealizado(route) {
   const fechaCorrecta = moment(fechaIncorrecta).format("YYYY-MM-DDThh:mm"); //doy formato correcto a la fecha
 
   return (
-    <Grid container direction="column" alignItems="top" justifyContent="center">
+    <Grid container direction="column" alignItems="top" justifyContent="center" fontFamily={'Roboto'}>
       <Typography
           variant="5"
           textAlign="center"
           color="inherit"
-          backgroundColor="green"
+          backgroundColor="#0000FF"
           padding={0.5}
+          borderRadius='5px'
+          fontWeight='600'
         >
-           {editing ? "Actualizar Trabajo" : "Insertar Trabajo"}
+           {editing ? "ACTUALIZAR TRABAJO" : "INSERTAR TRABAJO"}
         </Typography>
         <Card
           style={{
             backgroundColor: "transparent",
             padding: ".5rem",
             color: "inherit",
-            marginRight: "0.5rem",
+            borderRadius:'5px'
           }}
         >
           <CardContent>
