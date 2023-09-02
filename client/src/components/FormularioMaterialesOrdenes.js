@@ -2,7 +2,7 @@ import { useMaterialContext } from "./MaterialContext";
 import {
   saveMaterialTrabajosRealizados,
   UpdateMaterialTrabajosRealizados,
-  getPrecioMateriales
+  getMateriales
 } from "../api";
 import { Button, TextField } from "@material-ui/core";
 import { Card, Grid, Typography } from "@mui/material";
@@ -49,15 +49,12 @@ export default function FormularioMaterialesOrdenes({ editedMaterial }) {
     precio_total: "",
   });
 
-  const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState(false);
-  const [precios, setPrecios] = useState();
   const [precio_ml, setPrecio_ml] = useState(0);
   const [precio_m2, setPrecio_m2] = useState(0);
 
   const handledSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
 
     try {
       if (editing) {
@@ -66,7 +63,6 @@ export default function FormularioMaterialesOrdenes({ editedMaterial }) {
          saveMaterialTrabajosRealizados(materialOrden);
       }
       setShouldReload(true);
-      setLoading(false);
       setEditing(false);
     } catch (error) {
       console.error(error);
@@ -84,7 +80,6 @@ export default function FormularioMaterialesOrdenes({ editedMaterial }) {
       precio_m2: "",
       precio_total: "",
     });
-
   };
 
   const handleChange = async (e) => {
@@ -96,14 +91,20 @@ export default function FormularioMaterialesOrdenes({ editedMaterial }) {
     setPrecio_m2(0);
     if(materialOrden.espesor && materialOrden.color && materialOrden.nombre)
     {
-      const preciosM = await getPrecioMateriales();
-      const precio = preciosM.find(x=>(x.nombre === materialOrden.nombre && x.color === materialOrden.color && x.espesor === materialOrden.espesor)); 
-      setPrecios(precio) ; 
+      const materiales = await getMateriales();
+      const materialesFiltrados = materiales.filter((x)=>(x.nombre === materialOrden.nombre && x.color === materialOrden.color && x.espesor.toString() === materialOrden.espesor)); 
+
+      const sumaPreciosM2 = materialesFiltrados.reduce((total, material) => total + parseFloat(material.costo_m2), 0);
+      const precio_m2 = sumaPreciosM2 / materialesFiltrados.length;
+
+      const sumaPreciosMl = materialesFiltrados.reduce((total, material) => total + parseFloat(material.costo_ml), 0);
+      const precio_ml = sumaPreciosMl / materialesFiltrados.length;
+ 
       if(materialOrden.medida_largo )
-        setPrecio_ml(( materialOrden.medida_largo * precios.precio_ml));
+        setPrecio_ml(( materialOrden.medida_largo * precio_ml));
        
       if(materialOrden.medida_largo  && materialOrden.medida_ancho)
-        setPrecio_m2((materialOrden.medida_largo*materialOrden.medida_ancho * precios.precio_m2));  
+        setPrecio_m2((materialOrden.medida_largo*materialOrden.medida_ancho * precio_m2));  
        
     }
   }
@@ -288,7 +289,6 @@ export default function FormularioMaterialesOrdenes({ editedMaterial }) {
           style={{
             background: "inherit",
             width: "280px",
-            paddingTop: "5px",
             color: "inherit",
             textAlign: "center",
             fontSize: "12px",
@@ -297,13 +297,13 @@ export default function FormularioMaterialesOrdenes({ editedMaterial }) {
             borderColor:"black"
           }}
         >
+          <div style={{background:'#FF3300', borderRadius: "5px", fontWeight: 'bold', fontStyle: 'italic'}}>DATOS DEL MATERIAL</div>
+            
           
-            DATOS DEL MATERIAL
-          
-          <p style={{color:'greenyellow', fontSize:'13px'}}>{materialOrden.nombre+" "+materialOrden.espesor+"mm"+" "+materialOrden.color}</p>
-          <p>Precio ML(usd): {precio_ml}</p>
-          <p>Precio M2(usd): {precio_m2}</p>
-          <p>Precio Total(usd):</p>
+          <p style={{color:'greenyellow', fontSize:'13px', fontWeight: 'bold', fontStyle: 'italic'}}>{materialOrden.nombre} {materialOrden.espesor} mm {materialOrden.color}</p>
+          <p style={{fontWeight: 'bold', fontStyle: 'italic'}}>Precio ML (USD): {precio_ml.toFixed(2)}</p>
+          <p style={{fontWeight: 'bold', fontStyle: 'italic'}}>Precio M2 (USD): {precio_m2.toFixed(2)}</p>
+      
         </div>
       </Card>
       <div>&nbsp;</div>

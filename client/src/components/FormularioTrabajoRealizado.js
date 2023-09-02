@@ -1,3 +1,4 @@
+import { useMaterialContext } from "./MaterialContext";
 import moment from "moment";
 import { Button, TextField } from "@material-ui/core";
 import {
@@ -12,6 +13,7 @@ import {
   saveTrabajosRealizados,
   getTrabajoRealizado,
   UpdateTrabajoRealizado,
+  getMaterialTrabajosRealizados,
 } from "../api";
 import { useParams, useNavigate } from "react-router-dom";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -31,7 +33,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FormularioTrabajoRealizado(route) {
+export default function FormularioTrabajoRealizado() {
+  const { shouldReload, setShouldReload } = useMaterialContext();
+
   const classes = useStyles();
 
   const params = useParams();
@@ -41,7 +45,7 @@ export default function FormularioTrabajoRealizado(route) {
     descripcion: "",
     pago_efectivo: "",
     precio: "",
-    fecha: new Date().toISOString().slice(0, 16),
+    fecha: new Date().toISOString().slice(0, 10),
     otros_gastos_descripcion: "",
     costo_otros_gastos: "",
     impuesto_representacion: "",
@@ -72,6 +76,7 @@ export default function FormularioTrabajoRealizado(route) {
     } catch (error) {
       console.error(error);
     }
+    setShouldReload(true);
   };
 
   const handleChange = (e) => {
@@ -79,235 +84,251 @@ export default function FormularioTrabajoRealizado(route) {
   };
 
   const loadTrabajos = async (id) => {
-    const data = await getTrabajoRealizado(id);
-    setTrabajo(...data);
+    const materialesT = await getMaterialTrabajosRealizados(params.id);
+    const costoT = materialesT.reduce(
+      (total, material) => total + parseFloat(material.precio_total),
+      0
+    );
+
+    let data = await getTrabajoRealizado(id);
+    data[0].costo_total = costoT;
+    setTrabajo(data[0]);
+    console.log(trabajo);
   };
 
   useEffect(() => {
     if (params.id) {
       setEditing(true);
       loadTrabajos(params.id);
+      //setShouldReload(false);
     }
-  }, [params.id]);
+  }, [params.id, shouldReload]); //params.id
 
   const fechaIncorrecta = trabajo.fecha; //aqui capturo la fecha con formato incorrecto
   const fechaCorrecta = moment(fechaIncorrecta).format("YYYY-MM-DDThh:mm"); //doy formato correcto a la fecha
-
+  
   return (
-    <Grid container direction="column" alignItems="top" justifyContent="center" fontFamily={'Roboto'}>
+    <Grid
+      container
+      direction="column"
+      alignItems="top"
+      justifyContent="center"
+      fontFamily={"Roboto"}
+    >
       <Typography
-          variant="5"
-          textAlign="center"
-          color="inherit"
-          backgroundColor="#0000FF"
-          padding={0.5}
-          borderRadius='5px'
-          fontWeight='600'
-        >
-           {editing ? "ACTUALIZAR TRABAJO" : "INSERTAR TRABAJO"}
-        </Typography>
-        <Card
-          style={{
-            backgroundColor: "transparent",
-            padding: ".5rem",
-            color: "inherit",
-            borderRadius:'5px'
-          }}
-        >
-          <CardContent>
-            <form className={classes.root} onSubmit={handledSubmit}>
-              <TextField
-                variant="outlined"
-                label="Nombre"
-                sx={{
-                  display: "block",
-                  margin: ".5rem 0",
-                  backgroundColor: "lightblue",
-                }}
-                name="nombre"
-                value={trabajo.nombre}
-                onChange={handleChange}
-                InputLabelProps={{ style: { color: "inherit" } }}
-                InputProps={{
-                  style: {
-                    color: "inherit",
-                  },
-                }}
-              />
+        variant="5"
+        textAlign="center"
+        color="inherit"
+        backgroundColor="#0000FF"
+        padding={0.5}
+        borderRadius="5px"
+        fontWeight="600"
+      >
+        {editing ? "ACTUALIZAR TRABAJO" : "INSERTAR TRABAJO"}
+      </Typography>
+      <Card
+        style={{
+          backgroundColor: "transparent",
+          padding: ".5rem",
+          color: "inherit",
+          borderRadius: "5px",
+        }}
+      >
+        <CardContent>
+          <form className={classes.root} onSubmit={handledSubmit}>
+            <TextField
+              variant="outlined"
+              label="Nombre"
+              sx={{
+                display: "block",
+                margin: ".5rem 0",
+                backgroundColor: "lightblue",
+              }}
+              name="nombre"
+              value={trabajo.nombre}
+              onChange={handleChange}
+              InputLabelProps={{ style: { color: "inherit" } }}
+              InputProps={{
+                style: {
+                  color: "inherit",
+                },
+              }}
+            />
 
-              <TextField
-                variant="outlined"
-                label="Descripcion"
-                multiline
-                rows={1}
-                sx={{ display: "block", margin: ".5rem 0" }}
-                name="descripcion"
-                value={trabajo.descripcion}
-                onChange={handleChange}
-                InputLabelProps={{ style: { color: "inherit" } }}
-                InputProps={{
-                  style: {
-                    color: "inherit",
-                  },
-                }}
-              />
+            <TextField
+              variant="outlined"
+              label="Descripcion"
+              multiline
+              rows={1}
+              sx={{ display: "block", margin: ".5rem 0" }}
+              name="descripcion"
+              value={trabajo.descripcion}
+              onChange={handleChange}
+              InputLabelProps={{ style: { color: "inherit" } }}
+              InputProps={{
+                style: {
+                  color: "inherit",
+                },
+              }}
+            />
 
-              <TextField
-                variant="outlined"
-                label="Tipo de Pago"
-                select
-                sx={{ display: "block", margin: ".5rem 0" }}
-                name="pago_efectivo"
-                value={trabajo.pago_efectivo + ""}
-                onChange={handleChange}
-                InputLabelProps={{ style: { color: "inherit" } }}
-                InputProps={{
-                  style: {
-                    color: "inherit",
-                  },
-                }}
-              >
-                {currencies1.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
+            <TextField
+              variant="outlined"
+              label="Tipo de Pago"
+              select
+              sx={{ display: "block", margin: ".5rem 0" }}
+              name="pago_efectivo"
+              value={trabajo.pago_efectivo + ""}
+              onChange={handleChange}
+              InputLabelProps={{ style: { color: "inherit" } }}
+              InputProps={{
+                style: {
+                  color: "inherit",
+                },
+              }}
+            >
+              {currencies1.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
 
-              <TextField
-                variant="outlined"
-                label="Precio (MN)"
-                type="number"
-                sx={{ display: "block", margin: ".5rem 0" }}
-                name="precio"
-                value={trabajo.precio + ""}
-                onChange={handleChange}
-                InputLabelProps={{ style: { color: "inherit" } }}
-                InputProps={{
-                  style: {
-                    color: "inherit",
-                  },
-                }}
-              />
+            <TextField
+              variant="outlined"
+              label="Precio (MN)"
+              type="number"
+              sx={{ display: "block", margin: ".5rem 0" }}
+              name="precio"
+              value={trabajo.precio + ""}
+              onChange={handleChange}
+              InputLabelProps={{ style: { color: "inherit" } }}
+              InputProps={{
+                style: {
+                  color: "inherit",
+                },
+              }}
+            />
 
-              <TextField
-                variant="outlined"
-                label="Fecha"
-                type="datetime-local"
-                sx={{ display: "block", margin: ".5rem 0" }}
-                name="fecha"
-                value={fechaCorrecta}
-                onChange={handleChange}
-                InputLabelProps={{ style: { color: "inherit" } }}
-                InputProps={{
-                  style: {
-                    color: "inherit",
-                  },
-                }}
-              />
-              <TextField
-                variant="outlined"
-                label="Otros Gastos Descrip."
-                sx={{ display: "block", margin: ".5rem 0" }}
-                name="otros_gastos_descripcion"
-                value={trabajo.otros_gastos_descripcion}
-                onChange={handleChange}
-                InputLabelProps={{ style: { color: "inherit" } }}
-                InputProps={{
-                  style: {
-                    color: "inherit",
-                  },
-                }}
-              />
+            <TextField
+              variant="outlined"
+              label="Fecha"
+              type="datetime-local"
+              sx={{ display: "block", margin: ".5rem 0" }}
+              name="fecha"
+              value={fechaCorrecta}
+              onChange={handleChange}
+              InputLabelProps={{ style: { color: "inherit" } }}
+              InputProps={{
+                style: {
+                  color: "inherit",
+                },
+              }}
+            />
+            <TextField
+              variant="outlined"
+              label="Otros Gastos Descrip."
+              sx={{ display: "block", margin: ".5rem 0" }}
+              name="otros_gastos_descripcion"
+              value={trabajo.otros_gastos_descripcion}
+              onChange={handleChange}
+              InputLabelProps={{ style: { color: "inherit" } }}
+              InputProps={{
+                style: {
+                  color: "inherit",
+                },
+              }}
+            />
 
-              <TextField
-                variant="outlined"
-                label="Costo Otros Gastos"
-                type="number"
-                sx={{ display: "block", margin: ".5rem 0" }}
-                name="costo_otros_gastos"
-                value={trabajo.costo_otros_gastos + ""}
-                onChange={handleChange}
-                InputLabelProps={{ style: { color: "inherit" } }}
-                InputProps={{
-                  style: {
-                    color: "inherit",
-                  },
-                }}
-              />
+            <TextField
+              variant="outlined"
+              label="Costo Otros Gastos"
+              type="number"
+              sx={{ display: "block", margin: ".5rem 0" }}
+              name="costo_otros_gastos"
+              value={trabajo.costo_otros_gastos + ""}
+              onChange={handleChange}
+              InputLabelProps={{ style: { color: "inherit" } }}
+              InputProps={{
+                style: {
+                  color: "inherit",
+                },
+              }}
+            />
 
-              <TextField
-                variant="outlined"
-                select
-                label="Facturado"
-                sx={{ display: "block", margin: ".5rem 0" }}
-                name="facturado"
-                value={trabajo.facturado}
-                onChange={handleChange}
-                InputLabelProps={{ style: { color: "inherit" } }}
-                InputProps={{
-                  style: {
-                    color: "inherit",
-                  },
-                }}
-              >
-                {currencies.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
+            <TextField
+              variant="outlined"
+              select
+              label="Facturado"
+              sx={{ display: "block", margin: ".5rem 0" }}
+              name="facturado"
+              value={trabajo.facturado}
+              onChange={handleChange}
+              InputLabelProps={{ style: { color: "inherit" } }}
+              InputProps={{
+                style: {
+                  color: "inherit",
+                },
+              }}
+            >
+              {currencies.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
 
-              <TextField
-                variant="outlined"
-                select
-                label="Entidad"
-                sx={{ display: "block", margin: ".5rem 0" }}
-                name="entidad"
-                value={trabajo.entidad}
-                onChange={handleChange}
-                InputLabelProps={{ style: { color: "inherit" } }}
-                InputProps={{
-                  style: {
-                    color: "inherit",
-                  },
-                }}
-              >
-                {entidad.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
-              <Button
-                variant="contained"
-                color="primary"
-                type="submit"
-                style={{
-                  padding: "12px",
-                  margin: "12px",
-                }}
-                disabled={
-                  !trabajo.nombre ||
-                  !trabajo.descripcion ||
-                  !(trabajo.pago_efectivo || trabajo.pago_efectivo === 0) ||
-                  !trabajo.fecha ||
-                  !trabajo.precio ||
-                  !trabajo.otros_gastos_descripcion ||
-                  !trabajo.costo_otros_gastos ||
-                  !(trabajo.facturado || trabajo.facturado === 0) ||
-                  !trabajo.entidad
-                }
-              >
-                {loading2 ? (
-                  <CircularProgress color="inherit" size={24} />
-                ) : (
-                  "Salvar"
-                )}
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
+            <TextField
+              variant="outlined"
+              select
+              label="Entidad"
+              sx={{ display: "block", margin: ".5rem 0" }}
+              name="entidad"
+              value={trabajo.entidad}
+              onChange={handleChange}
+              InputLabelProps={{ style: { color: "inherit" } }}
+              InputProps={{
+                style: {
+                  color: "inherit",
+                },
+              }}
+            >
+              {entidad.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+              style={{
+                padding: "12px",
+                margin: "12px",
+              }}
+              disabled={
+                !trabajo.nombre ||
+                !trabajo.descripcion ||
+                !(trabajo.pago_efectivo || trabajo.pago_efectivo === 0) ||
+                !trabajo.fecha ||
+                !trabajo.precio ||
+                !trabajo.otros_gastos_descripcion ||
+                !trabajo.costo_otros_gastos ||
+                !(trabajo.facturado || trabajo.facturado === 0) ||
+                !trabajo.entidad
+              }
+            >
+              {loading2 ? (
+                <CircularProgress color="inherit" size={24} />
+              ) : (
+                (editing ? 'Actualizar' : "Salvar")
+              )}
+            </Button>
+          </form>
+          
+        </CardContent>
+      </Card>
     </Grid>
   );
 }

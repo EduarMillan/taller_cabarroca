@@ -43,7 +43,7 @@ Content-Type: application/json
 DELETE {{api}}/2
 
 ###
-PUT {{api}}/3
+PUT {{api}}/30
 Content-Type: application/json
 
 {

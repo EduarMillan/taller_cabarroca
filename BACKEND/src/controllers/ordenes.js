@@ -1,4 +1,5 @@
 import { connect2 } from "../database";
+import { getMaterialOrdenes } from "./materiales_Ordenes";
 
 export const getOrdenes = async (req, res) => {
   const [row] = await (
@@ -28,7 +29,7 @@ export const getContadorOrdenes = async (req, res) => {
 export const saveOrdenes = async (req, res) => {
  
   let pagoEfectivo = req.body.pago_efectivo;
-  let costo_materiales = 1000;  // arreglar este valor cuando se calcule el costo de los materiales
+  let costo_materiales = 0; 
   let impuesto_representacion = 0;
   let impuesto_onat = 0;
    
@@ -89,8 +90,9 @@ export const deleteOrden = async (req, res) => {
 };
 
 export const updateOrden = async (req, res) => {
-  var pago_Efectivo = req.body.pago_efectivo;
- 
+  let pago_Efectivo = req.body.pago_efectivo;
+  let costo_materiales = 0;
+  
   if (pago_Efectivo=='si')
   {
     var impuesto_representacion = 0;

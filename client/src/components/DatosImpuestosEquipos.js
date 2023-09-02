@@ -2,10 +2,12 @@ import { Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import { getTrabajoRealizado } from "../api";
 import { useParams } from "react-router-dom";
+import { useMaterialContext } from "./MaterialContext";
 
 
 export default function DatosImpuestosEquipos() {
 
+  const { shouldReload } = useMaterialContext();
   const [trabajo, setTrabajo] = useState();
   const params = useParams();
 
@@ -13,7 +15,6 @@ export default function DatosImpuestosEquipos() {
     try {
       const data = await getTrabajoRealizado(params.id);
       setTrabajo(data);
-      console.log(data);
     } catch (error) {
       console.error("Error al cargar el trabajo:", error);
     }
@@ -21,7 +22,8 @@ export default function DatosImpuestosEquipos() {
 
   useEffect(() => {
     loadTrabajo();
-  },[]);
+    
+  },[shouldReload]);
 
   return (
       <Grid container alignItems={"center"} paddingBottom={1} >

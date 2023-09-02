@@ -28,10 +28,10 @@ export default function ListaMaterialesOrdenes() {
   };
 
   useEffect(() => {
-    //if (shouldReload) {
+    if (params.id) {
       loadMaterialesOrdenes(params.id);
       setShouldReload(false); // Restablecer el valor después de cargar
-  //  }
+   }
   }, [shouldReload, setShouldReload, params.id]);
 
 
