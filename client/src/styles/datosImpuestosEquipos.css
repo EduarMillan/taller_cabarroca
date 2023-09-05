@@ -1,0 +1,51 @@
+.container{ 
+    align-items: center; 
+    display: flex;
+   background: transparent ;
+    background-size: auto 100%;
+    background-repeat: repeat-x;
+    border-radius: 5px;
+    text-align: center;  
+    margin-bottom: 5px;
+    height: 50px;
+}
+
+.imp_onat{
+    background-color: transparent;
+    border-bottom: 3px solid red;
+    color: inherit;
+    height: 50px ; 
+    width: 20%;
+}
+
+.imp_rep{
+    background-color: transparent;
+    border-bottom: 3px solid yellow;
+    color: inherit;
+    height: 50px ;
+    width: 20%;
+}
+
+.imp_equipo{
+    background-color: transparent;
+    border-bottom: 3px solid blue;
+    color: inherit;
+    height: 50px ;
+    width: 20%;
+}
+
+.costo{
+    background-color: transparent;
+    border-bottom: 3px solid orange;
+    color: inherit;
+    height: 50px ;
+    width: 20%;
+}
+
+.utilidad{
+    background-color: transparent;
+    border-bottom: 3px solid green;
+    color: inherit;
+    height: 50px ;
+    width: 20%;
+}

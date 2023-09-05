@@ -68,6 +68,7 @@ export default function FormularioTrabajoRealizado() {
       if (editing) {
         //navigate("/dashboard/trabajos_realizados");
         await UpdateTrabajoRealizado(params.id, trabajo);
+        
       } else {
         navigate("/dashboard/trabajos_realizados");
         await saveTrabajosRealizados(trabajo);
@@ -84,16 +85,17 @@ export default function FormularioTrabajoRealizado() {
   };
 
   const loadTrabajos = async (id) => {
-    const materialesT = await getMaterialTrabajosRealizados(params.id);
-    const costoT = materialesT.reduce(
-      (total, material) => total + parseFloat(material.precio_total),
-      0
-    );
-
+    let costoT = 0;
+    const materialesT = await getMaterialTrabajosRealizados(id);
+    if (materialesT !=='Material no encontrado') {
+      costoT = materialesT.reduce(
+        (total, material) => total + parseFloat(material.precio_total),
+        0
+      );
+    }
     let data = await getTrabajoRealizado(id);
     data[0].costo_total = costoT;
     setTrabajo(data[0]);
-    console.log(trabajo);
   };
 
   useEffect(() => {
@@ -106,7 +108,7 @@ export default function FormularioTrabajoRealizado() {
 
   const fechaIncorrecta = trabajo.fecha; //aqui capturo la fecha con formato incorrecto
   const fechaCorrecta = moment(fechaIncorrecta).format("YYYY-MM-DDThh:mm"); //doy formato correcto a la fecha
-  
+
   return (
     <Grid
       container
@@ -321,12 +323,13 @@ export default function FormularioTrabajoRealizado() {
             >
               {loading2 ? (
                 <CircularProgress color="inherit" size={24} />
+              ) : editing ? (
+                "Actualizar"
               ) : (
-                (editing ? 'Actualizar' : "Salvar")
+                "Salvar"
               )}
             </Button>
           </form>
-          
         </CardContent>
       </Card>
     </Grid>

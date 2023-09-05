@@ -32,6 +32,7 @@ export const saveOrdenes = async (req, res) => {
   let costo_materiales = 0; 
   let impuesto_representacion = 0;
   let impuesto_onat = 0;
+  let otros_gastos = req.body.costo_otros_gastos;
    
     if (pagoEfectivo =='si')
     {
@@ -46,7 +47,7 @@ export const saveOrdenes = async (req, res) => {
   let impuesto_equipos =
     (req.body.precio -
       impuesto_representacion -
-      impuesto_onat -
+      impuesto_onat - otros_gastos-
       costo_materiales) *
     0.1;
   let utilidad =
@@ -54,6 +55,7 @@ export const saveOrdenes = async (req, res) => {
     impuesto_representacion -
     impuesto_onat -
     impuesto_equipos -
+    otros_gastos -
     costo_materiales;
   await (
     await connect2()
@@ -92,6 +94,7 @@ export const deleteOrden = async (req, res) => {
 export const updateOrden = async (req, res) => {
   let pago_Efectivo = req.body.pago_efectivo;
   let costo_materiales = 0;
+  let otros_gastos = req.body.costo_otros_gastos;
   
   if (pago_Efectivo=='si')
   {
@@ -107,13 +110,15 @@ export const updateOrden = async (req, res) => {
     (req.body.precio -
       impuesto_representacion -
       impuesto_onat -
-      req.body.costo_total) *
+      req.body.costo_total-
+      otros_gastos) *
     0.1;
   var utilidad =
     req.body.precio -
     impuesto_representacion -
     impuesto_onat -
     impuesto_equipos -
+    otros_gastos -
     req.body.costo_total;
   await (
     await connect2()

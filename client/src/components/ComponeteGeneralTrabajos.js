@@ -9,13 +9,18 @@ import { MaterialProvider } from "./MaterialContext";
 export default function ComponeteGeneralTrabajos() {
   const [editar, setEditar] = useState(false);
 
-  const params = useParams();
+  //const params = useParams();
+  const { '*': parametro } = useParams();
 
   useEffect(() => {
-    if (params.id) {
+    if (parametro === 'trabajos_realizados/nuevo') {
+      setEditar(false);
+    } else {
       setEditar(true);
     }
-  }, [params.id]);
+    console.log('aqui esta parametro:',parametro);
+  }, [parametro]);
+  
 
   return (
     <MaterialProvider>
