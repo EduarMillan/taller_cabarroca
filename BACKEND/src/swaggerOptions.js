@@ -1,8 +1,10 @@
-export const options = {
+const options = {
   definition: {
     info: {
-      title: "Taller Cabarroca API",
+      title: 'Taller Cabarroca API',
     },
   },
-  apis: ["./src/routes/**/*.js"],
+  apis: ['./src/routes/**/*.js'],
 };
+
+export default options;

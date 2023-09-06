@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Router } from 'express';
 import {
   deleteMaterial,
   getMaterial,
@@ -6,7 +6,7 @@ import {
   getMateriales,
   saveMateriales,
   updateMaterial,
-} from "../controllers/materiales";
+} from '../controllers/materiales';
 
 const router = Router();
 
@@ -16,7 +16,7 @@ const router = Router();
  *  get:
  *    summary: Muestra todos los materiales existentes en la base de datos
  */
-router.get("/materiales", getMateriales);
+router.get('/materiales', getMateriales);
 
 /**
  * @swagger
@@ -24,15 +24,15 @@ router.get("/materiales", getMateriales);
  *  get:
  *    summary: Devuelve la cantidad de materiales existentes en la base de datos
  */
-router.get("/materiales/count", getContadorMateriales);
+router.get('/materiales/count', getContadorMateriales);
 
 /**
  * @swagger
  * /materiales/:
  *  get:
- *    summary: Muestra un material especificado existente en la base de datos mediante un id, en caso de no existeir devuelve un mensaje
+ *    summary: Show 1 material  existente en la BD  mediante un id, de no existir retorna un mensaje
  */
-router.get("/materiales/:id", getMaterial);
+router.get('/materiales/:id', getMaterial);
 
 /**
  * @swagger
@@ -40,7 +40,7 @@ router.get("/materiales/:id", getMaterial);
  *  post:
  *    summary: salva los materiales introducidos en la base de datos
  */
-router.post("/materiales", saveMateriales);
+router.post('/materiales', saveMateriales);
 
 /**
  * @swagger
@@ -48,7 +48,7 @@ router.post("/materiales", saveMateriales);
  *  delete:
  *    summary: Elimina un materiales existente en la base de datos mediante un id especificado
  */
-router.delete("/materiales/:id", deleteMaterial);
+router.delete('/materiales/:id', deleteMaterial);
 
 /**
  * @swagger
@@ -56,8 +56,6 @@ router.delete("/materiales/:id", deleteMaterial);
  *  put:
  *    summary: Actualiza un material existentes en la base de datos usando un id
  */
-router.put("/materiales/:id", updateMaterial);
-
-
+router.put('/materiales/:id', updateMaterial);
 
 export default router;

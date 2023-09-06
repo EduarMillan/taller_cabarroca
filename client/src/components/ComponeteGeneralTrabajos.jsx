@@ -1,15 +1,15 @@
-import FormularioTrabajoRealizado from "./FormularioTrabajoRealizado";
-import { Grid } from "@mui/material";
-import DatosImpuestosEquipos from "./DatosImpuestosEquipos";
-import ListaMaterialesOrdenes from "./ListaMaterialesOrdenes";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { MaterialProvider } from "./MaterialContext";
+import { Grid } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import FormularioTrabajoRealizado from './FormularioTrabajoRealizado';
+import DatosImpuestosEquipos from './DatosImpuestosEquipos';
+import ListaMaterialesOrdenes from './ListaMaterialesOrdenes';
+import { MaterialProvider } from './MaterialContext';
 
 export default function ComponeteGeneralTrabajos() {
   const [editar, setEditar] = useState(false);
 
-  //const params = useParams();
+  // const params = useParams();
   const { '*': parametro } = useParams();
 
   useEffect(() => {
@@ -18,9 +18,7 @@ export default function ComponeteGeneralTrabajos() {
     } else {
       setEditar(true);
     }
-    console.log('aqui esta parametro:',parametro);
   }, [parametro]);
-  
 
   return (
     <MaterialProvider>
@@ -45,7 +43,7 @@ export default function ComponeteGeneralTrabajos() {
           justifyContent="center"
         >
           <FormularioTrabajoRealizado />
-          
+
         </Grid>
       )}
     </MaterialProvider>

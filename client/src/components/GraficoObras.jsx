@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { PieChart, Pie, Cell } from 'recharts';
 
@@ -8,12 +7,13 @@ const data = [
   { name: 'B', value: 80, color: '#00ff00' },
   { name: 'C', value: 80, color: '#0000ff' },
 ];
-const cx = 150; //espaciado lef
-const cy = 100; //espaciado top
-const iR = 50;//radio interior
-const oR = 100;//radio exterior
-const value = 50; //valor donde se encuentra la aguja
+const cx = 150; // espaciado lef
+const cy = 100; // espaciado top
+const iR = 50;// radio interior
+const oR = 100;// radio exterior
+const value = 50; // valor donde se encuentra la aguja
 
+// eslint-disable-next-line no-shadow
 const needle = (value, data, cx, cy, iR, oR, color) => {
   let total = 0;
   data.forEach((v) => {
@@ -40,27 +40,27 @@ const needle = (value, data, cx, cy, iR, oR, color) => {
 };
 
 export default function GraficoObras() {
-  
-    return (
-      <PieChart width={280} height={140}>
-        <Pie
-          dataKey="value"
-          startAngle={180}
-          endAngle={0}
-          data={data}
-          cx={cx}
-          cy={cy}
-          innerRadius={iR}
-          outerRadius={oR}
-          fill="#8884d8"
-          stroke="none"
-        >
-          {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={entry.color} />
-          ))}
-        </Pie>
-        {needle(value, data, cx, cy, iR, oR, '#d0d000')}
-      </PieChart>
-      
-    );
-  }
+  return (
+    <PieChart width={280} height={140}>
+      <Pie
+        dataKey="value"
+        startAngle={180}
+        endAngle={0}
+        data={data}
+        cx={cx}
+        cy={cy}
+        innerRadius={iR}
+        outerRadius={oR}
+        fill="#8884d8"
+        stroke="none"
+      >
+        {data.map((entry, index) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <Cell key={`cell-${index}`} fill={entry.color} />
+        ))}
+      </Pie>
+      {needle(value, data, cx, cy, iR, oR, '#d0d000')}
+    </PieChart>
+
+  );
+}

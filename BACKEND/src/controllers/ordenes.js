@@ -1,19 +1,18 @@
-import { connect2 } from "../database";
-import { getMaterialOrdenes } from "./materiales_Ordenes";
+import connect2 from '../database';
 
 export const getOrdenes = async (req, res) => {
   const [row] = await (
     await connect2()
-  ).query("SELECT * FROM trabajos_realizados");
+  ).query('SELECT * FROM trabajos_realizados');
   res.json(row);
 };
 
 export const getOrden = async (req, res) => {
   const [row] = await (
     await connect2()
-  ).query("SELECT * FROM trabajos_realizados WHERE id = ?", [req.params.id]);
-  if (row.length == 0) {
-    res.json("Orden no encontrada");
+  ).query('SELECT * FROM trabajos_realizados WHERE id = ?', [req.params.id]);
+  if (row.length === 0) {
+    res.json('Orden no encontrada');
   } else {
     res.json(row);
   }
@@ -22,45 +21,30 @@ export const getOrden = async (req, res) => {
 export const getContadorOrdenes = async (req, res) => {
   const [row] = await (
     await connect2()
-  ).query("SELECT COUNT(*) FROM trabajos_realizados");
-  res.json(row[0]["COUNT(*)"]);
+  ).query('SELECT COUNT(*) FROM trabajos_realizados');
+  res.json(row[0]['COUNT(*)']);
 };
 
-export const saveOrdenes = async (req, res) => {
- 
-  let pagoEfectivo = req.body.pago_efectivo;
-  let costo_materiales = 0; 
-  let impuesto_representacion = 0;
-  let impuesto_onat = 0;
-  let otros_gastos = req.body.costo_otros_gastos;
-   
-    if (pagoEfectivo =='si')
-    {
-       impuesto_representacion = 0;
-       impuesto_onat = 0;
-    }
-    else{
-       impuesto_representacion = req.body.precio * 0.11;
-       impuesto_onat = (req.body.precio - impuesto_representacion) * 0.35;
-    }
- 
-  let impuesto_equipos =
-    (req.body.precio -
-      impuesto_representacion -
-      impuesto_onat - otros_gastos-
-      costo_materiales) *
-    0.1;
-  let utilidad =
-    req.body.precio -
-    impuesto_representacion -
-    impuesto_onat -
-    impuesto_equipos -
-    otros_gastos -
-    costo_materiales;
-  await (
-    await connect2()
-  ).query(
-    "INSERT INTO trabajos_realizados ( nombre, descripcion, pago_efectivo, precio, fecha, otros_gastos_descripcion, costo_otros_gastos, impuesto_representacion, impuesto_onat, impuesto_equipos, costo_total, utilidad, facturado, entidad) VALUES ( ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?)",
+export const saveOrdenes = async (req) => {
+  const pagoEfectivo = req.body.pago_efectivo;
+  const costoMateriales = 0;
+  let impRepres;
+  let onat;
+  const otrosGastos = req.body.costo_otros_gastos;
+
+  if (pagoEfectivo === 'si') {
+    impRepres = 0;
+    onat = 0;
+  } else {
+    impRepres = req.body.precio * 0.11;
+    onat = (req.body.precio - impRepres) * 0.35;
+  }
+
+  const impEquipos = (req.body.precio - impRepres - onat - otrosGastos - costoMateriales) * 0.1;
+  const utilidad = req.body.precio - impRepres - onat - impEquipos - otrosGastos
+    - costoMateriales;
+  await (await connect2()).query(
+    'INSERT INTO trabajos_realizados ( nombre, descripcion, pago_efectivo, precio, fecha, otros_gastos_descripcion, costo_otros_gastos, impRepres, impuestoOnat, impuestoEquipos, costo_total, utilidad, facturado, entidad) VALUES ( ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?)',
     [
       req.body.nombre,
       req.body.descripcion,
@@ -69,61 +53,47 @@ export const saveOrdenes = async (req, res) => {
       req.body.fecha,
       req.body.otros_gastos_descripcion,
       req.body.costo_otros_gastos,
-      impuesto_representacion,
-      impuesto_onat,
-      impuesto_equipos,
-      costo_materiales,
+      impRepres,
+      onat,
+      impEquipos,
+      costoMateriales,
       utilidad,
       req.body.facturado,
-      req.body.entidad
-    ]
+      req.body.entidad,
+    ],
   );
 };
 
 export const deleteOrden = async (req, res) => {
   await (
     await connect2()
-  ).query("DELETE FROM trabajos_realizados WHERE id =?", [req.params.id]);
+  ).query('DELETE FROM trabajos_realizados WHERE id =?', [req.params.id]);
 
   await (
     await connect2()
-  ).query("DELETE FROM materialestrabajosrealizados WHERE id_orden =?", [req.params.id]);
+  ).query('DELETE FROM materialestrabajosrealizados WHERE id_orden =?', [req.params.id]);
   res.sendStatus(204);
 };
 
 export const updateOrden = async (req, res) => {
-  let pago_Efectivo = req.body.pago_efectivo;
-  let costo_materiales = 0;
-  let otros_gastos = req.body.costo_otros_gastos;
-  
-  if (pago_Efectivo=='si')
-  {
-    var impuesto_representacion = 0;
-    var impuesto_onat = 0;
+  const pagoEfectivo = req.body.pago_efectivo;
+  const otrosGastos = req.body.costo_otros_gastos;
+  let impRepres;
+  let onat;
+  const costoTotal = req.body.costo_total;
+
+  if (pagoEfectivo === 'si') {
+    impRepres = 0;
+    onat = 0;
+  } else {
+    impRepres = req.body.precio * 0.11;
+    onat = (req.body.precio - impRepres) * 0.35;
   }
-  else{
-    var impuesto_representacion = req.body.precio * 0.11;
-    var impuesto_onat = (req.body.precio - impuesto_representacion) * 0.35;
-  }
- 
-  var impuesto_equipos =
-    (req.body.precio -
-      impuesto_representacion -
-      impuesto_onat -
-      req.body.costo_total-
-      otros_gastos) *
-    0.1;
-  var utilidad =
-    req.body.precio -
-    impuesto_representacion -
-    impuesto_onat -
-    impuesto_equipos -
-    otros_gastos -
-    req.body.costo_total;
-  await (
-    await connect2()
-  ).query(
-    "UPDATE trabajos_realizados SET nombre = ?, descripcion = ?, pago_efectivo = ?, precio = ?, fecha = ?, otros_gastos_descripcion = ?, costo_otros_gastos = ?, impuesto_representacion = ?, impuesto_onat =?, impuesto_equipos = ?, costo_total = ?, utilidad=?, facturado = ?, entidad=?  WHERE id=?",
+
+  const impEquip = (req.body.precio - impRepres - onat - req.body.costo_total - otrosGastos) * 0.1;
+  const utilidad = (req.body.precio - impRepres - onat - impEquip - otrosGastos - costoTotal);
+  await (await connect2()).query(
+    'UPDATE trabajos_realizados SET nombre = ?, descripcion = ?, pago_efectivo = ?, precio = ?, fecha = ?, otros_gastos_descripcion = ?, costo_otros_gastos = ?, impRepres = ?, impuestoOnat =?, impuestoEquipos = ?, costo_total = ?, utilidad=?, facturado = ?, entidad=?  WHERE id=?',
     [
       req.body.nombre,
       req.body.descripcion,
@@ -132,15 +102,15 @@ export const updateOrden = async (req, res) => {
       req.body.fecha,
       req.body.otros_gastos_descripcion,
       req.body.costo_otros_gastos,
-      impuesto_representacion,
-      impuesto_onat,
-      impuesto_equipos,
+      impRepres,
+      onat,
+      impEquip,
       req.body.costo_total,
       utilidad,
-      req.body.facturado,
+      req.Gdy.facturado,
       req.body.entidad,
-      req.params.id
-    ]
+      req.params.id,
+    ],
   );
   res.sendStatus(204);
 };

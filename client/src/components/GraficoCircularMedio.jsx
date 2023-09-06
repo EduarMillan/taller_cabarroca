@@ -1,12 +1,14 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { PieChart, Pie, Sector, Legend } from "recharts";
-import { Box, Paper, Typography } from "@mui/material";
-import { getTrabajosRealizados } from "../api";
+import React, { useCallback, useEffect, useState } from 'react';
+import {
+  PieChart, Pie, Sector, Legend,
+} from 'recharts';
+import { Box, Paper, Typography } from '@mui/material';
+import { getTrabajosRealizados } from '../api';
 
 const style = {
   top: 270,
   left: 50,
-  lineHeight: "24px",
+  lineHeight: '24px',
 };
 
 const renderActiveShape = (props) => {
@@ -32,7 +34,7 @@ const renderActiveShape = (props) => {
   const my = cy + (outerRadius + 30) * sin;
   const ex = mx + (cos >= 0 ? 1 : -1) * 22;
   const ey = my;
-  const textAnchor = cos >= 0 ? "start" : "end";
+  const textAnchor = cos >= 0 ? 'start' : 'end';
 
   return (
     <g>
@@ -68,7 +70,10 @@ const renderActiveShape = (props) => {
         y={ey}
         textAnchor={textAnchor}
         fill="#99FF33"
-      >{` ${value} CUP`}</text>
+      >
+        {` ${value} CUP`}
+
+      </text>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
@@ -88,33 +93,33 @@ export default function GraficoCircularMedio() {
   const [sumaOtros, setSumaOtros] = useState(0);
 
   const data = [
-    { name: "Ofic. Hist.", value: sumaOficina, fill: "#0099FF" },
-    { name: "Emp. Estatales", value: sumaEstatales, fill: "#FF7200" },
-    { name: "Efectivo", value: sumaOtros, fill: "#FFCC02" },
+    { name: 'Ofic. Hist.', value: sumaOficina, fill: '#0099FF' },
+    { name: 'Emp. Estatales', value: sumaEstatales, fill: '#FF7200' },
+    { name: 'Efectivo', value: sumaOtros, fill: '#FFCC02' },
   ];
 
   const loadingDatos = async () => {
     const contenedor = await getTrabajosRealizados();
-    
+
     const oficiHistoriador = contenedor.filter(
-      (x) => x.entidad === "oficinadelhistoriador"
+      (x) => x.entidad === 'oficinadelhistoriador',
     );
     const estatales = contenedor.filter(
-      (x) => x.entidad === "entidadesestatales"
+      (x) => x.entidad === 'entidadesestatales',
     );
-    const otros = contenedor.filter((x) => x.entidad === "otros");
+    const otros = contenedor.filter((x) => x.entidad === 'otros');
 
     const sumOficina = oficiHistoriador.reduce(
       (accumulator, item) => accumulator + parseFloat(item.precio),
-      0
+      0,
     );
     const sumEstatales = estatales.reduce(
       (accumulator, item) => accumulator + parseFloat(item.precio),
-      0
+      0,
     );
     const sumOtros = otros.reduce(
       (accumulator, item) => accumulator + parseFloat(item.precio),
-      0
+      0,
     );
 
     setSumaOficina(sumOficina);
@@ -131,7 +136,7 @@ export default function GraficoCircularMedio() {
     (_, index) => {
       setActiveIndex(index);
     },
-    [setActiveIndex]
+    [setActiveIndex],
   );
 
   return (
@@ -139,9 +144,9 @@ export default function GraficoCircularMedio() {
       <Typography variant="h5"> TRABAJOS POR ENTIDADES</Typography>
       <Box
         sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
         <PieChart width={430} height={250}>

@@ -6,40 +6,40 @@ import {
   Card,
   Typography,
   CircularProgress,
-} from "@material-ui/core";
-import MenuItem from "@material-ui/core/MenuItem";
-import React, { useEffect, useState } from "react";
-import { saveMateriales, getMaterial, UpdateMaterial } from "../api";
-import { useNavigate, useParams } from "react-router-dom";
+} from '@material-ui/core';
+import MenuItem from '@material-ui/core/MenuItem';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+import { saveMateriales, getMaterial, UpdateMaterial } from '../api';
 import {
   ColoresM,
   EspesoresM,
   materialesRegistrados,
-} from "../CaracteristicasMateriales/DatosMateriales";
-import { makeStyles } from "@material-ui/core/styles";
+} from '../CaracteristicasMateriales/DatosMateriales';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    "& .MuiTextField-root": {
+    '& .MuiTextField-root': {
       margin: theme.spacing(1),
-      width: "30ch",
+      width: '30ch',
     },
   },
 }));
 
-export default function FormularioMateriales(route) {
+export default function FormularioMateriales() {
   const classes = useStyles();
 
   const [material, setMaterial] = useState({
-    nombre: "",
-    descripcion: "",
-    espesor: "",
-    longitud_ancho: "",
-    longitud_largo: "",
-    calidad_material: "",
-    costo_total: "",
-    cantidad: "",
-    color: "",
+    nombre: '',
+    descripcion: '',
+    espesor: '',
+    longitud_ancho: '',
+    longitud_largo: '',
+    calidad_material: '',
+    costo_total: '',
+    cantidad: '',
+    color: '',
   });
 
   const [loading, setLoading] = useState(false);
@@ -56,10 +56,10 @@ export default function FormularioMateriales(route) {
 
     try {
       if (editing) {
-        navigate("/dashboard/materiales");
+        navigate('/dashboard/materiales');
         await UpdateMaterial(params.id, material);
       } else {
-        navigate("/dashboard/materiales");
+        navigate('/dashboard/materiales');
         await saveMateriales(material);
       }
 
@@ -88,7 +88,7 @@ export default function FormularioMateriales(route) {
   return (
     <Grid
       container
-      direction="column" 
+      direction="column"
       alignItems="center"
       justifyContent="center"
     >
@@ -96,15 +96,15 @@ export default function FormularioMateriales(route) {
         <Card
           sx={{ mt: 1 }}
           style={{
-            padding: "1rem",
-            color: "inherit", 
-            background: "rgba(255, 255, 255, 0.1)",
-            backdropFilter: "blur(20px)",
-    
+            padding: '1rem',
+            color: 'inherit',
+            background: 'rgba(255, 255, 255, 0.1)',
+            backdropFilter: 'blur(20px)',
+
           }}
         >
           <Typography variant="5" textAlign="center" color="inherit">
-            {editing ? "Actualizar Material" : "Insertar Material"}
+            {editing ? 'Actualizar Material' : 'Insertar Material'}
           </Typography>
           <CardContent>
             <form className={classes.root} onSubmit={handledSubmit}>
@@ -113,11 +113,11 @@ export default function FormularioMateriales(route) {
                 label="Nombre"
                 name="nombre"
                 select
-                sx={{ display: "block", margin: ".5rem 0" }}
+                sx={{ display: 'block', margin: '.5rem 0' }}
                 value={material.nombre}
                 onChange={handleChange}
-                InputProps={{ style: { color: "inherit" } }}
-                InputLabelProps={{ style: { color: "inherit" } }}
+                InputProps={{ style: { color: 'inherit' } }}
+                InputLabelProps={{ style: { color: 'inherit' } }}
               >
                 {materialesRegistrados.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
@@ -131,12 +131,12 @@ export default function FormularioMateriales(route) {
                 label="Descripcion"
                 multiline
                 rows={3}
-                sx={{ display: "block", margin: ".5rem 0" }}
+                sx={{ display: 'block', margin: '.5rem 0' }}
                 name="descripcion"
                 value={material.descripcion}
                 onChange={handleChange}
-                inputProps={{ style: { color: "white" } }}
-                InputLabelProps={{ style: { color: "inherit" } }}
+                inputProps={{ style: { color: 'white' } }}
+                InputLabelProps={{ style: { color: 'inherit' } }}
               />
 
               <TextField
@@ -144,11 +144,11 @@ export default function FormularioMateriales(route) {
                 label="Espesor (mm)"
                 name="espesor"
                 select
-                sx={{ display: "block", margin: ".5rem 0" }}
+                sx={{ display: 'block', margin: '.5rem 0' }}
                 value={material.espesor}
                 onChange={handleChange}
-                InputLabelProps={{ style: { color: "inherit" } }}
-                InputProps={{ style: { color: "inherit" } }}
+                InputLabelProps={{ style: { color: 'inherit' } }}
+                InputProps={{ style: { color: 'inherit' } }}
               >
                 {EspesoresM.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
@@ -159,56 +159,56 @@ export default function FormularioMateriales(route) {
               <TextField
                 variant="filled"
                 label="Ancho (m)"
-                sx={{ display: "block", margin: ".5rem 0" }}
+                sx={{ display: 'block', margin: '.5rem 0' }}
                 name="longitud_ancho"
-                value={material.longitud_ancho + ""}
+                value={`${material.longitud_ancho}`}
                 onChange={handleChange}
-                inputProps={{ style: { color: "white" } }}
-                InputLabelProps={{ style: { color: "inherit" } }}
+                inputProps={{ style: { color: 'white' } }}
+                InputLabelProps={{ style: { color: 'inherit' } }}
               />
 
               <TextField
                 variant="filled"
                 label="Largo (m)"
-                sx={{ display: "block", margin: ".5rem 0" }}
+                sx={{ display: 'block', margin: '.5rem 0' }}
                 name="longitud_largo"
-                value={material.longitud_largo + ""}
+                value={`${material.longitud_largo}`}
                 onChange={handleChange}
-                inputProps={{ style: { color: "white" } }}
-                InputLabelProps={{ style: { color: "inherit" } }}
+                inputProps={{ style: { color: 'white' } }}
+                InputLabelProps={{ style: { color: 'inherit' } }}
               />
 
               <TextField
                 variant="filled"
                 label="Calidad"
-                sx={{ display: "block", margin: ".5rem 0" }}
+                sx={{ display: 'block', margin: '.5rem 0' }}
                 name="calidad_material"
                 value={material.calidad_material}
                 onChange={handleChange}
-                inputProps={{ style: { color: "white" } }}
-                InputLabelProps={{ style: { color: "inherit" } }}
+                inputProps={{ style: { color: 'white' } }}
+                InputLabelProps={{ style: { color: 'inherit' } }}
               />
 
               <TextField
                 variant="filled"
                 label="Costo Total (USD)"
-                sx={{ display: "block", margin: ".5rem 0" }}
+                sx={{ display: 'block', margin: '.5rem 0' }}
                 name="costo_total"
-                value={material.costo_total + ""}
+                value={`${material.costo_total}`}
                 onChange={handleChange}
-                inputProps={{ style: { color: "white" } }}
-                InputLabelProps={{ style: { color: "inherit" } }}
+                inputProps={{ style: { color: 'white' } }}
+                InputLabelProps={{ style: { color: 'inherit' } }}
               />
 
               <TextField
                 variant="filled"
                 label="Cantidad"
-                sx={{ display: "block", margin: ".5rem 0" }}
+                sx={{ display: 'block', margin: '.5rem 0' }}
                 name="cantidad"
-                value={material.cantidad + ""}
+                value={`${material.cantidad}`}
                 onChange={handleChange}
-                inputProps={{ style: { color: "white" } }}
-                InputLabelProps={{ style: { color: "inherit" } }}
+                inputProps={{ style: { color: 'white' } }}
+                InputLabelProps={{ style: { color: 'inherit' } }}
               />
 
               <TextField
@@ -216,11 +216,11 @@ export default function FormularioMateriales(route) {
                 label="Color"
                 name="color"
                 select
-                sx={{ display: "block", margin: ".5rem 0" }}
+                sx={{ display: 'block', margin: '.5rem 0' }}
                 value={material.color}
                 onChange={handleChange}
-                InputLabelProps={{ style: { color: "inherit" } }}
-                InputProps={{ style: { color: "inherit" } }}
+                InputLabelProps={{ style: { color: 'inherit' } }}
+                InputProps={{ style: { color: 'inherit' } }}
               >
                 {ColoresM.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
@@ -233,21 +233,21 @@ export default function FormularioMateriales(route) {
                 color="primary"
                 type="submit"
                 disabled={
-                  !material.nombre ||
-                  !material.descripcion ||
-                  !material.espesor ||
-                  !material.longitud_ancho ||
-                  !material.longitud_largo ||
-                  !material.calidad_material ||
-                  !material.costo_total ||
-                  !material.cantidad ||
-                  !material.color
+                  !material.nombre
+                  || !material.descripcion
+                  || !material.espesor
+                  || !material.longitud_ancho
+                  || !material.longitud_largo
+                  || !material.calidad_material
+                  || !material.costo_total
+                  || !material.cantidad
+                  || !material.color
                 }
               >
                 {loading ? (
                   <CircularProgress color="inherit" size={24} />
                 ) : (
-                  "Salvar"
+                  'Salvar'
                 )}
               </Button>
             </form>

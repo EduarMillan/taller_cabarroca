@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from 'react';
 import {
   BarChart,
   Bar,
@@ -8,31 +8,30 @@ import {
   Tooltip,
   Legend,
   LabelList,
-} from "recharts";
-import { Box, Paper, Typography } from "@mui/material";
-import { getTrabajosRealizados } from "../api";
+} from 'recharts';
+import { Box, Paper, Typography } from '@mui/material';
 
 const data = [
   {
-    name: "Primero",
+    name: 'Primero',
     uv: 6000,
     pv: 2400,
     amt: 2400,
   },
   {
-    name: "Segundo",
+    name: 'Segundo',
     uv: 3000,
     pv: 1398,
     amt: 2210,
   },
   {
-    name: "Tercero",
+    name: 'Tercero',
     uv: 12000,
     pv: 8,
     amt: 2290,
   },
   {
-    name: "Cuarto ",
+    name: 'Cuarto ',
     uv: 2780,
     pv: 3908,
     amt: 2000,
@@ -40,7 +39,9 @@ const data = [
 ];
 
 const renderCustomizedLabel = (props) => {
-  const { x, y, width, value } = props;
+  const {
+    x, y, width,
+  } = props;
   const radius = 10;
 
   return (
@@ -60,23 +61,14 @@ const renderCustomizedLabel = (props) => {
 };
 
 export default function GraficoBarras() {
-
-  const [datosTrabajos, setDatosTrabajos] = useState();
-  
-  const loadDatos = async ()=> {
-    const  datos =  await getTrabajosRealizados();
-    setDatosTrabajos(datos);
-    //const primerTrimestre = datos.
-  }
-
   return (
     <Paper elevation={3} sx={{ p: 3 }}>
       <Typography variant="h5"> COMPARACION POR TRIMESTRES</Typography>
       <Box
         sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
         <BarChart

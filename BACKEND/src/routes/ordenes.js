@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Router } from 'express';
 import {
   deleteOrden,
   getOrden,
@@ -6,8 +6,7 @@ import {
   getOrdenes,
   saveOrdenes,
   updateOrden,
-} from "../controllers/ordenes";
-
+} from '../controllers/ordenes';
 
 const router = Router();
 
@@ -17,7 +16,7 @@ const router = Router();
  *  get:
  *    summary: Muestra todos los materiales existentes en la base de datos
  */
-router.get("/trabajos_realizados", getOrdenes);
+router.get('/trabajos_realizados', getOrdenes);
 
 /**
  * @swagger
@@ -25,15 +24,15 @@ router.get("/trabajos_realizados", getOrdenes);
  *  get:
  *    summary: Devuelve la cantidad de materiales existentes en la base de datos
  */
-router.get("/trabajos_realizados/count", getContadorOrdenes);
+router.get('/trabajos_realizados/count', getContadorOrdenes);
 
 /**
  * @swagger
  * /materiales/:
  *  get:
- *    summary: Muestra un material especificado existente en la base de datos mediante un id, en caso de no existeir devuelve un mensaje
+ *    summary: Show 1 material existente en la BD mediante un id, de no existeir devuelve un mensaje
  */
-router.get("/trabajos_realizados/:id", getOrden);
+router.get('/trabajos_realizados/:id', getOrden);
 
 /**
  * @swagger
@@ -41,7 +40,7 @@ router.get("/trabajos_realizados/:id", getOrden);
  *  post:
  *    summary: salva los materiales introducidos en la base de datos
  */
-router.post("/trabajos_realizados", saveOrdenes);
+router.post('/trabajos_realizados', saveOrdenes);
 
 /**
  * @swagger
@@ -49,7 +48,7 @@ router.post("/trabajos_realizados", saveOrdenes);
  *  delete:
  *    summary: Elimina un materiales existente en la base de datos mediante un id especificado
  */
-router.delete("/trabajos_realizados/:id", deleteOrden);
+router.delete('/trabajos_realizados/:id', deleteOrden);
 
 /**
  * @swagger
@@ -57,6 +56,6 @@ router.delete("/trabajos_realizados/:id", deleteOrden);
  *  put:
  *    summary: Actualiza un material existentes en la base de datos usando un id
  */
-router.put("/trabajos_realizados/:id", updateOrden);
+router.put('/trabajos_realizados/:id', updateOrden);
 
 export default router;

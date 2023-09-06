@@ -1,13 +1,12 @@
-import { Router } from "express";
+import { Router } from 'express';
 import {
-  get_Materiales_de_Ordenes,
+  getMaterialesOrdenes,
   saveMaterialesTrabajos,
   getMaterialOrdenes,
   deleteMaterialOrdenes,
   updateMaterialOrdenes,
   getContadorMaterialesOrdenes,
-  getMaterialOrdenesEditing
-} from "../controllers/materiales_Ordenes";
+} from '../controllers/materiales_Ordenes';
 
 const router = Router();
 
@@ -17,7 +16,7 @@ const router = Router();
  *  post:
  *    summary: salva los materiales introducidos en la base de datos
  */
-router.post("/materialestrabajosrealizados", saveMaterialesTrabajos);
+router.post('/materialestrabajosrealizados', saveMaterialesTrabajos);
 
 /**
  * @swagger
@@ -25,7 +24,7 @@ router.post("/materialestrabajosrealizados", saveMaterialesTrabajos);
  *  get:
  *    summary: Devuelve la cantidad de materiales existentes en la base de datos
  */
-router.get("/materialestrabajosrealizados/count", getContadorMaterialesOrdenes);
+router.get('/materialestrabajosrealizados/count', getContadorMaterialesOrdenes);
 
 /**
  * @swagger
@@ -33,15 +32,15 @@ router.get("/materialestrabajosrealizados/count", getContadorMaterialesOrdenes);
  *  get:
  *    summary: Muestra todos los materiales existentes en la base de datos
  */
-router.get("/materialestrabajosrealizados", get_Materiales_de_Ordenes);
+router.get('/materialestrabajosrealizados', getMaterialesOrdenes);
 
 /**
  * @swagger
  * /materiales_Ordenes/:
  *  get:
- *    summary: Muestra un material especificado existente en la base de datos mediante un id, en caso de no existeir devuelve un mensaje
+ *    summary: Show 1 material  existente en la BD mediante un id, de no existir devuelve un mensaje
  */
-router.get("/materialestrabajosrealizados/:id", getMaterialOrdenes);
+router.get('/materialestrabajosrealizados/:id', getMaterialOrdenes);
 
 /**
  * @swagger
@@ -49,7 +48,7 @@ router.get("/materialestrabajosrealizados/:id", getMaterialOrdenes);
  *  delete:
  *    summary: Elimina un materiales existente en la base de datos mediante un id especificado
  */
-router.delete("/materialestrabajosrealizados/:id", deleteMaterialOrdenes);
+router.delete('/materialestrabajosrealizados/:id', deleteMaterialOrdenes);
 
 /**
  * @swagger
@@ -57,6 +56,6 @@ router.delete("/materialestrabajosrealizados/:id", deleteMaterialOrdenes);
  *  put:
  *    summary: Actualiza un material existentes en la base de datos usando un id
  */
-router.put("/materialestrabajosrealizados/:id", updateMaterialOrdenes);
+router.put('/materialestrabajosrealizados/:id', updateMaterialOrdenes);
 
 export default router;
