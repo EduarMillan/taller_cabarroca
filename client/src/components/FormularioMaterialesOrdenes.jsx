@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 import {
   saveMaterialTrabajosRealizados,
   UpdateMaterialTrabajosRealizados,
@@ -26,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// eslint-disable-next-line react/prop-types
 export default function FormularioMaterialesOrdenes({ editedMaterial }) {
   const { setShouldReload } = useMaterialContext();
   let editedMaterial1;
@@ -335,3 +335,5 @@ export default function FormularioMaterialesOrdenes({ editedMaterial }) {
     </Grid>
   );
 }
+
+FormularioMaterialesOrdenes.propTypes = { editedMaterial: PropTypes.node.isRequired };
