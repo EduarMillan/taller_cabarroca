@@ -44,7 +44,7 @@ export const saveOrdenes = async (req) => {
   const utilidad = req.body.precio - impRepres - onat - impEquipos - otrosGastos
     - costoMateriales;
   await (await connect2()).query(
-    'INSERT INTO trabajos_realizados ( nombre, descripcion, pago_efectivo, precio, fecha, otros_gastos_descripcion, costo_otros_gastos, impRepres, impuestoOnat, impuestoEquipos, costo_total, utilidad, facturado, entidad) VALUES ( ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?)',
+    'INSERT INTO trabajos_realizados ( nombre, descripcion, pago_efectivo, precio, fecha, otros_gastos_descripcion, costo_otros_gastos, impuesto_representacion, impuesto_onat, impuesto_equipos, costo_total, utilidad, facturado, entidad) VALUES ( ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?)',
     [
       req.body.nombre,
       req.body.descripcion,
@@ -93,7 +93,7 @@ export const updateOrden = async (req, res) => {
   const impEquip = (req.body.precio - impRepres - onat - req.body.costo_total - otrosGastos) * 0.1;
   const utilidad = (req.body.precio - impRepres - onat - impEquip - otrosGastos - costoTotal);
   await (await connect2()).query(
-    'UPDATE trabajos_realizados SET nombre = ?, descripcion = ?, pago_efectivo = ?, precio = ?, fecha = ?, otros_gastos_descripcion = ?, costo_otros_gastos = ?, impRepres = ?, impuestoOnat =?, impuestoEquipos = ?, costo_total = ?, utilidad=?, facturado = ?, entidad=?  WHERE id=?',
+    'UPDATE trabajos_realizados SET nombre = ?, descripcion = ?, pago_efectivo = ?, precio = ?, fecha = ?, otros_gastos_descripcion = ?, costo_otros_gastos = ?, impuesto_representacion = ?, impuesto_onat =?, impuesto_equipos = ?, costo_total = ?, utilidad=?, facturado = ?, entidad=?  WHERE id=?',
     [
       req.body.nombre,
       req.body.descripcion,
@@ -107,7 +107,7 @@ export const updateOrden = async (req, res) => {
       impEquip,
       req.body.costo_total,
       utilidad,
-      req.Gdy.facturado,
+      req.body.facturado,
       req.body.entidad,
       req.params.id,
     ],
