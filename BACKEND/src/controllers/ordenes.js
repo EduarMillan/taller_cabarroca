@@ -32,7 +32,7 @@ export const saveOrdenes = async (req) => {
   let onat;
   const otrosGastos = req.body.costo_otros_gastos;
 
-  if (pagoEfectivo === 'si') {
+  if (pagoEfectivo === 1) {
     impRepres = 0;
     onat = 0;
   } else {
@@ -82,7 +82,7 @@ export const updateOrden = async (req, res) => {
   let onat;
   const costoTotal = parseFloat(req.body.costo_total) + otrosGastos;
 
-  if (pagoEfectivo === 'si') {
+  if (pagoEfectivo === 1) {
     impRepres = 0;
     onat = 0;
   } else {
