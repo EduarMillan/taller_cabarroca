@@ -5,6 +5,12 @@
             "name": "http://localhost:3001/dashboard/trabajosrealizados/nuevo",
             "request": "launch",
             "url": "http://localhost:3001/dashboard/trabajosrealizados/nuevo"
+        },
+        {
+            "type": "chrome",
+            "name": "http://localhost:3001/dashboard/trabajos_realizados/37",
+            "request": "launch",
+            "url": "http://localhost:3001/dashboard/trabajos_realizados/37"
         }
     ]
 }

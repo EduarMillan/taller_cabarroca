@@ -77,10 +77,10 @@ export const deleteOrden = async (req, res) => {
 
 export const updateOrden = async (req, res) => {
   const pagoEfectivo = req.body.pago_efectivo;
-  const otrosGastos = req.body.costo_otros_gastos;
+  const otrosGastos = parseFloat(req.body.costo_otros_gastos);
   let impRepres;
   let onat;
-  const costoTotal = req.body.costo_total;
+  const costoTotal = parseFloat(req.body.costo_total) + otrosGastos;
 
   if (pagoEfectivo === 'si') {
     impRepres = 0;
@@ -91,7 +91,7 @@ export const updateOrden = async (req, res) => {
   }
 
   const impEquip = (req.body.precio - impRepres - onat - req.body.costo_total - otrosGastos) * 0.1;
-  const utilidad = (req.body.precio - impRepres - onat - impEquip - otrosGastos - costoTotal);
+  const utilidad = (req.body.precio - impRepres - onat - impEquip - costoTotal);
   await (await connect2()).query(
     'UPDATE trabajos_realizados SET nombre = ?, descripcion = ?, pago_efectivo = ?, precio = ?, fecha = ?, otros_gastos_descripcion = ?, costo_otros_gastos = ?, impuesto_representacion = ?, impuesto_onat =?, impuesto_equipos = ?, costo_total = ?, utilidad=?, facturado = ?, entidad=?  WHERE id=?',
     [
@@ -105,7 +105,7 @@ export const updateOrden = async (req, res) => {
       impRepres,
       onat,
       impEquip,
-      req.body.costo_total,
+      costoTotal,
       utilidad,
       req.body.facturado,
       req.body.entidad,

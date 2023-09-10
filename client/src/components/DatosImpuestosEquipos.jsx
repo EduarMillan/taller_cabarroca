@@ -50,7 +50,7 @@ export default function DatosImpuestosEquipos() {
         <h4>
           Costo Total:
           {' '}
-          {trabajo ? trabajo[0].costo_total : 'Cargando...'}
+          {trabajo ? (trabajo[0].costo_total) : 'Cargando...'}
         </h4>
       </Grid>
       <Grid className="utilidad">

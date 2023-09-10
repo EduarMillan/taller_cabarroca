@@ -13,14 +13,25 @@ export default function ListaTrabajosRealizados() {
   const [trabajos, setTrabajos] = useState([]);
   const navigate = useNavigate();
 
+  const arreglarFecha = (dato) => {
+    const fecha = new Date(dato.fecha);
+    const anno = fecha.getFullYear();
+    const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
+    const dia = fecha.getDate().toString().padStart(2, '0');
+    // Formatear la fecha en 'YYYY-MM-DD'
+    const fechaFormateada = `${anno}-${mes}-${dia}`;
+    return fechaFormateada;
+  };
+
   const loadTrabajos = async () => {
     try {
       const datos = await getTrabajosRealizados();
-
       // Ordenar los datos por fecha en orden descendente (de más reciente a más antiguo)
       datos.sort((a, b) => moment(b.fecha).toDate() - moment(a.fecha).toDate());
 
-      setTrabajos(datos);
+      const datos1 = datos.map((dato) => ({ ...dato, fecha: arreglarFecha(dato) }));
+
+      setTrabajos(datos1);
     } catch (error) {
       console.error('Error:', error);
     }
@@ -51,7 +62,7 @@ export default function ListaTrabajosRealizados() {
     },
     {
       name: 'pago_efectivo',
-      label: 'P. Efectivo',
+      label: 'Pago. Efec.',
     },
     {
       name: 'precio',
@@ -61,14 +72,6 @@ export default function ListaTrabajosRealizados() {
       name: 'fecha',
       label: 'Fecha',
     },
-    /* {
-      name: "otros_gastos_descripcion",
-      label: "Otros Gastos",
-    },
-    {
-      name: "costo_otros_gastos",
-      label: "Costo  Otros Gastos",
-    }, */
     {
       name: 'impuesto_representacion',
       label: 'Imp. Repres.',
@@ -89,10 +92,6 @@ export default function ListaTrabajosRealizados() {
       name: 'utilidad',
       label: 'Utilidad',
     },
-    {
-      name: 'facturado',
-      label: 'Fact.',
-    },
 
     {
       name: 'acciones',
@@ -104,6 +103,7 @@ export default function ListaTrabajosRealizados() {
           <>
             <IconButton
               aria-label="Editar"
+              style={{ color: '#CCFFCC' }}
               onClick={() => {
                 navigate(`/dashboard/trabajos_realizados/${tableMeta.rowData[0]}`);
               }}
@@ -112,6 +112,7 @@ export default function ListaTrabajosRealizados() {
             </IconButton>
             <IconButton
               aria-label="Eliminar"
+              style={{ color: '#FF6600' }}
               onClick={() => {
                 EjecutaEliminar(tableMeta.rowData[0]);
               }}
