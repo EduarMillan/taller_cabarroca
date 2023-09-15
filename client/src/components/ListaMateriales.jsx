@@ -80,6 +80,7 @@ export default function ListaMateriales() {
           <>
             <IconButton
               aria-label="Editar"
+              style={{ color: '#00FF33' }}
               onClick={() => {
                 navigate(`/dashboard/materiales/${tableMeta.rowData[0]}`);
               }}
@@ -88,6 +89,7 @@ export default function ListaMateriales() {
             </IconButton>
             <IconButton
               aria-label="Eliminar"
+              style={{ color: '#FF6600' }}
               onClick={() => {
                 EjecutaEliminar(tableMeta.rowData[0]);
               }}

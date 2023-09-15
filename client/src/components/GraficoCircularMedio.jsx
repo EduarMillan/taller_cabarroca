@@ -110,15 +110,15 @@ export default function GraficoCircularMedio() {
     const otros = contenedor.filter((x) => x.entidad === 'otros');
 
     const sumOficina = oficiHistoriador.reduce(
-      (accumulator, item) => accumulator + parseFloat(item.precio),
+      (accumulator, item) => accumulator + parseInt(item.precio, 10),
       0,
     );
     const sumEstatales = estatales.reduce(
-      (accumulator, item) => accumulator + parseFloat(item.precio),
+      (accumulator, item) => accumulator + parseInt(item.precio, 10),
       0,
     );
     const sumOtros = otros.reduce(
-      (accumulator, item) => accumulator + parseFloat(item.precio),
+      (accumulator, item) => accumulator + parseInt(item.precio, 10),
       0,
     );
 

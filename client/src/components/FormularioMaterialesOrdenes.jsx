@@ -16,6 +16,7 @@ import {
   EspesoresM,
   materialesRegistrados,
 } from '../CaracteristicasMateriales/DatosMateriales';
+import '../styles/formularioMaterialesOrdenes.css';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -126,27 +127,10 @@ export default function FormularioMaterialesOrdenes({ editedMaterial }) {
   return (
     <Grid container direction="column" alignItems="top" justifyContent="center" fontFamily="Roboto">
       <div>&nbsp;</div>
-      <Typography
-        variant="5"
-        textAlign="center"
-        color="inherit"
-        backgroundColor="#0000FF"
-        padding={0.5}
-        borderRadius="5px"
-        fontWeight="600"
-      >
+      <Typography id="materialesA">
         MATERIALES ASOCIADOS
       </Typography>
-      <Card
-        style={{
-          backgroundColor: 'transparent',
-          padding: '0.5rem',
-          color: 'inherit',
-          borderRadius: '5px',
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-      >
+      <Card className="tarjeta">
         <form className={classes.root} onSubmit={handledSubmit}>
           <TextField
             variant="outlined"
@@ -287,29 +271,11 @@ export default function FormularioMaterialesOrdenes({ editedMaterial }) {
             Salvar
           </Button>
         </form>
-        <div
-          style={{
-            background: 'inherit',
-            width: '280px',
-            color: 'inherit',
-            textAlign: 'center',
-            fontSize: '12px',
-            border: '1px solid',
-            borderRadius: '5px',
-            borderColor: 'black',
-          }}
-        >
-          <div style={{
-            background: '#FF3300', borderRadius: '5px', fontWeight: 'bold', fontStyle: 'italic',
-          }}
-          >
+        <div className="dataMaterial">
+          <div className="headerMaterial">
             DATOS DEL MATERIAL
           </div>
-
-          <p style={{
-            color: 'greenyellow', fontSize: '13px', fontWeight: 'bold', fontStyle: 'italic',
-          }}
-          >
+          <p className="data">
             {materialOrden.nombre}
             {' '}
             {materialOrden.espesor}
@@ -318,17 +284,16 @@ export default function FormularioMaterialesOrdenes({ editedMaterial }) {
             {' '}
             {materialOrden.color}
           </p>
-          <p style={{ fontWeight: 'bold', fontStyle: 'italic' }}>
+          <p className="data1">
             Precio ML (USD):
             {' '}
             {precioMl.toFixed(2)}
           </p>
-          <p style={{ fontWeight: 'bold', fontStyle: 'italic' }}>
+          <p className="data1">
             Precio M2 (USD):
             {' '}
             {precioM2.toFixed(2)}
           </p>
-
         </div>
       </Card>
       <div>&nbsp;</div>

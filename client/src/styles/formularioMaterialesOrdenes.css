@@ -1,0 +1,46 @@
+.tarjeta{
+    background-color: transparent;
+    padding: 0.5rem;
+    color: inherit;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#materialesA{
+    text-align: center;
+    color: inherit;
+    background-color: #0000FF;
+    padding: 5px;
+    border-radius: 5px;
+    font-weight: 600;
+}
+
+.dataMaterial{
+    background: inherit;
+    width: 280px;
+    color: inherit;
+    font-size: 12px;
+    text-align: center;
+    border: 1px solid grey ;
+    border-radius: 5px;
+}
+
+.headerMaterial{
+    background-color: #FF3300;
+    border-radius: 5px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.data{
+    color: greenyellow;
+    font-size: 13px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.data1{
+    font-weight: bold;
+    font-style: italic;
+}

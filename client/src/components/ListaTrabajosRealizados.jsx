@@ -7,7 +7,6 @@ import { IconButton } from '@mui/material';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import moment from 'moment';
 import { getTrabajosRealizados, EliminarTrabajoRealizado } from '../api';
-// import { Card } from "@material-ui/core";
 
 export default function ListaTrabajosRealizados() {
   const [trabajos, setTrabajos] = useState([]);
@@ -103,7 +102,7 @@ export default function ListaTrabajosRealizados() {
           <>
             <IconButton
               aria-label="Editar"
-              style={{ color: '#CCFFCC' }}
+              style={{ color: '#00FF33' }}
               onClick={() => {
                 navigate(`/dashboard/trabajos_realizados/${tableMeta.rowData[0]}`);
               }}

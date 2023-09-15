@@ -1,10 +1,8 @@
 import {
   Button,
   TextField,
-  Grid,
   CardContent,
-  Card,
-  Typography,
+  // Typography,
   CircularProgress,
 } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -17,12 +15,14 @@ import {
   EspesoresM,
   materialesRegistrados,
 } from '../CaracteristicasMateriales/DatosMateriales';
+import '../styles/formularioMateriales.css';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiTextField-root': {
       margin: theme.spacing(1),
-      width: '30ch',
+      width: '28ch',
+      background: 'orange',
     },
   },
 }));
@@ -86,153 +86,150 @@ export default function FormularioMateriales() {
   }, [params.id]);
 
   return (
-    <Grid
-      container
-      direction="column"
-      alignItems="center"
-      justifyContent="center"
-    >
-      <Grid item xs={3}>
-        <Card
-          sx={{ mt: 1 }}
-          style={{
-            padding: '1rem',
-            color: 'inherit',
-            background: 'rgba(255, 255, 255, 0.1)',
-            backdropFilter: 'blur(20px)',
+    <div className="container">
+      <div className="cardContainer">
+        <p className="titulo">
+          {editing ? 'Actualizar Material' : 'Insertar Material'}
+        </p>
+        <CardContent className="cardContent">
+          <form className={classes.root} id="formulario" onSubmit={handledSubmit}>
+            <TextField
+              className="textField"
+              variant="filled"
+              label="Nombre"
+              name="nombre"
+              select
+              sx={{ display: 'block', margin: '.5rem 0' }}
+              value={material.nombre}
+              onChange={handleChange}
+              InputProps={{ style: { color: 'inherit' } }}
+              InputLabelProps={{ style: { color: 'inherit' } }}
+            >
+              {materialesRegistrados.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
 
-          }}
-        >
-          <Typography variant="5" textAlign="center" color="inherit">
-            {editing ? 'Actualizar Material' : 'Insertar Material'}
-          </Typography>
-          <CardContent>
-            <form className={classes.root} onSubmit={handledSubmit}>
-              <TextField
-                variant="filled"
-                label="Nombre"
-                name="nombre"
-                select
-                sx={{ display: 'block', margin: '.5rem 0' }}
-                value={material.nombre}
-                onChange={handleChange}
-                InputProps={{ style: { color: 'inherit' } }}
-                InputLabelProps={{ style: { color: 'inherit' } }}
-              >
-                {materialesRegistrados.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
+            <TextField
+              className="textField"
+              variant="filled"
+              label="Descripcion"
+              sx={{ display: 'block', margin: '.5rem 0' }}
+              name="descripcion"
+              value={material.descripcion}
+              onChange={handleChange}
+              inputProps={{ style: { color: 'white' } }}
+              InputLabelProps={{ style: { color: 'inherit' } }}
+            />
 
-              <TextField
-                variant="filled"
-                label="Descripcion"
-                multiline
-                rows={3}
-                sx={{ display: 'block', margin: '.5rem 0' }}
-                name="descripcion"
-                value={material.descripcion}
-                onChange={handleChange}
-                inputProps={{ style: { color: 'white' } }}
-                InputLabelProps={{ style: { color: 'inherit' } }}
-              />
+            <TextField
+              className="textField"
+              variant="filled"
+              label="Espesor (mm)"
+              name="espesor"
+              select
+              sx={{ display: 'block', margin: '.5rem 0' }}
+              value={material.espesor}
+              onChange={handleChange}
+              InputLabelProps={{ style: { color: 'inherit' } }}
+              InputProps={{ style: { color: 'inherit' } }}
+            >
+              {EspesoresM.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+            <TextField
+              className="textField"
+              variant="filled"
+              label="Ancho (m)"
+              sx={{ display: 'block', margin: '.5rem 0' }}
+              name="longitud_ancho"
+              value={`${material.longitud_ancho}`}
+              onChange={handleChange}
+              inputProps={{ style: { color: 'white' } }}
+              InputLabelProps={{ style: { color: 'inherit' } }}
+            />
 
-              <TextField
-                variant="filled"
-                label="Espesor (mm)"
-                name="espesor"
-                select
-                sx={{ display: 'block', margin: '.5rem 0' }}
-                value={material.espesor}
-                onChange={handleChange}
-                InputLabelProps={{ style: { color: 'inherit' } }}
-                InputProps={{ style: { color: 'inherit' } }}
-              >
-                {EspesoresM.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
-              <TextField
-                variant="filled"
-                label="Ancho (m)"
-                sx={{ display: 'block', margin: '.5rem 0' }}
-                name="longitud_ancho"
-                value={`${material.longitud_ancho}`}
-                onChange={handleChange}
-                inputProps={{ style: { color: 'white' } }}
-                InputLabelProps={{ style: { color: 'inherit' } }}
-              />
+            <TextField
+              className="textField"
+              variant="filled"
+              label="Largo (m)"
+              sx={{ display: 'block', margin: '.5rem 0' }}
+              name="longitud_largo"
+              value={`${material.longitud_largo}`}
+              onChange={handleChange}
+              inputProps={{ style: { color: 'white' } }}
+              InputLabelProps={{ style: { color: 'inherit' } }}
+            />
 
-              <TextField
-                variant="filled"
-                label="Largo (m)"
-                sx={{ display: 'block', margin: '.5rem 0' }}
-                name="longitud_largo"
-                value={`${material.longitud_largo}`}
-                onChange={handleChange}
-                inputProps={{ style: { color: 'white' } }}
-                InputLabelProps={{ style: { color: 'inherit' } }}
-              />
+            <TextField
+              className="textField"
+              variant="filled"
+              label="Calidad"
+              sx={{ display: 'block', margin: '.5rem 0' }}
+              name="calidad_material"
+              value={material.calidad_material}
+              onChange={handleChange}
+              inputProps={{ style: { color: 'white' } }}
+              InputLabelProps={{ style: { color: 'inherit' } }}
+            />
 
-              <TextField
-                variant="filled"
-                label="Calidad"
-                sx={{ display: 'block', margin: '.5rem 0' }}
-                name="calidad_material"
-                value={material.calidad_material}
-                onChange={handleChange}
-                inputProps={{ style: { color: 'white' } }}
-                InputLabelProps={{ style: { color: 'inherit' } }}
-              />
+            <TextField
+              className="textField"
+              variant="filled"
+              label="Costo Total (USD)"
+              sx={{ display: 'block', margin: '.5rem 0' }}
+              name="costo_total"
+              value={`${material.costo_total}`}
+              onChange={handleChange}
+              inputProps={{ style: { color: 'white' } }}
+              InputLabelProps={{ style: { color: 'inherit' } }}
+            />
 
-              <TextField
-                variant="filled"
-                label="Costo Total (USD)"
-                sx={{ display: 'block', margin: '.5rem 0' }}
-                name="costo_total"
-                value={`${material.costo_total}`}
-                onChange={handleChange}
-                inputProps={{ style: { color: 'white' } }}
-                InputLabelProps={{ style: { color: 'inherit' } }}
-              />
+            <TextField
+              className="textField"
+              variant="filled"
+              label="Cantidad"
+              sx={{ display: 'block', margin: '.5rem 0' }}
+              name="cantidad"
+              value={`${material.cantidad}`}
+              onChange={handleChange}
+              inputProps={{ style: { color: 'white' } }}
+              InputLabelProps={{ style: { color: 'inherit' } }}
+            />
 
-              <TextField
-                variant="filled"
-                label="Cantidad"
-                sx={{ display: 'block', margin: '.5rem 0' }}
-                name="cantidad"
-                value={`${material.cantidad}`}
-                onChange={handleChange}
-                inputProps={{ style: { color: 'white' } }}
-                InputLabelProps={{ style: { color: 'inherit' } }}
-              />
-
-              <TextField
-                variant="filled"
-                label="Color"
-                name="color"
-                select
-                sx={{ display: 'block', margin: '.5rem 0' }}
-                value={material.color}
-                onChange={handleChange}
-                InputLabelProps={{ style: { color: 'inherit' } }}
-                InputProps={{ style: { color: 'inherit' } }}
-              >
-                {ColoresM.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
-              <Button
-                variant="contained"
-                color="primary"
-                type="submit"
-                disabled={
+            <TextField
+              className="textField"
+              variant="filled"
+              label="Color"
+              name="color"
+              select
+              sx={{ display: 'block', margin: '.5rem 0' }}
+              value={material.color}
+              onChange={handleChange}
+              InputLabelProps={{ style: { color: 'inherit' } }}
+              InputProps={{ style: { color: 'inherit' } }}
+            >
+              {ColoresM.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+              style={{
+                padding: '12px',
+                margin: '8px',
+                width: '28ch',
+              }}
+              disabled={
                   !material.nombre
                   || !material.descripcion
                   || !material.espesor
@@ -243,17 +240,16 @@ export default function FormularioMateriales() {
                   || !material.cantidad
                   || !material.color
                 }
-              >
-                {loading ? (
-                  <CircularProgress color="inherit" size={24} />
-                ) : (
-                  'Salvar'
-                )}
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
-      </Grid>
-    </Grid>
+            >
+              {loading ? (
+                <CircularProgress color="inherit" size={24} />
+              ) : (
+                'Salvar'
+              )}
+            </Button>
+          </form>
+        </CardContent>
+      </div>
+    </div>
   );
 }

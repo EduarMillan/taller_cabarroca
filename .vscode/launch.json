@@ -11,6 +11,18 @@
             "name": "http://localhost:3001/dashboard/trabajos_realizados/37",
             "request": "launch",
             "url": "http://localhost:3001/dashboard/trabajos_realizados/37"
+        },
+        {
+            "type": "chrome",
+            "name": "http://localhost:3001/dashboard/trabajos_realizados/38",
+            "request": "launch",
+            "url": "http://localhost:3001/dashboard/trabajos_realizados/38"
+        },
+        {
+            "type": "chrome",
+            "name": "http://localhost:3001/dashboard/inicio",
+            "request": "launch",
+            "url": "http://localhost:3001/dashboard/inicio"
         }
     ]
 }
