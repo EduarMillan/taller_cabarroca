@@ -25,6 +25,7 @@ import {
   currencies1,
   entidad,
 } from '../CaracteristicasMateriales/DatosMateriales';
+import '../styles/formularioTrabajoRealizado.css';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -118,35 +119,16 @@ export default function FormularioTrabajoRealizado() {
       justifyContent="center"
       fontFamily="Roboto"
     >
-      <Typography
-        variant="5"
-        textAlign="center"
-        color="inherit"
-        backgroundColor="#0000FF"
-        padding={0.5}
-        borderRadius="5px"
-        fontWeight="600"
-      >
+      <Typography id="trabajosR">
         {editing ? 'ACTUALIZAR TRABAJO' : 'INSERTAR TRABAJO'}
       </Typography>
-      <Card
-        style={{
-          backgroundColor: 'transparent',
-          padding: '.5rem',
-          color: 'inherit',
-          borderRadius: '5px',
-        }}
-      >
+      <Card id="tarjetaTR">
         <CardContent>
           <form className={classes.root} onSubmit={handledSubmit}>
             <TextField
               variant="outlined"
               label="Nombre"
-              sx={{
-                display: 'block',
-                margin: '.5rem 0',
-                backgroundColor: 'lightblue',
-              }}
+              sx={{ display: 'block', margin: '.5rem 0', backgroundColor: 'lightblue' }}
               name="nombre"
               value={trabajo.nombre}
               onChange={handleChange}
@@ -162,7 +144,6 @@ export default function FormularioTrabajoRealizado() {
               variant="outlined"
               label="Descripcion"
               multiline
-              rows={1}
               sx={{ display: 'block', margin: '.5rem 0' }}
               name="descripcion"
               value={trabajo.descripcion}

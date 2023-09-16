@@ -1,0 +1,16 @@
+#trabajosR{
+    text-align: center;
+    color: inherit;
+    background-color: #0000FF;
+    padding: 5px;
+    border-radius: 5px;
+    font-weight: 600;
+}
+
+#tarjetaTR{
+    background-color: transparent;
+    padding: .5rem;
+    color: inherit;
+    border-radius: 5px;
+}
+        
