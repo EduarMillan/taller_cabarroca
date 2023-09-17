@@ -26,7 +26,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ p: 2 }}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -62,7 +62,6 @@ export default function VerticalTabs() {
   const trabajosPorFecha = async () => {
     try {
       const datos = await getTrabajosRealizados();
-
       const annoActual = moment().year();
       const annoPasado = annoActual - 1;
 
@@ -98,7 +97,7 @@ export default function VerticalTabs() {
           justifyContent: 'center',
         }}
       >
-        <Box sx={{ flexGrow: 1, display: 'flex', height: 200 }}>
+        <Box sx={{ flexGrow: 1, display: 'flex', height: 210 }}>
           <Tabs
             orientation="vertical"
             variant="scrollable"
@@ -107,15 +106,12 @@ export default function VerticalTabs() {
             aria-label="Vertical tabs example"
             sx={{ borderRight: 1, borderColor: 'divider' }}
           >
-            <Tab label="Historico" {...a11yProps(0)} />
-            <Tab label="Año Pasado" {...a11yProps(1)} />
-            <Tab label="Año Actual" {...a11yProps(2)} />
-            <Tab label="Gráficos" {...a11yProps(3)} />
+            <Tab label="Gráficos" {...a11yProps(0)} />
+            <Tab label="Año Actual" {...a11yProps(1)} />
+            <Tab label="Año Pasado" {...a11yProps(2)} />
+            <Tab label="Historico" {...a11yProps(3)} />
           </Tabs>
           <TabPanel value={value} index={0}>
-            <Typography variant="h6" marginLeft={5}>
-              TRABAJOS REALIZADOS
-            </Typography>
             <Box
               sx={{
                 display: 'flex',
@@ -123,38 +119,10 @@ export default function VerticalTabs() {
                 justifyContent: 'center',
               }}
             >
-              <MapsHomeWork
-                sx={{
-                  height: 100, width: 100, opacity: 0.3, ml: 5,
-                }}
-              />
-              <Typography variant="h4" marginLeft={5}>
-                {trabajosRealizados.length}
-              </Typography>
+              <GraficoObras />
             </Box>
           </TabPanel>
           <TabPanel value={value} index={1}>
-            <Typography variant="h6" marginLeft={5}>
-              TRABAJOS REALIZADOS
-            </Typography>
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <MapsHomeWork
-                sx={{
-                  height: 100, width: 100, opacity: 0.3, ml: 5,
-                }}
-              />
-              <Typography variant="h4" marginLeft={5}>
-                {trabajosAnnoPasado}
-              </Typography>
-            </Box>
-          </TabPanel>
-          <TabPanel value={value} index={2}>
             <Typography variant="h6" marginLeft={5}>
               TRABAJOS REALIZADOS
             </Typography>
@@ -175,35 +143,45 @@ export default function VerticalTabs() {
               </Typography>
             </Box>
           </TabPanel>
-          <TabPanel value={value} index={3}>
+          <TabPanel value={value} index={2}>
+            <Typography variant="h6" marginLeft={5}>
+              TRABAJOS REALIZADOS
+            </Typography>
             <Box
               sx={{
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                //  border: "1px solid"
               }}
             >
-              <GraficoObras />
-            </Box>
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                //  border: "1px solid"
-              }}
-            >
-              <Typography fontSize="10px" color="#ff0000">Prom. Trabajos Por Año</Typography>
-              <Typography fontSize="10px" color="#00ff00" paddingLeft="5px">
-                Trabajos año
-                {' '}
-                {moment().year() - 1}
+              <MapsHomeWork
+                sx={{
+                  height: 100, width: 100, opacity: 0.3, ml: 5,
+                }}
+              />
+              <Typography variant="h4" marginLeft={5}>
+                {trabajosAnnoPasado}
               </Typography>
-              <Typography fontSize="10px" color="#0000ff" paddingLeft="5px">
-                Trabajos año
-                {' '}
-                {moment().year() - 2}
+            </Box>
+          </TabPanel>
+          <TabPanel value={value} index={3}>
+            <Typography variant="h6" marginLeft={5}>
+              TRABAJOS REALIZADOS
+            </Typography>
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <MapsHomeWork
+                sx={{
+                  height: 100, width: 100, opacity: 0.3, ml: 5,
+                }}
+              />
+              <Typography variant="h4" marginLeft={5}>
+                {trabajosRealizados.length}
               </Typography>
             </Box>
           </TabPanel>

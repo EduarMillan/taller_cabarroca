@@ -1,0 +1,31 @@
+.container{
+    display: block;
+    width: 300px;
+}
+
+.data{
+    display: flex;
+    width: auto;
+    justify-content: space-between;
+    height: 35px;
+}
+
+.footdata{
+    font-size: 10px;
+}
+
+#pt{
+    color: #ff0000;
+}
+
+#tap{
+    color: #00ff00;
+}
+
+#taap{
+    color: #0000ff;
+}
+
+#aa{
+    color: #d0d000;
+}
