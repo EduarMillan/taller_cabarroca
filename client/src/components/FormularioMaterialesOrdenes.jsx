@@ -1,5 +1,5 @@
 import { Button, TextField } from '@material-ui/core';
-import { Card, Grid, Typography } from '@mui/material';
+import { Card, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -125,7 +125,7 @@ export default function FormularioMaterialesOrdenes({ editedMaterial }) {
   }, [materialOrden]);
 
   return (
-    <Grid container direction="column" alignItems="top" justifyContent="center" fontFamily="Roboto">
+    <div className="container3">
       <div>&nbsp;</div>
       <Typography id="materialesA">
         MATERIALES ASOCIADOS
@@ -275,7 +275,7 @@ export default function FormularioMaterialesOrdenes({ editedMaterial }) {
           <div className="headerMaterial">
             DATOS DEL MATERIAL
           </div>
-          <p className="data">
+          <p className="data2">
             {materialOrden.nombre}
             {' '}
             {materialOrden.espesor}
@@ -284,12 +284,12 @@ export default function FormularioMaterialesOrdenes({ editedMaterial }) {
             {' '}
             {materialOrden.color}
           </p>
-          <p className="data1">
+          <p className="data2">
             Precio ML (USD):
             {' '}
             {precioMl.toFixed(2)}
           </p>
-          <p className="data1">
+          <p className="data2">
             Precio M2 (USD):
             {' '}
             {precioM2.toFixed(2)}
@@ -297,7 +297,7 @@ export default function FormularioMaterialesOrdenes({ editedMaterial }) {
         </div>
       </Card>
       <div>&nbsp;</div>
-    </Grid>
+    </div>
   );
 }
 

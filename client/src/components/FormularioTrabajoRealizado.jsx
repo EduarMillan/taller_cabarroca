@@ -3,9 +3,6 @@
 import moment from 'moment';
 import { Button, TextField } from '@material-ui/core';
 import {
-  Card,
-  CardContent,
-  Grid,
   Typography,
   CircularProgress,
 } from '@mui/material';
@@ -112,19 +109,13 @@ export default function FormularioTrabajoRealizado() {
   const fechaCorrecta = moment(fechaIncorrecta).format('YYYY-MM-DDThh:mm'); // doy formato correcto a la fecha
 
   return (
-    <Grid
-      container
-      direction="column"
-      alignItems="top"
-      justifyContent="center"
-      fontFamily="Roboto"
-    >
-      <Typography id="trabajosR">
+    <div className={editing ? 'container4' : 'container5'}>
+      <Typography id={editing ? 'trabajosR' : 'trabajosRS'}>
         {editing ? 'ACTUALIZAR TRABAJO' : 'INSERTAR TRABAJO'}
       </Typography>
-      <Card id="tarjetaTR">
-        <CardContent>
-          <form className={classes.root} onSubmit={handledSubmit}>
+      <div id={editing ? 'tarjetaTR' : 'tarjetaTRS'}>
+        <div>
+          <form className={classes.root} id={editing ? 'formE' : 'formS'} onSubmit={handledSubmit}>
             <TextField
               variant="outlined"
               label="Nombre"
@@ -290,6 +281,7 @@ export default function FormularioTrabajoRealizado() {
               style={{
                 padding: '12px',
                 margin: '12px',
+                width: '28ch',
               }}
               disabled={
                 !trabajo.nombre
@@ -312,8 +304,8 @@ export default function FormularioTrabajoRealizado() {
               )}
             </Button>
           </form>
-        </CardContent>
-      </Card>
-    </Grid>
+        </div>
+      </div>
+    </div>
   );
 }

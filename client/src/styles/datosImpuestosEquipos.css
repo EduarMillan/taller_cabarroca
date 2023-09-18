@@ -1,13 +1,10 @@
 .container{ 
     align-items: center; 
     display: flex;
-   background: transparent ;
-    background-size: auto 100%;
-    background-repeat: repeat-x;
+    background: transparent ;
     border-radius: 5px;
     text-align: center;  
     margin-bottom: 5px;
-    height: 50px;
 }
 
 .imp_onat{

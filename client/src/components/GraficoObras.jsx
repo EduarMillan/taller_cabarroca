@@ -86,7 +86,7 @@ export default function GraficoObras() {
   }, [value]);
 
   return (
-    <div className="container">
+    <div className="container1">
       <div>
         <PieChart width={280} height={110}>
           <Pie
@@ -108,20 +108,20 @@ export default function GraficoObras() {
           {needle(value, data, cx, cy, iR, oR, '#d0d000')}
         </PieChart>
       </div>
-      <div className="data">
-        <p className="footdata" id="pt">
+      <div className="data1">
+        <p className="footdata1" id="pt">
           Promedio Trabajos
           {' '}
           {aveG}
         </p>
-        <p className="footdata" id="tap">
+        <p className="footdata1" id="tap">
           Trabajos
           {' '}
           {moment().year() - 1}
           {' '}
           {aveProfitLY}
         </p>
-        <p className="footdata" id="taap">
+        <p className="footdata1" id="taap">
           Trabajos
           {' '}
           {moment().year() - 2}
@@ -130,7 +130,7 @@ export default function GraficoObras() {
         </p>
       </div>
       <div>
-        <p className="footdata" id="aa">
+        <p className="footdata1" id="aa">
           Año Actual:
           {' '}
           {value}

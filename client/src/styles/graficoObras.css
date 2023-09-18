@@ -1,16 +1,16 @@
-.container{
+.container1{
     display: block;
     width: 300px;
 }
 
-.data{
+.data1{
     display: flex;
     width: auto;
     justify-content: space-between;
     height: 35px;
 }
 
-.footdata{
+.footdata1{
     font-size: 10px;
 }
 
