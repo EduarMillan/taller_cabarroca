@@ -6,6 +6,7 @@ import ListaMateriales from './components/ListaMateriales';
 import ListaTrabajosRealizados from './components/ListaTrabajosRealizados';
 import ComponeteGeneralTrabajos from './components/ComponeteGeneralTrabajos';
 import Inicio from './components/Inicio';
+// import Inicio from './components/Inicio';
 // import Formulario_Materiales_Ordenes from "./components/Formulario_Materiales_Ordenes";
 
 function App() {
